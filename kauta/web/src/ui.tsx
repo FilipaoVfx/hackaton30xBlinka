@@ -82,7 +82,7 @@ export function TiraReglas({ reglas, grande = false, animar = false, className }
 // ---------------------------------------------------------------- contenedores
 export function Panel({ titulo, subtitulo, accion, children, className, cuerpo = "p-5" }: { titulo?: ReactNode; subtitulo?: ReactNode; accion?: ReactNode; children: ReactNode; className?: string; cuerpo?: string }) {
   return (
-    <section className={cx("rounded-[14px] border border-bruma bg-white", className)}>
+    <section className={cx("kauta-panel rounded-[14px] border border-bruma bg-white", className)}>
       {(titulo || accion) && (
         <header className="flex flex-wrap items-start justify-between gap-3 border-b border-bruma px-5 py-4">
           <div className="min-w-0">
@@ -98,7 +98,7 @@ export function Panel({ titulo, subtitulo, accion, children, className, cuerpo =
 }
 export function Encabezado({ titulo, texto, accion }: { titulo: string; texto?: ReactNode; accion?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div className="kauta-encabezado mb-6 flex flex-wrap items-end justify-between gap-4">
       <div className="max-w-3xl">
         <h1 className="text-[26px] font-extrabold leading-tight tracking-[-0.025em] sm:text-[30px]">{titulo}</h1>
         {texto && <p className="mt-1.5 text-[15px] text-pizarra">{texto}</p>}
@@ -120,7 +120,7 @@ const VARIANTES: Record<Variante, string> = {
 export function Boton({ variante = "secundario", icono, cargando, children, className, ...p }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variante?: Variante; icono?: ReactNode; cargando?: boolean }) {
   return (
     <button {...p} disabled={p.disabled || cargando}
-      className={cx("inline-flex min-h-10 items-center justify-center gap-2 rounded-[10px] px-4 py-2 text-[14px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60", VARIANTES[variante], className)}>
+      className={cx("kauta-boton inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-4 py-2 text-[14px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60", VARIANTES[variante], className)}>
       {cargando ? <LoaderCircle className="h-4 w-4 animate-spin" /> : icono}
       {children}
     </button>
@@ -135,7 +135,7 @@ export function Campo({ etiqueta, ayuda, children, className }: { etiqueta: stri
     </label>
   );
 }
-export const claseEntrada = "w-full min-h-10 rounded-[10px] border border-bruma bg-white px-3 py-2 text-[14px] text-noche placeholder:text-pizarra/70 focus:border-azul focus:outline-none focus:ring-2 focus:ring-azul/20";
+export const claseEntrada = "w-full min-h-10 rounded-[10px] border border-bruma bg-white px-3 py-2 text-[14px] text-noche placeholder:text-pizarra focus:border-azul focus:outline-none focus:ring-2 focus:ring-azul/20";
 
 // ---------------------------------------------------------------- avisos
 export function Aviso({ tono = "info", titulo, children, className }: { tono?: "info" | "exito" | "alerta" | "error"; titulo?: ReactNode; children?: ReactNode; className?: string }) {

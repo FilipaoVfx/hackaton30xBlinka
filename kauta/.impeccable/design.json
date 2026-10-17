@@ -1,0 +1,462 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T21:54:45.467292+00:00",
+  "title": "Kauta · Sistema de interfaz",
+  "extensions": {
+    "colorMeta": {
+      "noche": {
+        "role": "neutral",
+        "displayName": "noche",
+        "tonalRamp": [
+          "oklch(15.00% 0.06303 265.48)",
+          "oklch(26.43% 0.06303 265.48)",
+          "oklch(37.86% 0.06303 265.48)",
+          "oklch(49.29% 0.06303 265.48)",
+          "oklch(60.71% 0.06303 265.48)",
+          "oklch(72.14% 0.06303 265.48)",
+          "oklch(83.57% 0.06303 265.48)",
+          "oklch(95.00% 0.06303 265.48)"
+        ]
+      },
+      "noche-2": {
+        "role": "neutral",
+        "displayName": "noche-2",
+        "tonalRamp": [
+          "oklch(15.00% 0.08500 266.80)",
+          "oklch(26.43% 0.08500 266.80)",
+          "oklch(37.86% 0.08500 266.80)",
+          "oklch(49.29% 0.08500 266.80)",
+          "oklch(60.71% 0.08500 266.80)",
+          "oklch(72.14% 0.08500 266.80)",
+          "oklch(83.57% 0.08500 266.80)",
+          "oklch(95.00% 0.08500 266.80)"
+        ]
+      },
+      "noche-3": {
+        "role": "neutral",
+        "displayName": "noche-3",
+        "tonalRamp": [
+          "oklch(15.00% 0.09443 267.32)",
+          "oklch(26.43% 0.09443 267.32)",
+          "oklch(37.86% 0.09443 267.32)",
+          "oklch(49.29% 0.09443 267.32)",
+          "oklch(60.71% 0.09443 267.32)",
+          "oklch(72.14% 0.09443 267.32)",
+          "oklch(83.57% 0.09443 267.32)",
+          "oklch(95.00% 0.09443 267.32)"
+        ]
+      },
+      "menta": {
+        "role": "secondary",
+        "displayName": "menta",
+        "tonalRamp": [
+          "oklch(15.00% 0.14523 168.72)",
+          "oklch(26.43% 0.14523 168.72)",
+          "oklch(37.86% 0.14523 168.72)",
+          "oklch(49.29% 0.14523 168.72)",
+          "oklch(60.71% 0.14523 168.72)",
+          "oklch(72.14% 0.14523 168.72)",
+          "oklch(83.57% 0.14523 168.72)",
+          "oklch(95.00% 0.14523 168.72)"
+        ]
+      },
+      "menta-t": {
+        "role": "secondary",
+        "displayName": "menta-t",
+        "tonalRamp": [
+          "oklch(15.00% 0.10210 167.72)",
+          "oklch(26.43% 0.10210 167.72)",
+          "oklch(37.86% 0.10210 167.72)",
+          "oklch(49.29% 0.10210 167.72)",
+          "oklch(60.71% 0.10210 167.72)",
+          "oklch(72.14% 0.10210 167.72)",
+          "oklch(83.57% 0.10210 167.72)",
+          "oklch(95.00% 0.10210 167.72)"
+        ]
+      },
+      "menta-s": {
+        "role": "secondary",
+        "displayName": "menta-s",
+        "tonalRamp": [
+          "oklch(15.00% 0.02387 173.85)",
+          "oklch(26.43% 0.02387 173.85)",
+          "oklch(37.86% 0.02387 173.85)",
+          "oklch(49.29% 0.02387 173.85)",
+          "oklch(60.71% 0.02387 173.85)",
+          "oklch(72.14% 0.02387 173.85)",
+          "oklch(83.57% 0.02387 173.85)",
+          "oklch(95.00% 0.02387 173.85)"
+        ]
+      },
+      "ambar": {
+        "role": "secondary",
+        "displayName": "ambar",
+        "tonalRamp": [
+          "oklch(15.00% 0.14865 73.35)",
+          "oklch(26.43% 0.14865 73.35)",
+          "oklch(37.86% 0.14865 73.35)",
+          "oklch(49.29% 0.14865 73.35)",
+          "oklch(60.71% 0.14865 73.35)",
+          "oklch(72.14% 0.14865 73.35)",
+          "oklch(83.57% 0.14865 73.35)",
+          "oklch(95.00% 0.14865 73.35)"
+        ]
+      },
+      "ambar-t": {
+        "role": "secondary",
+        "displayName": "ambar-t",
+        "tonalRamp": [
+          "oklch(15.00% 0.12015 62.73)",
+          "oklch(26.43% 0.12015 62.73)",
+          "oklch(37.86% 0.12015 62.73)",
+          "oklch(49.29% 0.12015 62.73)",
+          "oklch(60.71% 0.12015 62.73)",
+          "oklch(72.14% 0.12015 62.73)",
+          "oklch(83.57% 0.12015 62.73)",
+          "oklch(95.00% 0.12015 62.73)"
+        ]
+      },
+      "ambar-s": {
+        "role": "secondary",
+        "displayName": "ambar-s",
+        "tonalRamp": [
+          "oklch(15.00% 0.02883 82.60)",
+          "oklch(26.43% 0.02883 82.60)",
+          "oklch(37.86% 0.02883 82.60)",
+          "oklch(49.29% 0.02883 82.60)",
+          "oklch(60.71% 0.02883 82.60)",
+          "oklch(72.14% 0.02883 82.60)",
+          "oklch(83.57% 0.02883 82.60)",
+          "oklch(95.00% 0.02883 82.60)"
+        ]
+      },
+      "coral": {
+        "role": "secondary",
+        "displayName": "coral",
+        "tonalRamp": [
+          "oklch(15.00% 0.19869 23.91)",
+          "oklch(26.43% 0.19869 23.91)",
+          "oklch(37.86% 0.19869 23.91)",
+          "oklch(49.29% 0.19869 23.91)",
+          "oklch(60.71% 0.19869 23.91)",
+          "oklch(72.14% 0.19869 23.91)",
+          "oklch(83.57% 0.19869 23.91)",
+          "oklch(95.00% 0.19869 23.91)"
+        ]
+      },
+      "coral-t": {
+        "role": "secondary",
+        "displayName": "coral-t",
+        "tonalRamp": [
+          "oklch(15.00% 0.18798 26.31)",
+          "oklch(26.43% 0.18798 26.31)",
+          "oklch(37.86% 0.18798 26.31)",
+          "oklch(49.29% 0.18798 26.31)",
+          "oklch(60.71% 0.18798 26.31)",
+          "oklch(72.14% 0.18798 26.31)",
+          "oklch(83.57% 0.18798 26.31)",
+          "oklch(95.00% 0.18798 26.31)"
+        ]
+      },
+      "coral-s": {
+        "role": "secondary",
+        "displayName": "coral-s",
+        "tonalRamp": [
+          "oklch(15.00% 0.02405 17.58)",
+          "oklch(26.43% 0.02405 17.58)",
+          "oklch(37.86% 0.02405 17.58)",
+          "oklch(49.29% 0.02405 17.58)",
+          "oklch(60.71% 0.02405 17.58)",
+          "oklch(72.14% 0.02405 17.58)",
+          "oklch(83.57% 0.02405 17.58)",
+          "oklch(95.00% 0.02405 17.58)"
+        ]
+      },
+      "azul": {
+        "role": "primary",
+        "displayName": "azul",
+        "tonalRamp": [
+          "oklch(15.00% 0.24164 268.26)",
+          "oklch(26.43% 0.24164 268.26)",
+          "oklch(37.86% 0.24164 268.26)",
+          "oklch(49.29% 0.24164 268.26)",
+          "oklch(60.71% 0.24164 268.26)",
+          "oklch(72.14% 0.24164 268.26)",
+          "oklch(83.57% 0.24164 268.26)",
+          "oklch(95.00% 0.24164 268.26)"
+        ]
+      },
+      "azul-t": {
+        "role": "primary",
+        "displayName": "azul-t",
+        "tonalRamp": [
+          "oklch(15.00% 0.22292 267.91)",
+          "oklch(26.43% 0.22292 267.91)",
+          "oklch(37.86% 0.22292 267.91)",
+          "oklch(49.29% 0.22292 267.91)",
+          "oklch(60.71% 0.22292 267.91)",
+          "oklch(72.14% 0.22292 267.91)",
+          "oklch(83.57% 0.22292 267.91)",
+          "oklch(95.00% 0.22292 267.91)"
+        ]
+      },
+      "azul-s": {
+        "role": "primary",
+        "displayName": "azul-s",
+        "tonalRamp": [
+          "oklch(15.00% 0.02483 273.50)",
+          "oklch(26.43% 0.02483 273.50)",
+          "oklch(37.86% 0.02483 273.50)",
+          "oklch(49.29% 0.02483 273.50)",
+          "oklch(60.71% 0.02483 273.50)",
+          "oklch(72.14% 0.02483 273.50)",
+          "oklch(83.57% 0.02483 273.50)",
+          "oklch(95.00% 0.02483 273.50)"
+        ]
+      },
+      "pizarra": {
+        "role": "neutral",
+        "displayName": "pizarra",
+        "tonalRamp": [
+          "oklch(15.00% 0.04543 266.09)",
+          "oklch(26.43% 0.04543 266.09)",
+          "oklch(37.86% 0.04543 266.09)",
+          "oklch(49.29% 0.04543 266.09)",
+          "oklch(60.71% 0.04543 266.09)",
+          "oklch(72.14% 0.04543 266.09)",
+          "oklch(83.57% 0.04543 266.09)",
+          "oklch(95.00% 0.04543 266.09)"
+        ]
+      },
+      "bruma": {
+        "role": "neutral",
+        "displayName": "bruma",
+        "tonalRamp": [
+          "oklch(15.00% 0.01456 264.50)",
+          "oklch(26.43% 0.01456 264.50)",
+          "oklch(37.86% 0.01456 264.50)",
+          "oklch(49.29% 0.01456 264.50)",
+          "oklch(60.71% 0.01456 264.50)",
+          "oklch(72.14% 0.01456 264.50)",
+          "oklch(83.57% 0.01456 264.50)",
+          "oklch(95.00% 0.01456 264.50)"
+        ]
+      },
+      "niebla": {
+        "role": "neutral",
+        "displayName": "niebla",
+        "tonalRamp": [
+          "oklch(15.00% 0.00574 264.53)",
+          "oklch(26.43% 0.00574 264.53)",
+          "oklch(37.86% 0.00574 264.53)",
+          "oklch(49.29% 0.00574 264.53)",
+          "oklch(60.71% 0.00574 264.53)",
+          "oklch(72.14% 0.00574 264.53)",
+          "oklch(83.57% 0.00574 264.53)",
+          "oklch(95.00% 0.00574 264.53)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "panel",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "headline",
+        "purpose": "Cabeceras compartidas."
+      },
+      "metric": {
+        "displayName": "metric",
+        "purpose": "Importes y métricas tabulares."
+      },
+      "title": {
+        "displayName": "title",
+        "purpose": "Cabeceras de panel."
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "Texto base."
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "Etiquetas y navegación."
+      }
+    },
+    "shadows": [
+      {
+        "name": "command-dialog",
+        "value": "0 24px 80px -12px #0b173659",
+        "purpose": "Superposición de búsqueda modal."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-transition",
+        "value": "150ms",
+        "purpose": "Filas de decisión y enlaces del recorrido."
+      },
+      {
+        "name": "inspector-transition",
+        "value": "160ms",
+        "purpose": "Cambios de estado y selección de reglas."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Duración reducida con retrasos de animación anulados."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "640px"
+      },
+      {
+        "name": "invoice-table",
+        "value": "768px"
+      },
+      {
+        "name": "sidebar",
+        "value": "1024px"
+      },
+      {
+        "name": "metric-mid",
+        "value": "1100px"
+      },
+      {
+        "name": "summary-stack",
+        "value": "1199px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primary",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción compartida de al menos 44 px.",
+      "html": "<button class=\"ds-button-primary\">Revisar factura</button>",
+      "css": ".ds-button-primary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-panel,#ffffff);background:var(--color-azul,#3b5bfd);border:0;}.ds-button-primary:hover{background:var(--color-azul-t,#2a44d6);}.ds-button-primary:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-primary:active{transform:translateY(1px);}"
+    },
+    {
+      "name": "Botón secondary",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción compartida de al menos 44 px.",
+      "html": "<button class=\"ds-button-secondary\">Revisar factura</button>",
+      "css": ".ds-button-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-noche,#0b1736);background:var(--color-panel,#ffffff);border:0;box-shadow:0 0 0 1px var(--color-bruma,#e3e8f2);}.ds-button-secondary:hover{background:var(--color-niebla,#f5f7fb);}.ds-button-secondary:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-secondary:active{transform:translateY(1px);}"
+    },
+    {
+      "name": "Botón danger",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Acción compartida de al menos 44 px.",
+      "html": "<button class=\"ds-button-danger\">Revisar factura</button>",
+      "css": ".ds-button-danger{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-coral-t,#c7302f);background:var(--color-panel,#ffffff);border:0;box-shadow:0 0 0 1px #ff5c5c66;}.ds-button-danger:hover{background:var(--color-coral-s,#ffe9e9);}.ds-button-danger:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-danger:active{transform:translateY(1px);}"
+    },
+    {
+      "name": "Botón ghost",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Acción compartida de al menos 44 px.",
+      "html": "<button class=\"ds-button-ghost\">Revisar factura</button>",
+      "css": ".ds-button-ghost{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-pizarra,#5b6782);background:transparent;border:0;}.ds-button-ghost:hover{color:var(--color-noche,#0b1736);background:#e3e8f299;}.ds-button-ghost:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-ghost:active{transform:translateY(1px);}"
+    },
+    {
+      "name": "Botón success",
+      "kind": "button",
+      "refersTo": "button-success",
+      "description": "Acción compartida de al menos 44 px.",
+      "html": "<button class=\"ds-button-success\">Revisar factura</button>",
+      "css": ".ds-button-success{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-panel,#ffffff);background:var(--color-menta-t,#0b7a5c);border:0;}.ds-button-success:hover{background:#086349;}.ds-button-success:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-success:active{transform:translateY(1px);}"
+    },
+    {
+      "name": "Campo",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo con etiqueta y placeholder pizarra.",
+      "html": "<label class=\"ds-field\">Buscar facturas<input class=\"ds-input\" placeholder=\"Proveedor, número o ID\" /></label>",
+      "css": ".ds-field{display:block;font:500 13px \"Inter Variable\",sans-serif;color:var(--color-noche,#0b1736)}.ds-input{display:block;margin-top:6px;min-height:40px;padding:8px 12px;border:1px solid var(--color-bruma,#e3e8f2);border-radius:10px;background:white;color:var(--color-noche,#0b1736);font:14px \"Inter Variable\",sans-serif}.ds-input::placeholder{color:var(--color-pizarra,#5b6782)}.ds-input:hover{border-color:var(--color-bruma,#e3e8f2)}.ds-input:focus-visible{border-color:var(--color-azul,#3b5bfd);outline:none;box-shadow:0 0 0 2px #3b5bfd33}"
+    },
+    {
+      "name": "Navegación",
+      "kind": "nav",
+      "description": "Selección sobre noche con señal menta.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#/resumen\" aria-current=\"page\" class=\"ds-nav-item\">Resumen</a></nav>",
+      "css": ".ds-nav{background:var(--color-noche,#0b1736);padding:15px}.ds-nav-item{display:flex;align-items:center;position:relative;min-height:42px;padding:10px;border-radius:6px;color:#c4cde0;font:500 12px \"Inter Variable\",sans-serif;text-decoration:none}.ds-nav-item:hover{background:#142350;color:white}.ds-nav-item[aria-current=page]{background:#243556;color:white;font-weight:600}.ds-nav-item[aria-current=page]::after{content:\"\";position:absolute;left:-15px;top:14px;bottom:14px;width:2px;background:var(--color-menta,#16c79a)}.ds-nav-item:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}"
+    },
+    {
+      "name": "Estado pagada",
+      "kind": "chip",
+      "description": "Estado escrito y punto, sin depender solo del color.",
+      "html": "<span class=\"ds-chip\"><span></span>Pagada</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;border-radius:9999px;padding:2px 10px;background:var(--color-menta-s,#e3f8f1);color:var(--color-menta-t,#0b7a5c);box-shadow:0 0 0 1px #16c79a4d;font:600 12px \"Inter Variable\",sans-serif}.ds-chip>span{width:6px;height:6px;border-radius:50%;background:var(--color-menta,#16c79a)}"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Contenedor compartido con borde y sin sombra.",
+      "html": "<section class=\"ds-panel\"><header><h2>Necesita tu firma</h2><p>Estas decisiones necesitan una persona.</p></header><div>Decisiones pendientes</div></section>",
+      "css": ".ds-panel{border:1px solid var(--color-bruma,#e3e8f2);border-radius:12px;background:white;color:var(--color-noche,#0b1736);font:14px \"Inter Variable\",sans-serif}.ds-panel>header{padding:22px 24px 18px;border-bottom:1px solid var(--color-bruma,#e3e8f2)}.ds-panel h2{margin:0;font-size:16px;font-weight:600;letter-spacing:-.025em}.ds-panel p{margin:6px 0 0;font-size:12px;line-height:1.6;color:var(--color-pizarra,#5b6782)}.ds-panel>div{padding:20px}"
+    },
+    {
+      "name": "Regla inspeccionable",
+      "kind": "custom",
+      "description": "Muestra de una regla seleccionada; no ejecuta una evaluación.",
+      "html": "<section class=\"ds-inspector\"><button class=\"ds-rule\" aria-pressed=\"true\" aria-label=\"R12: requiere atención\"><span>12</span><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M18 6 6 18M6 6l12 12\" /></svg></button></section>",
+      "css": ".ds-inspector{padding:24px;background:var(--color-noche,#0b1736);border-radius:12px}.ds-rule{display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-height:74px;min-width:28px;padding:9px 0;border:1px solid transparent;border-radius:4px;background:#ff8585;color:var(--color-noche,#0b1736);font:9px ui-monospace,monospace;transition:background 160ms,transform 160ms,border-color 160ms}.ds-rule[aria-pressed=true]{border-color:white;transform:translateY(-4px)}.ds-rule:hover{border-color:#c4cde0}.ds-rule:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}@media(prefers-reduced-motion:reduce){.ds-rule{transition-duration:.01ms}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Autonomía, pero cauta.",
+    "overview": "Kauta es una herramienta para operar cuentas por pagar. La pregunta de cada pantalla manda sobre la cantidad de datos: como máximo cuatro métricas de cabecera; los detalles se abren cuando hacen falta.\n\nLa identidad existente se mantiene: modo claro, navegación noche, superficie niebla, panel blanco y semáforo de decisiones. El refinamiento da más peso a la tipografía, reduce los contenedores y muestra el motivo de cada decisión. No introduce una identidad nueva.",
+    "keyCharacteristics": [
+      "Semáforo reservado a decisiones, con texto e iconos.",
+      "Métricas en una fila compartida con separadores.",
+      "Inter Variable local y números tabulares.",
+      "Inspección de reglas guardadas, sin evaluación ficticia."
+    ],
+    "rules": [
+      {
+        "name": "The Semáforo Rule",
+        "body": "Menta significa pagar, ámbar preguntar y coral frenar. Azul identifica acciones y selección; nunca informar un estado solo con color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dato Rule",
+        "body": "Dinero y métricas usan números tabulares; monospace se reserva a IDs y huellas.",
+        "section": "typography"
+      },
+      {
+        "name": "The Superficie Rule",
+        "body": "Los paneles ordinarios se separan con fondo y borde, sin sombra decorativa. La búsqueda modal usa sombra para expresar su superposición.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do conservar la identidad noche, niebla y el semáforo de decisiones.",
+      "Do mostrar como máximo cuatro métricas de cabecera, con separadores y sin tarjetas individuales.",
+      "Do distinguir carga, vacío y error; ofrecer Reintentar cuando corresponde.",
+      "Do mantener foco visible, etiquetas y preferencia de movimiento reducido.",
+      "Do validar F01 → F07 → F12 → Rendimiento → CEO/F10 a 390 y 1440 px."
+    ],
+    "donts": [
+      "Don't añadir KPIs a los desgloses, gráficas decorativas ni cifras calculadas por la vista.",
+      "Don't usar solo color para comunicar estado.",
+      "Don't representar las reglas guardadas como una evaluación nueva o una animación de progreso.",
+      "Don't extender el radio heredado de 14 px a los paneles compartidos actuales."
+    ]
+  }
+}

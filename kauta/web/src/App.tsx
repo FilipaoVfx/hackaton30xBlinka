@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { Building2, ChevronDown, Ellipsis, FlaskConical, LayoutDashboard, MessageCircleQuestion, ReceiptText, ScrollText, ShieldCheck, SlidersHorizontal, Users, Wallet, ChartNoAxesCombined, ArrowRight } from "lucide-react";
+import { Building2, ChevronDown, Ellipsis, FlaskConical, LayoutDashboard, MessageCircleQuestion, ReceiptText, ScrollText, ShieldCheck, SlidersHorizontal, Users, Wallet, ChartNoAxesCombined, ArrowRight, Search, Command } from "lucide-react";
 import { alPerderSesion, alRenovarSesion, api, avisarCambio, elegirPersona, fijarCsrf, guardarPersona, ultimaPersona, PERIODO, useCambios, useRuta, type Usuario } from "./api";
 import { Aviso, Boton, Cargando, cx, EstadoCarga, Logo, Modal } from "./ui";
+import PaletaComandos from "./components/PaletaComandos";
 import Resumen from "./pages/Resumen";
 import Facturas from "./pages/Facturas";
 import Detalle from "./pages/Detalle";
@@ -58,6 +59,14 @@ function Marco({ usuario, setUsuario }: { usuario: Usuario; setUsuario: (u: Usua
   const [pendientes, setPendientes] = useState(0);
   const [periodo, setPeriodo] = useState("2026-10");
   const [mas, setMas] = useState(false);
+  const [buscar, setBuscar] = useState(false);
+  useEffect(() => {
+    const atajo = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setBuscar(b => !b); }
+    };
+    document.addEventListener("keydown", atajo);
+    return () => document.removeEventListener("keydown", atajo);
+  }, []);
   const [personas, setPersonas] = useState(false);
   const contar = useCallback(() => {
     api<any[]>("/aprobaciones").then((l) => setPendientes(l.filter((f) => !f.ya_aprobe && !f.cargue_yo).length)).catch(() => {});
@@ -79,10 +88,11 @@ function Marco({ usuario, setUsuario }: { usuario: Usuario; setUsuario: (u: Usua
     case "seguridad": contenido = <Seguridad />; break;
     default: contenido = <Resumen usuario={usuario} />;
   }
-  return <div className="min-h-dvh lg:pl-[232px]">
+  return <div className="kauta-app min-h-dvh lg:pl-[232px]">
     <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:bg-white focus:p-4">Saltar al contenido</a>
     <aside className="kauta-sidebar fixed inset-y-0 left-0 z-30 hidden w-[232px] flex-col text-white lg:flex">
-      <div className="sidebar-brand px-6 pb-7 pt-8"><a href="#/resumen" aria-label="Kauta, inicio"><Logo claro /></a><p className="mt-3 text-xs text-[#aab6d3]">El agente de cuentas por pagar</p></div>
+      <div className="sidebar-brand px-6 pb-7 pt-8"><a href="#/resumen" aria-label="Kauta, inicio"><Logo claro /></a><p className="mt-3 text-xs text-[#aab6d3]">Autonomía, pero cauta.</p></div>
+      <a className="sidebar-empresa" href="#/resumen"><span className="empresa-avatar">B</span><span><strong>Brisamar Labs</strong><small>Espacio de demostración</small></span></a>
       <nav className="sidebar-nav flex-1 px-3" aria-label="Secciones">
         {["Operar", "Dinero", "Control"].map((grupo) => <div className="sidebar-grupo mb-6" key={grupo}>
           <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#aab6d3]">{grupo}</p>
@@ -98,22 +108,23 @@ function Marco({ usuario, setUsuario }: { usuario: Usuario; setUsuario: (u: Usua
         <span className="min-w-0 flex-1"><span className="block truncate text-[13px] font-semibold">{usuario.nombre}</span><span className="block text-xs text-[#aab6d3]">Cambiar persona</span></span><ChevronDown className="h-4 w-4" />
       </button></div>
     </aside>
-    <header className="border-b border-bruma bg-white">
+    <header className="kauta-topbar border-b border-bruma bg-white">
       <div className="mx-auto flex min-h-[72px] max-w-[1280px] items-center gap-3 px-5 sm:px-9">
         <a href="#/resumen" className="lg:hidden" aria-label="Inicio"><Logo /></a>
-        <div className="hidden text-[13px] sm:block"><span className="font-semibold">Brisamar Labs</span><span className="mx-3 text-bruma">/</span><span className="text-pizarra">{PERIODO(periodo)}</span></div>
-        <div className="ml-auto flex items-center gap-3"><span className="hidden items-center gap-2 text-xs text-pizarra sm:flex"><span className="h-1.5 w-1.5 rounded-full bg-menta" />Demo · sin dinero real</span>
+        <div className="hidden text-[13px] sm:block"><span className="font-semibold">Brisamar Labs</span><span className="mx-3 text-bruma">/</span><span className="text-pizarra">{NAV.find(n => n.ruta === pagina)?.nombre ?? "Resumen"}</span></div>
+        <div className="ml-auto flex items-center gap-3"><button className="abrir-comandos" onClick={() => setBuscar(true)} aria-label="Buscar en Kauta"><Search size={16} /><span>Buscar</span><kbd><Command size={11} />K</kbd></button><span className="hidden items-center gap-2 text-xs text-pizarra sm:flex"><span className="h-1.5 w-1.5 rounded-full bg-menta" />Demo · sin dinero real</span>
           <button onClick={() => setPersonas(true)} className="flex min-h-11 items-center gap-2 rounded-lg border border-bruma px-3 text-[13px] font-semibold" aria-label="Elegir persona"><span className="text-pizarra">Vista</span> {usuario.rol_nombre}<ChevronDown className="h-3.5 w-3.5" /></button>
         </div>
       </div>
     </header>
-    <main id="contenido" key={usuario.correo} className="mx-auto max-w-[1280px] px-5 pb-28 pt-8 sm:px-9 lg:pb-12">{contenido}</main>
+    <main id="contenido" key={usuario.correo} className="kauta-contenido mx-auto max-w-[1280px] px-5 pb-28 pt-8 sm:px-9 lg:pb-12"><div className="contexto-periodo"><span><span className="contexto-punto" />Demo · sin dinero real</span><span>{PERIODO(periodo)}</span></div>{contenido}</main>
     <footer className="mx-auto hidden max-w-[1280px] items-center justify-between border-t border-bruma px-9 py-5 text-xs text-pizarra lg:flex"><span>Kauta · La IA lee, el código decide.</span><span>Datos y costos simulados · Hackathon 30X</span></footer>
     <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-bruma bg-white pb-[env(safe-area-inset-bottom)] lg:hidden" aria-label="Navegación móvil"><div className="grid grid-cols-5">
       {NAV.filter((n) => n.movil).map((n) => <a key={n.ruta} href={`#/${n.ruta}`} aria-current={pagina === n.ruta ? "page" : undefined} className={cx("flex min-h-16 flex-col items-center justify-center gap-1 text-[10px] font-semibold", pagina === n.ruta ? "text-azul" : "text-pizarra")}><n.icono className="h-5 w-5" />{n.corto ?? n.nombre}</a>)}
       <button onClick={() => setMas(true)} className="flex min-h-16 flex-col items-center justify-center gap-1 text-[10px] font-semibold text-pizarra"><Ellipsis className="h-5 w-5" />Más</button>
     </div></nav>
     <Modal abierto={mas} titulo="Más secciones" onCerrar={() => setMas(false)}><div className="space-y-2">{NAV.filter((n) => !n.movil).map((n) => <a key={n.ruta} href={`#/${n.ruta}`} onClick={() => setMas(false)} className="flex min-h-12 items-center gap-3 rounded-lg border border-bruma px-4 font-semibold"><n.icono className="h-4 w-4 text-pizarra" />{n.nombre}<ArrowRight className="ml-auto h-4 w-4" /></a>)}</div></Modal>
+    <PaletaComandos abierto={buscar} cerrar={() => setBuscar(false)} secciones={NAV} />
     <CambiarPersona abierto={personas} onCerrar={() => setPersonas(false)} actual={usuario} alCambiar={(u) => { setUsuario(u); setPersonas(false); avisarCambio(); }} />
   </div>;
 }

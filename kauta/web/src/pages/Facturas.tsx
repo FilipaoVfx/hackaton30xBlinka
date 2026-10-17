@@ -56,7 +56,7 @@ export default function Facturas({ usuario }: { usuario: Usuario }) {
   };
 
   return (
-    <div>
+    <div className="facturas-pagina">
       <Encabezado titulo="Facturas" texto="Todo lo que llegó por correo, chat, PDF, foto o XML fiscal, con la decisión de Kauta y su motivo."
         accion={puede(usuario, "facturas.cargar") && <>
           <Boton onClick={sorpresa} icono={<FileCode className="h-4 w-4" />}>Procesar XML sorpresa</Boton>
@@ -77,7 +77,7 @@ export default function Facturas({ usuario }: { usuario: Usuario }) {
       {errorCarga && <Aviso tono="error" className="mb-4" titulo="No se procesó el archivo">{errorCarga}</Aviso>}
 
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1" role="tablist" aria-label="Filtrar por estado">
+        <div className="facturas-filtros -mx-1 flex gap-1 overflow-x-auto px-1 pb-1" role="tablist" aria-label="Filtrar por estado">
           {FILTROS.map((f) => (
             <button key={f.v} role="tab" aria-selected={filtro === f.v} onClick={() => setFiltro(f.v)}
               className={cx("shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-semibold", filtro === f.v ? "bg-noche text-white" : "bg-white text-pizarra ring-1 ring-bruma hover:text-noche")}>
@@ -94,7 +94,7 @@ export default function Facturas({ usuario }: { usuario: Usuario }) {
       {error || !datos ? <EstadoCarga cargando={cargando} error={error} datos={datos} reintentar={recargar} /> : lista.length === 0 ? (
         <div className="rounded-[14px] border border-bruma bg-white"><Vacio titulo="No hay facturas con ese filtro" texto="Carga un documento o crea uno en el simulador para ver a Kauta decidir." /></div>
       ) : (
-        <div className="overflow-hidden rounded-[14px] border border-bruma bg-white">
+        <div className="tabla-facturas overflow-hidden rounded-[14px] border border-bruma bg-white">
           <table className="hidden w-full text-left text-[14px] md:table">
             <thead className="border-b border-bruma bg-niebla/60 text-xs text-pizarra">
               <tr><th className="px-5 py-3 font-semibold">Factura</th><th className="px-3 py-3 font-semibold">Beneficiario</th><th className="px-3 py-3 font-semibold">Canal</th>
