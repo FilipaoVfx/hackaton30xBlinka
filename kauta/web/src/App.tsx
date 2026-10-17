@@ -92,7 +92,7 @@ function Marco({ usuario, setUsuario }: { usuario: Usuario; setUsuario: (u: Usua
     <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:bg-white focus:p-4">Saltar al contenido</a>
     <aside className="kauta-sidebar fixed inset-y-0 left-0 z-30 hidden w-[232px] flex-col text-white lg:flex">
       <div className="sidebar-brand px-6 pb-7 pt-8"><a href="#/resumen" aria-label="Kauta, inicio"><Logo claro /></a><p className="mt-3 text-xs text-[#aab6d3]">Autonomía, pero cauta.</p></div>
-      <a className="sidebar-empresa" href="#/resumen"><span className="empresa-avatar">B</span><span><strong>Brisamar Labs</strong><small>Espacio de demostración</small></span></a>
+      <a className="sidebar-empresa" href="#/resumen"><span className="empresa-avatar">K</span><span><strong>Kauta</strong><small>Espacio de demostración</small></span></a>
       <nav className="sidebar-nav flex-1 px-3" aria-label="Secciones">
         {["Operar", "Dinero", "Control"].map((grupo) => <div className="sidebar-grupo mb-6" key={grupo}>
           <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#aab6d3]">{grupo}</p>
@@ -111,7 +111,7 @@ function Marco({ usuario, setUsuario }: { usuario: Usuario; setUsuario: (u: Usua
     <header className="kauta-topbar border-b border-bruma bg-white">
       <div className="mx-auto flex min-h-[72px] max-w-[1280px] items-center gap-3 px-5 sm:px-9">
         <a href="#/resumen" className="lg:hidden" aria-label="Inicio"><Logo /></a>
-        <div className="hidden text-[13px] sm:block"><span className="font-semibold">Brisamar Labs</span><span className="mx-3 text-bruma">/</span><span className="text-pizarra">{NAV.find(n => n.ruta === pagina)?.nombre ?? "Resumen"}</span></div>
+        <div className="hidden text-[13px] sm:block"><span className="font-semibold">Kauta</span><span className="mx-3 text-bruma">/</span><span className="text-pizarra">{NAV.find(n => n.ruta === pagina)?.nombre ?? "Resumen"}</span></div>
         <div className="ml-auto flex items-center gap-3"><button className="abrir-comandos" onClick={() => setBuscar(true)} aria-label="Buscar en Kauta"><Search size={16} /><span>Buscar</span><kbd><Command size={11} />K</kbd></button><span className="hidden items-center gap-2 text-xs text-pizarra sm:flex"><span className="h-1.5 w-1.5 rounded-full bg-menta" />Demo · sin dinero real</span>
           <button onClick={() => setPersonas(true)} className="flex min-h-11 items-center gap-2 rounded-lg border border-bruma px-3 text-[13px] font-semibold" aria-label="Elegir persona"><span className="text-pizarra">Vista</span> {usuario.rol_nombre}<ChevronDown className="h-3.5 w-3.5" /></button>
         </div>

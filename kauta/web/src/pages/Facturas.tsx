@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { FileArchive, FileCode, FileText, Image, Mail, MessageSquare, Search, Upload, FlaskConical } from "lucide-react";
 import { api, avisarCambio, dinero, fecha, ir, puede, useApi, useCambios, type FacturaResumen, type Usuario } from "../api";
 import { EstadoCarga, Aviso, Boton, Cargando, claseEntrada, cx, Encabezado, EstadoChip, TiraReglas, useToast, Vacio } from "../ui";
+import BandejaCorreo from "../components/BandejaCorreo";
 
 const FILTROS = [
   { v: "", t: "Todas" }, { v: "pagada", t: "Pagadas" }, { v: "pendiente", t: "Pendientes" },
@@ -64,6 +65,8 @@ export default function Facturas({ usuario }: { usuario: Usuario }) {
         </>} />
       <input ref={input} type="file" className="hidden" accept=".pdf,.png,.jpg,.jpeg,.webp,.eml,.txt,.xml,.zip"
         onChange={(e) => { const f = e.target.files?.[0]; if (f) subir(f); e.target.value = ""; }} />
+
+      <BandejaCorreo usuario={usuario} />
 
       {puede(usuario, "facturas.cargar") && (
         <div onDragOver={(e) => { e.preventDefault(); setArrastre(true); }} onDragLeave={() => setArrastre(false)}

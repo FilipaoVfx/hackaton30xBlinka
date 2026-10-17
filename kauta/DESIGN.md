@@ -194,6 +194,10 @@ Búsqueda real de secciones y facturas de la API, por ID, proveedor o número, n
 
 Panel noche que consulta las decisiones guardadas F01, F07, F12 y F10. Selecciona una factura y una regla; muestra nombre, resultado y detalle persistidos por la API, con enlace a la decisión completa. Cumple, Requiere atención y No aplica usan texto e iconos. La selección mantiene borde visible y elevación de 4 px; no simula evaluación. Carga y error con Reintentar tienen estados separados.
 
+### Recepción de correo
+
+Facturas muestra el estado y los documentos de la API de correo del servidor. La conexión y los secretos OAuth permanecen en ese servidor; el navegador no consulta Gmail directamente. Carga, error y recepción vacía se distinguen. Retirar un documento requiere permiso y confirmación; el correo original y el historial financiero se conservan. Una respuesta anterior no debe sobrescribir una consulta más reciente.
+
 ### Superficies existentes
 
 - Resumen: una lente por persona con métricas de `/api/resumen`, trabajo pendiente e inspector de decisiones.
