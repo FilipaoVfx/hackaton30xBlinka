@@ -1,0 +1,108 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+/* Paleta Kauta: el semáforo de decisiones (menta = pagar, ámbar = escalar, coral = frenar) sobre noche y niebla. */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  --color-noche: #0b1736;
+  --color-noche-2: #142350;
+  --color-noche-3: #1e2f63;
+  --color-menta: #16c79a;
+  --color-menta-t: #0b7a5c;
+  --color-menta-s: #e3f8f1;
+  --color-ambar: #ffb547;
+  --color-ambar-t: #9a5800;
+  --color-ambar-s: #fff4e0;
+  --color-coral: #ff5c5c;
+  --color-coral-t: #c7302f;
+  --color-coral-s: #ffe9e9;
+  --color-azul: #3b5bfd;
+  --color-azul-t: #2a44d6;
+  --color-azul-s: #e8edff;
+  --color-pizarra: #5b6782;
+  --color-bruma: #e3e8f2;
+  --color-niebla: #f5f7fb;
+
+  --text-2xs: 0.6875rem;
+  --radius-panel: 14px;
+}
+
+html {
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  background: var(--color-niebla);
+  color: var(--color-noche);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+:focus-visible {
+  outline: 2px solid var(--color-azul);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+::selection {
+  background: var(--color-azul-s);
+}
+
+/* La única animación orquestada: las 13 reglas se encienden una por una al evaluar */
+@keyframes encender {
+  from {
+    transform: scaleY(0.25);
+    opacity: 0.2;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+.celda-animada {
+  animation: encender 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: bottom;
+}
+@keyframes sello {
+  0% {
+    transform: scale(1.35) rotate(-4deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(0.96) rotate(-2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 1;
+  }
+}
+.sello {
+  animation: sello 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes avanzar {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.paso-animado {
+  animation: avanzar 280ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
