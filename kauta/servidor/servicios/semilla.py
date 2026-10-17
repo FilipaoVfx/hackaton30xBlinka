@@ -18,7 +18,7 @@ from kauta.normalizacion import validar_aba, validar_clabe, validar_id_fiscal
 
 from ..config import CONFIG, RAIZ
 from ..db import Base, motor_bd
-from ..modelos import (Aprobacion, Asiento, Beneficiario, CambioCuenta, ClaveIdempotencia, CuentaWallet, EventoAuditoria,
+from ..modelos import (Aprobacion, Asiento, Beneficiario, CambioCuenta, ClaveIdempotencia, CuentaWallet, EventoAuditoria, EventoCosto,
                        Factura, Movimiento, Organizacion, Pago, Sesion, Usuario, VersionReglas)
 from ..seguridad.cifrado import cifrar
 from ..seguridad.contrasenas import hashear, problemas_politica
@@ -146,7 +146,7 @@ def iniciar(bd: Session, con_set: bool = True) -> None:
         _negocio(bd, con_set)
 
 
-TABLAS_NEGOCIO = [ClaveIdempotencia, Movimiento, Asiento, Pago, Aprobacion, CambioCuenta, Factura, Beneficiario,
+TABLAS_NEGOCIO = [EventoCosto, ClaveIdempotencia, Movimiento, Asiento, Pago, Aprobacion, CambioCuenta, Factura, Beneficiario,
                   VersionReglas, CuentaWallet, EventoAuditoria, Organizacion]
 
 

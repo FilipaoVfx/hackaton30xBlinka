@@ -19,7 +19,7 @@ from ..seguridad.limites import LIMITADOR
 from ..seguridad.sesiones import Contexto, requiere
 from kauta import ocr
 
-from ..servicios import agente, auditoria, semilla, wallet
+from ..servicios import agente, auditoria, metricas, semilla, wallet
 from .. import vistas
 
 r = APIRouter(prefix="/api", tags=["Control"])
@@ -40,7 +40,9 @@ def resumen(ctx: Contexto = Depends(requiere("ver"))):
     pagos_ = bd.execute(select(Pago)).scalars().all()
     por_riel = Counter(p.riel for p in pagos_ if p.estado == "liquidado")
     ultimas = [vistas.factura_resumen(bd, f) for f in sorted(fs, key=lambda x: x.recibida_en, reverse=True)[:8]]
-    return {"metricas": m, "wallet": wallet.resumen(bd), "presupuesto": reglas["presupuesto_periodo_usd"],
+    u = ctx.usuario
+    return {"metricas": m, "lente": metricas.lente(bd, u.rol, u.correo, u.id, reglas["periodo_actual"]),
+            "wallet": wallet.resumen(bd), "presupuesto": reglas["presupuesto_periodo_usd"],
             "periodo": reglas["periodo_actual"], "version_reglas": reglas["version"], "serie": serie,
             "fallas_por_regla": dict(sorted(fallas.items())), "pagos_por_riel": dict(por_riel), "ultimas": ultimas,
             "extractor": agente.EXTRACTOR.modo,
@@ -53,6 +55,13 @@ def resumen(ctx: Contexto = Depends(requiere("ver"))):
                 {"criterio": "Explicabilidad", "valor": f"{m['explicadas_pct']:.0f} %",
                  "detalle": "Cada decisión trae su motivo en lenguaje claro y el resultado de las 13 reglas."},
             ]}
+
+
+@r.get("/rendimiento")
+def rendimiento(periodo: str | None = None, ctx: Contexto = Depends(requiere("ver"))):
+    """Rendimiento y costos: igual para los tres roles. Sin cortes históricos: las cifras son las de ahora."""
+    per = periodo or agente.reglas_vigentes(ctx.bd)["periodo_actual"]
+    return metricas.rendimiento(ctx.bd, per)
 
 
 @r.get("/auditoria")

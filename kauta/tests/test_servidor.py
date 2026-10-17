@@ -299,3 +299,79 @@ def test_quien_cambia_reglas_no_es_firma_unica(cliente):
     h2 = persona(cliente, "mariana.torres@brisamar.example")
     r = cliente.post(f"/api/facturas/{fid}/aprobar", json={"comentario": "Revisado por otra persona."}, headers=h2)
     assert r.status_code == 200, r.text
+
+
+# ---------------------------------------------------------------------------
+# Libro de costos sobre la base sembrada (plan-eng-review D10, D14 e invariante)
+# ---------------------------------------------------------------------------
+def test_costos_idempotentes_y_conflicto_auditado(cliente):
+    from servidor.db import SesionBD
+    from servidor.modelos import EventoAuditoria, EventoCosto, Factura, Pago
+    from servidor.servicios import costos
+    with SesionBD() as bd:
+        p = bd.query(Pago).filter(Pago.estado == "liquidado").first()
+        f = bd.get(Factura, p.factura_id)
+        antes = bd.query(EventoCosto).count()
+        costos.registrar_pago(bd, f, p)                       # repetir el mismo pago no vuelve a cobrar
+        assert bd.query(EventoCosto).count() == antes
+        p.comision_usd = p.comision_usd + 1                   # misma clave, otro importe: no se sobrescribe
+        costos.registrar_pago(bd, f, p)
+        ev = bd.query(EventoCosto).filter(EventoCosto.fuente == "pago_comision",
+                                          EventoCosto.origen_id == f"pago:{p.clave_idempotencia}").one()
+        assert int(ev.importe_nano_usd) != costos.a_nano(p.comision_usd)
+        assert bd.query(EventoAuditoria).filter(EventoAuditoria.tipo == "costo.conflicto").count() >= 1
+        bd.rollback()
+
+
+def test_costos_no_se_confirman_aparte(cliente):
+    from servidor.db import SesionBD
+    from servidor.modelos import EventoCosto, Factura
+    from servidor.servicios import costos
+    with SesionBD() as bd:
+        f = bd.get(Factura, "F01")
+        try:
+            with bd.begin_nested():
+                costos.registrar_lectura(bd, f, 0.85, n_intento=99)
+                raise RuntimeError("falla entre la acción y su confirmación")
+        except RuntimeError:
+            pass
+        bd.commit()
+        n = bd.query(EventoCosto).filter(EventoCosto.factura_id == "F01", EventoCosto.fuente.like("lectura_%")).count()
+        assert n == 1  # solo la lectura original; la del intento revertido no quedó
+
+
+def test_invariante_y_tesis_de_la_ia(cliente):
+    from decimal import Decimal
+    from servidor.db import SesionBD
+    from servidor.modelos import EventoCosto
+    from servidor.servicios import agente, costos, metricas
+    h = persona(cliente, "carlos.rivera@brisamar.example")
+    rend = cliente.get("/api/rendimiento", headers=h).json()
+    assert [t["id"] for t in rend["tarjetas"]] == ["costo_por_factura_resuelta", "costo_de_pagar", "leido_sin_ia", "cobertura"]
+    with SesionBD() as bd:
+        per = agente.reglas_vigentes(bd)["periodo_actual"]
+        lib = metricas.Libro(bd, per)
+        suma = sum((lib.recibo(f)["total_usd"] for f in lib.finales()), Decimal(0))
+        assert suma == lib.costo_por_factura_resuelta()["numerador_usd"]
+        por = {}
+        for e in bd.query(EventoCosto).all():
+            por[e.fuente] = por.get(e.fuente, Decimal(0)) + (costos.a_usd(e.importe_nano_usd) or 0)
+        assert bd.query(EventoCosto).filter(EventoCosto.fuente == "lectura_ia").count() >= 1  # F13: la prueba no pasa en vacío
+        ia_x10 = por["lectura_ia"] * 10
+        assert ia_x10 < por["revision_humana"] and ia_x10 < por["pago_cambio"]
+    r = cliente.get("/api/facturas/F13/recibo", headers=h).json()
+    assert any("IA" in l["titulo"] for l in r["lineas"])
+    lente = cliente.get("/api/resumen", headers=h).json()["lente"]
+    assert len(lente["tarjetas"]) <= 4 and lente["pregunta"]
+
+
+def test_restablecer_es_determinista(cliente):
+    h = persona(cliente, "tomas.herrera@brisamar.example")
+    vistas = []
+    for _ in range(2):
+        assert cliente.post("/api/demo/restablecer", json={"con_set": True}, headers=h).status_code == 200
+        h = persona(cliente, "tomas.herrera@brisamar.example")
+        r = cliente.get("/api/rendimiento", headers=h).json()
+        r.pop("calculado_en")
+        vistas.append(r)
+    assert vistas[0] == vistas[1]

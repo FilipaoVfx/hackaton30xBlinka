@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "_nota": "Tarifas simuladas y declaradas (no son precios de ningún proveedor). Cambiar una tarifa solo vale hacia adelante: cada evento guarda su tarifa_version.",
+  "ia": {"usd_por_millon_entrada": 3.0, "usd_por_millon_cache": 0.3, "usd_por_millon_salida": 15.0,
+         "tokens_entrada_por_pagina": 6000, "tokens_salida_por_pagina": 600, "latencia_ms_por_pagina": 3500},
+  "ocr": {"usd_por_pagina": 0.0005, "latencia_ms_por_pagina": 1800},
+  "xml": {"usd_por_documento": 0.0, "latencia_ms": 40},
+  "texto": {"usd_por_documento": 0.0, "latencia_ms": 120},
+  "revision_humana": {"usd_por_hora": 40.0, "minutos_respuesta": 3, "minutos_firma": 1},
+  "infraestructura": {"usd_por_mes": 30.0}
+}

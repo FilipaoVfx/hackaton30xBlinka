@@ -12,7 +12,6 @@ Ciclo de una factura:
 """
 from __future__ import annotations
 
-import csv
 import hashlib
 import os
 import re
@@ -32,7 +31,7 @@ from ..config import RAIZ, VAR
 from ..modelos import (Aprobacion, Beneficiario, CambioCuenta, Factura, Pago, Usuario, VersionReglas, ahora)
 from ..seguridad import firma
 from ..seguridad.cifrado import cifrar
-from . import BLOQUEO, auditoria, pagos, wallet
+from . import BLOQUEO, auditoria, costos, pagos, wallet
 
 ESTADO = {"pagar": "pagada", "frenar": "frenada", "escalar": "pendiente"}
 ARCHIVOS = VAR / "archivos"
@@ -166,6 +165,7 @@ def registrar(bd: Session, nombre: str, r: dict[str, Any], origen: str, actor: s
                     version_reglas=d.version_reglas or reglas["version"], aprobaciones_requeridas=requeridas)
         bd.add(f)
         bd.flush()
+        costos.registrar_lectura(bd, f, float(reglas["confianza_minima"]))
         auditoria.registrar(bd, "factura.decision", actor, "factura", fid, d.motivo[:400],
                             {"decision": d.decision, "monto_usd": d.monto_usd, "beneficiario": f.beneficiario_nombre,
                              "metodo_lectura": f.metodo_lectura, "modelo": f.modelo, "hash_documento": f.hash_documento,
@@ -272,6 +272,7 @@ def aprobar(bd: Session, fid: str, u: Usuario, comentario: str, correcciones: di
                        datos_firmados=datos, firma=firma.firmar(datos), con_mfa=con_mfa)
         bd.add(a)
         bd.flush()
+        costos.registrar_revision(bd, f, a, u.correo)
         auditoria.registrar(bd, "aprobacion", f"{u.nombre} ({u.cargo})", "factura", fid,
                             f"Aprobación {nivel} de {f.aprobaciones_requeridas} · «{comentario.strip()[:160]}»",
                             {"firma": a.firma[:16], "con_mfa": con_mfa, "correcciones": corr, "reglas_revisadas": revisadas})
@@ -304,8 +305,11 @@ def rechazar(bd: Session, fid: str, u: Usuario, comentario: str) -> dict[str, An
             raise ErrorNegocio("Escriba el motivo del rechazo.")
         ts = datetime.now(timezone.utc).isoformat(timespec="seconds")
         datos = pagos.datos_aprobacion(f, f.beneficiario_id, "", u.id, 0, "rechazar", ts)
-        bd.add(Aprobacion(factura_id=fid, usuario_id=u.id, usuario_nombre=u.nombre, nivel=0, accion="rechazar",
-                          comentario=comentario.strip()[:1000], datos_firmados=datos, firma=firma.firmar(datos)))
+        a = Aprobacion(factura_id=fid, usuario_id=u.id, usuario_nombre=u.nombre, nivel=0, accion="rechazar",
+                       comentario=comentario.strip()[:1000], datos_firmados=datos, firma=firma.firmar(datos))
+        bd.add(a)
+        bd.flush()
+        costos.registrar_revision(bd, f, a, u.correo)
         f.estado = "rechazada"
         f.motivo = f"Rechazada por {u.nombre}. Comentario: «{comentario.strip()[:200]}»."
         auditoria.registrar(bd, "rechazo", f"{u.nombre} ({u.cargo})", "factura", fid, f.motivo, {})
@@ -358,49 +362,12 @@ def reevaluar(bd: Session, actor: str, beneficiario_id: str | None = None, cambi
 # ---------------------------------------------------------------------------
 # Métricas para el jurado
 # ---------------------------------------------------------------------------
-def esperado_set() -> dict[str, dict[str, str]]:
-    ruta = RAIZ / "data" / "esperado.csv"
-    return {r["factura_id"]: r for r in csv.DictReader(open(ruta, encoding="utf-8"))} if ruta.exists() else {}
-
-
 def regla_principal(motivo: str) -> str:
     m = re.search(r"\((R\d{2})\)", motivo or "")
     return m.group(1) if m and not motivo.startswith("Pagada") else "—"
 
 
 def metricas(bd: Session) -> dict[str, Any]:
-    fs = bd.execute(select(Factura)).scalars().all()
-    tot = len(fs)
-    cuenta = lambda e: sum(1 for f in fs if f.estado == e)
-    autonomas = sum(1 for f in fs if f.decision_inicial in ("pagar", "frenar"))
-    indebidos = 0
-    for f in fs:
-        if f.estado != "pagada":
-            continue
-        aprobadas = [a for a in f.aprobaciones if a.accion == "aprobar"]
-        fallas = [r for r in f.reglas if r["estado"] == "falla"]
-        if not aprobadas and fallas:
-            indebidos += 1
-        if aprobadas and any(r["efecto"] == "frenar" for r in fallas):
-            indebidos += 1
-        if aprobadas and len(aprobadas) < f.aprobaciones_requeridas:
-            indebidos += 1
-    esperado = esperado_set()
-    del_set = [f for f in fs if f.id in esperado]
-    aciertos = sum(1 for f in del_set if f.decision_inicial == esperado[f.id]["decision_esperada"]
-                   and regla_principal(f.motivo_inicial) == esperado[f.id]["regla_principal"])
-    protegido = sum((float(f.monto_usd or 0) for f in fs if f.estado in ("frenada", "rechazada")), 0.0)
-    autonomas_set = sum(1 for f in del_set if f.decision_inicial in ("pagar", "frenar"))
-    trampas = [f for f in del_set if esperado[f.id]["tipo_caso"] == "trampa"]
-    return {
-        "total": tot, "pagadas": cuenta("pagada"), "frenadas": cuenta("frenada"), "pendientes": cuenta("pendiente"),
-        "rechazadas": cuenta("rechazada"), "devueltas": cuenta("devuelta"),
-        "autonomia_pct": round(100 * autonomas / tot, 1) if tot else 0.0,
-        "pagos_fuera_de_reglas": indebidos,
-        "explicadas_pct": round(100 * sum(1 for f in fs if f.motivo and f.reglas) / tot, 1) if tot else 0.0,
-        "set_aciertos": aciertos, "set_total": len(del_set),
-        "autonomia_set_pct": round(100 * autonomas_set / len(del_set), 1) if del_set else 0.0,
-        "trampas_detenidas": sum(1 for f in trampas if f.decision_inicial != "pagar"), "trampas_total": len(trampas),
-        "dinero_protegido_usd": round(protegido, 2),
-        "lectura_xml": sum(1 for f in fs if f.metodo_lectura == "xml_fiscal"),
-    }
+    """Las métricas viven en servicios/metricas.py (una sola fuente para Resumen, Recibo y Rendimiento)."""
+    from . import metricas as m
+    return m.base(bd)

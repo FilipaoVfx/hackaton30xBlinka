@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Any
 
+from sqlalchemy import event
 from sqlalchemy import (JSON, Boolean, CheckConstraint, DateTime, ForeignKey, Index, Integer, Numeric, String, Text,
                         UniqueConstraint, text)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -196,6 +197,8 @@ class Factura(Base):
     aprobaciones_requeridas: Mapped[int] = mapped_column(Integer, default=0)
     # Quien cambió reglas o datos y provocó una reevaluación no puede ser la firma única de la factura
     excluir_firmante: Mapped[str | None] = mapped_column(String(160), nullable=True, default=None)
+    # Cuándo llegó a un estado final (pagada, frenada o rechazada); lo fija un evento de SQLAlchemy
+    resuelta_en: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, default=None)
     aprobaciones: Mapped[list["Aprobacion"]] = relationship(back_populates="factura", order_by="Aprobacion.id")
     __table_args__ = (
         CheckConstraint("decision IN ('pagar','frenar','escalar')", name="ck_decision"),
@@ -222,6 +225,41 @@ class Aprobacion(Base):
     factura: Mapped[Factura] = relationship(back_populates="aprobaciones")
     __table_args__ = (UniqueConstraint("factura_id", "usuario_id", name="ux_una_aprobacion_por_persona"),
                       CheckConstraint("accion IN ('aprobar','rechazar')", name="ck_accion"))
+
+
+# ---------------------------------------------------------------------------
+# Libro de costos: cuánto cuesta leer, revisar, pagar y alojar cada factura (FinOps)
+# ---------------------------------------------------------------------------
+FUENTES_COSTO = ("lectura_xml", "lectura_texto", "lectura_ocr", "lectura_ia", "revision_humana",
+                 "pago_comision", "pago_cambio", "infraestructura")
+
+
+class EventoCosto(Base):
+    """Un costo con su origen. La clave (fuente, origen_id) impide cobrar dos veces el mismo intento.
+
+    El importe se guarda en milmillonésimas de USD; NULL significa costo desconocido (nunca cero).
+    Se escribe en la misma transacción que la acción que lo causa (lectura, firma o pago).
+    """
+    __tablename__ = "eventos_costo"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    factura_id: Mapped[str | None] = mapped_column(ForeignKey("facturas.id"), index=True, nullable=True)
+    periodo: Mapped[str] = mapped_column(String(7), index=True)
+    fuente: Mapped[str] = mapped_column(String(20))
+    origen_id: Mapped[str] = mapped_column(String(120))
+    persona: Mapped[str | None] = mapped_column(String(160))
+    importe_nano_usd: Mapped[int | None] = mapped_column(Numeric(24, 0), nullable=True)
+    tokens_entrada: Mapped[int | None] = mapped_column(Integer)
+    tokens_cache: Mapped[int | None] = mapped_column(Integer)
+    tokens_salida: Mapped[int | None] = mapped_column(Integer)
+    latencia_ms: Mapped[int | None] = mapped_column(Integer)
+    paginas: Mapped[int | None] = mapped_column(Integer)
+    minutos: Mapped[float | None] = mapped_column(Numeric(8, 2))
+    detalle: Mapped[str] = mapped_column(String(200), default="")
+    tarifa_version: Mapped[int] = mapped_column(Integer)
+    simulado: Mapped[bool] = mapped_column(Boolean, default=True)
+    ts: Mapped[datetime] = mapped_column(DateTime, default=ahora)
+    __table_args__ = (UniqueConstraint("fuente", "origen_id", name="ux_costo_una_vez"),
+                      CheckConstraint("fuente IN ('" + "','".join(FUENTES_COSTO) + "')", name="ck_fuente_costo"))
 
 
 # ---------------------------------------------------------------------------
@@ -319,3 +357,16 @@ class ClaveIdempotencia(Base):
     hash_solicitud: Mapped[str] = mapped_column(String(64))
     respuesta: Mapped[dict[str, Any]] = mapped_column(JSON)
     creada_en: Mapped[datetime] = mapped_column(DateTime, default=ahora)
+
+
+# Cuándo una factura queda resuelta: se fija al pasar a un estado final y se borra si vuelve a uno abierto
+ESTADOS_FINALES = ("pagada", "frenada", "rechazada")
+
+
+@event.listens_for(Factura.estado, "set")
+def _marcar_resuelta(factura: Factura, valor: str, _anterior: Any, _iniciador: Any) -> None:
+    if valor in ESTADOS_FINALES:
+        if factura.resuelta_en is None:
+            factura.resuelta_en = ahora()
+    else:
+        factura.resuelta_en = None

@@ -30,7 +30,7 @@ from kauta.normalizacion import clave_nombre
 from ..modelos import Aprobacion, Beneficiario, Factura, Pago, ahora
 from ..seguridad import firma
 from ..seguridad.cifrado import descifrar
-from . import auditoria, wallet
+from . import auditoria, costos, wallet
 
 CENT = Decimal("0.01")
 
@@ -187,6 +187,7 @@ def crear_y_ejecutar(bd: Session, f: Factura, reglas: dict[str, Any], actor: str
              datos_firmados=instruccion, firma=firma.firmar(instruccion), creado_en=t0)
     bd.add(p)
     bd.flush()
+    costos.registrar_pago(bd, f, p)  # dentro del savepoint del pago: si el pago se revierte, su costo también
     per = f.periodo
     wallet.transferir(bd, "reserva", f"Reserva para {pid} · {f.id} · {ben.nombre}", pid, per, "cxp", "reservas", monto_usd)
     wallet.transferir(bd, "envio", f"Envío por {info['nombre']} · {pid}", pid, per, "reservas", "transito", monto_usd)

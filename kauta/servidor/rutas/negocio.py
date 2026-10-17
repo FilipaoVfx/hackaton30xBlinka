@@ -17,7 +17,7 @@ from ..seguridad import totp
 from ..seguridad.cifrado import cifrar, descifrar
 from ..seguridad.limites import limitar
 from ..seguridad.sesiones import Contexto, requiere
-from ..servicios import BLOQUEO, agente, auditoria, wallet
+from ..servicios import BLOQUEO, agente, auditoria, metricas, wallet
 from ..servicios.agente import ErrorNegocio
 from .. import vistas
 
@@ -65,6 +65,15 @@ def detalle(fid: str, ctx: Contexto = Depends(requiere("ver"))):
     if not f:
         raise HTTPException(404, "Factura no encontrada.")
     return vistas.factura_detalle(ctx.bd, f)
+
+
+@r.get("/facturas/{fid}/recibo")
+def recibo(fid: str, ctx: Contexto = Depends(requiere("ver"))):
+    """Lo que costó esta factura: lectura, revisión humana, pago e infraestructura (datos simulados)."""
+    r = metricas.recibo(ctx.bd, fid)
+    if r is None:
+        raise HTTPException(404, "La factura no existe.")
+    return r
 
 
 @r.get("/facturas/{fid}/vista")
