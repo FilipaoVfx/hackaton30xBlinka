@@ -1,0 +1,44 @@
+---
+title: "C3 · Componentes de kauta/ (núcleo sin FastAPI) | Fuente: hechos §3, §6, §11 · imports verificados en el código"
+---
+flowchart LR
+  SV["servidor/servicios/agente.py<br/>[Consumidor]"]:::externo
+  EXT["<b>extractor.py</b><br/>leer_documento, ExtractorReferencia,<br/>ExtractorIA, enriquecer,<br/>detectar_instrucciones"]:::comp
+  LX["<b>lectores_xml.py</b><br/>CFDI 4.0, UBL DIAN, contenedor DIAN,<br/>ZIP seguro, QR/CUFE/CAE"]:::comp
+  OCR["<b>ocr.py</b><br/>texto del PDF o Tesseract,<br/>campos por patrones"]:::comp
+  NOR["<b>normalizacion.py</b><br/>validadores fiscales y bancarios,<br/>monto, fecha, moneda, FacturaCanonica"]:::comp
+  MOT["<b>motor.py</b><br/>13 reglas puras, evaluar(),<br/>prioridad frenar/escalar. Sin IA"]:::clave
+  AG["<b>agente.py</b><br/>agente en memoria<br/>(Streamlit y pruebas)"]:::legado
+  REG["<b>registro.py</b><br/>registro JSONL con cadena SHA-256"]:::legado
+  UI["<b>ui.py</b><br/>HTML/CSS para Streamlit"]:::legado
+  APP["app.py<br/>[Streamlit, plan B]"]:::externo
+  TES["Tesseract"]:::externo
+  ANT["API de Anthropic"]:::externo
+  DEF["defusedxml, pypdf"]:::externo
+  SV -->|"ExtractorReferencia"| EXT
+  SV -->|"motor.evaluar"| MOT
+  EXT -->|"lee XML fiscal"| LX
+  EXT -->|"lee con OCR"| OCR
+  EXT -->|"valida y normaliza"| NOR
+  LX -->|"FacturaCanonica y validadores"| NOR
+  OCR -->|"normalización"| NOR
+  OCR -->|"subproceso"| TES
+  LX --> DEF
+  EXT --> DEF
+  EXT -.->|"ExtractorIA, opcional"| ANT
+  AG -->|"evalúa con"| MOT
+  AG -->|"registra en"| REG
+  APP --> AG
+  APP --> UI
+  UI -->|"fmt_dinero"| MOT
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Componente"]:::comp
+    L2["Componente central"]:::clave
+    L3["Solo Streamlit y pruebas"]:::legado
+    L4["Externo"]:::externo
+  end
+  classDef comp fill:#3b5bfd,stroke:#2a43c7,color:#ffffff
+  classDef clave fill:#0b1736,stroke:#0b1736,color:#ffffff
+  classDef legado fill:#dfe6ff,stroke:#3b5bfd,color:#0b1736,stroke-dasharray:4 3
+  classDef externo fill:#e3e8f2,stroke:#5b6782,color:#0b1736

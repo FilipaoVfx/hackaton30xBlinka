@@ -1,0 +1,74 @@
+---
+title: "C3 · Componentes de servidor/ (API FastAPI) | Fuente: hechos §3, §4, §9 · imports verificados en el código"
+---
+flowchart LR
+  MAIN["<b>main.py</b><br/>crea la app, middlewares, arranque,<br/>sirve web/dist, /api/salud"]:::comp
+  subgraph RUT["rutas/ (un APIRouter por archivo, prefijo /api)"]
+    direction LR
+    R1["auth.py<br/>login, persona, MFA, sesiones"]:::comp
+    R2["negocio.py<br/>facturas, aprobar, reglas,<br/>proveedores, cambios de cuenta"]:::comp
+    R3["dinero.py<br/>wallet, pagos, rieles"]:::comp
+    R4["control.py<br/>resumen, rendimiento, auditoría,<br/>seguridad, restablecer"]:::comp
+    R5["simulador.py<br/>escenarios, factura, año"]:::comp
+    R6["personas.py<br/>invitar, registro, roles"]:::comp
+  end
+  subgraph SEG["seguridad/"]
+    direction LR
+    S1["sesiones.py<br/>requiere(), CSRF"]:::seg
+    S2["permisos.py<br/>roles cfo, ceo, cto"]:::seg
+    S3["cabeceras.py<br/>CSP y Origin"]:::seg
+    S4["firma.py HMAC · cifrado.py AES-GCM<br/>contrasenas.py Argon2id · totp.py<br/>limites.py"]:::seg
+  end
+  subgraph SVC["servicios/"]
+    direction LR
+    V1["agente.py<br/>procesar, registrar,<br/>aprobar, reevaluar"]:::clave
+    V2["pagos.py<br/>cotizar, ejecutar, firmas"]:::comp
+    V3["wallet.py<br/>libro de doble partida"]:::comp
+    V4["costos.py<br/>eventos de costo"]:::comp
+    V5["metricas.py<br/>métricas y recibos"]:::comp
+    V6["auditoria.py<br/>cadena HMAC"]:::comp
+    V7["semilla.py · usuarios.py<br/>simulador.py"]:::comp
+  end
+  subgraph DAT["Datos y utilidades"]
+    direction LR
+    D1["modelos.py<br/>16 tablas SQLAlchemy"]:::dato
+    D2["db.py · config.py"]:::dato
+    D3["esquemas.py<br/>entradas Pydantic"]:::dato
+    D4["vistas.py<br/>filas a JSON"]:::dato
+  end
+  K["kauta/ motor y extractor"]:::externo
+  MAIN -->|"monta routers"| RUT
+  MAIN --> S3
+  MAIN -->|"arranque"| V7
+  RUT -->|"requiere(permiso)"| S1
+  S1 --> S2
+  RUT --> SVC
+  RUT --> D3
+  RUT --> D4
+  V1 -->|"motor.evaluar, ExtractorReferencia"| K
+  V1 --> V2
+  V1 --> V4
+  V2 --> V3
+  V2 --> V4
+  V1 & V2 --> V6
+  V1 & V2 -->|"firmar, cifrar"| S4
+  V5 --> V1
+  V5 --> V4
+  D4 --> V1
+  SVC --> D1
+  S1 --> D1
+  D1 --> D2
+  D2 ~~~ L1
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Componente"]:::comp
+    L2["Seguridad"]:::seg
+    L3["Núcleo de orquestación"]:::clave
+    L4["Datos"]:::dato
+    L5["Externo"]:::externo
+  end
+  classDef comp fill:#3b5bfd,stroke:#2a43c7,color:#ffffff
+  classDef clave fill:#0b1736,stroke:#0b1736,color:#ffffff
+  classDef seg fill:#fff1d6,stroke:#b9770e,color:#0b1736
+  classDef dato fill:#dfe6ff,stroke:#3b5bfd,color:#0b1736
+  classDef externo fill:#e3e8f2,stroke:#5b6782,color:#0b1736

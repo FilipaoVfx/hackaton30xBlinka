@@ -1,0 +1,28 @@
+---
+title: "P1 · Personas de Kauta y lo que cada una puede firmar o ejecutar | Fuente: hechos §8 · permisos.py:10-22"
+---
+flowchart TB
+  CFO["<b>CFO</b> Carlos Rivera"]:::persona
+  CEO["<b>CEO</b> Mariana Torres"]:::persona
+  CTO["<b>CTO</b> Tomás Herrera"]:::persona
+  A1["aprobar y rechazar facturas"]:::ok
+  A2["editar reglas, fondear wallet,<br/>verificar cuentas, reintentar pagos"]:::ok
+  A3["cargar facturas"]:::ok
+  A4["gestionar personas (solo API),<br/>restablecer la demo"]:::ok
+  A5["ver, simulador, auditoría y exportar"]:::comun
+  CFO --> A1
+  CEO --> A1
+  CFO --> A2
+  CTO --> A3
+  CTO --> A4
+  CFO & CEO & CTO --> A5
+  A5 ~~~ L1
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Persona"]:::persona
+    L2["Permiso exclusivo o compartido"]:::ok
+    L3["Permiso de los tres roles"]:::comun
+  end
+  classDef persona fill:#0b1736,stroke:#0b1736,color:#ffffff
+  classDef ok fill:#d9f5e8,stroke:#0f9f6e,color:#0b1736
+  classDef comun fill:#dfe6ff,stroke:#3b5bfd,color:#0b1736
