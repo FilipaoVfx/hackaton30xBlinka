@@ -2,7 +2,36 @@
 
 Proyecto para la hackatón **30xBlinka**: construir un agente que revise facturas de una empresa, aplique sus reglas y decida **aprobar un pago simulado, frenarlo o solicitar aprobación humana**, explicando cada decisión.
 
-> **Estado actual:** documentación inicial. El agente, la interfaz y las pruebas están pendientes de implementación. La arquitectura, las reglas de ejemplo y el reparto del equipo que aparecen aquí son propuestas para organizar el desarrollo.
+> **Estado actual:** cuatro prototipos interactivos de UX/UI en HTML, CSS generado con Tailwind y JavaScript. La biblioteca corporativa incluye 15 documentos ficticios y siete rutas de recepción simuladas. La extracción con IA, los conectores de entrada y la persistencia de backend están pendientes; las reglas se ejecutan en el navegador para explorar la experiencia. La arquitectura y el reparto del equipo que aparecen más abajo siguen siendo propuestas.
+
+## Prototipos disponibles
+
+| Pantalla | Archivo | Qué permite explorar |
+| --- | --- | --- |
+| **Biblioteca corporativa** | [prototipos/biblioteca.html](prototipos/biblioteca.html) | Documento original, campos con evidencia, normalización, reglas, decisiones y correcciones con historial de sesión. |
+| Centro de decisiones CRM | [prototipos/monitor.html](prototipos/monitor.html) | Cola priorizada, responsables ficticios, simulación de parámetros y comparación contra el escenario base. |
+| Revisor individual | [prototipos/revisor.html](prototipos/revisor.html) | Revisar facturas, autorizar excepciones de monto, rechazar y exportar el registro de la sesión. |
+| Planificador de pagos | [prototipos/planificador.html](prototipos/planificador.html) | Seleccionar facturas, ordenar por vencimiento o monto y simular la distribución del presupuesto. |
+
+Las cuatro pantallas tienen modo claro y oscuro, recuerdan la elección de tema y se adaptan a dispositivos móviles. La biblioteca utiliza como referencia visual la paleta, la fuente y el logotipo públicos de [Blinka](https://blinka.co); es una exploración de la hackatón.
+
+### Biblioteca: formatos y rutas de recepción
+
+Los formatos y los canales se muestran por separado: un PDF puede llegar por correo, portal, WhatsApp o carga manual. Los ejemplos incluyen:
+
+- PDF con texto, PDF escaneado, imagen, XML simplificado, cuerpo de correo, mensajes de chat, CSV y JSON.
+- Correo, portal de proveedores, WhatsApp, Slack, carga manual, SFTP y API como **escenarios ficticios**, sin conectores activos.
+- Subtotales, impuestos registrados, líneas de servicio, cantidades, adjuntos, idiomas y distintas monedas.
+- Dos facturas provenientes de filas del mismo CSV, y un cobro duplicado recibido por otro canal.
+- Fotos y escaneos con lectura por confirmar, proforma que requiere revisión y factura en EUR sin tasa configurada.
+
+Cada documento recorre cinco etapas: **Documento → Extracción → Normalización → Validación → Decisión**. Seleccionar un campo resalta su evidencia. Las correcciones conservan la representación original y generan otra versión de lectura en la sesión. La exportación JSON incluye procedencia, datos normalizados y resultados de reglas.
+
+### Límites del prototipo
+
+La extracción, OCR, remitentes, contratos y rutas son ejemplos precargados. Las vistas previas representan documentos ficticios, no son un visor de archivos reales. Los duplicados y otras condiciones se incluyen como casos preparados para la demo. No hay autenticación ni motor financiero de producción; el rol de revisión está simulado.
+
+El estado de facturas, reglas y autorizaciones se reinicia al recargar. Solo la preferencia de tema se guarda en el navegador. Las tasas de la biblioteca son fijas y ficticias: 1 USD = 4.000 COP, 17 MXN o 5 BRL. EUR se muestra como caso pendiente por falta de tasa. Ninguna acción mueve dinero.
 
 ## El problema
 
@@ -181,11 +210,34 @@ Cada caso debe definir la factura, el acuerdo, las reglas y el presupuesto inici
 
 ## Cómo empezar con el repositorio
 
-Por ahora, el repositorio contiene esta documentación inicial. Para obtenerla:
+Clona el repositorio:
 
 ```bash
 git clone https://github.com/FilipaoVfx/hackaton30xBlinka.git
 cd hackaton30xBlinka
 ```
 
-Cuando se incorpore la aplicación, actualizar esta sección con los requisitos, variables de entorno de ejemplo, comandos de instalación, arranque y pruebas. Todavía no hay comandos para ejecutar un agente.
+Los prototipos no requieren instalar dependencias ni configurar claves. Con Python 3 disponible, inicia un servidor desde la raíz del repositorio:
+
+```bash
+python3 -m http.server 8830 --bind 127.0.0.1
+```
+
+Abre [la biblioteca corporativa](http://127.0.0.1:8830/prototipos/biblioteca.html). Las otras pantallas están en `/prototipos/monitor.html`, `/prototipos/revisor.html` y `/prototipos/planificador.html`.
+
+El CSS de Tailwind está compilado dentro de los HTML; la biblioteca conserva sus fuentes y logotipos en `prototipos/assets/`. Para compartirla, conserva esa carpeta junto a los HTML. Los prototipos no dependen del túnel temporal.
+
+### Verificación de la UX
+
+Se comprobaron en Chromium los filtros, las cinco etapas de la biblioteca, la evidencia resaltada, las correcciones, las excepciones de monto, el bloqueo de duplicados preparados, la falta de tasa, las simulaciones, el tema y el ajuste a móvil, tableta y escritorio. Estas comprobaciones de prototipo no validan un backend ni una integración real.
+
+Para revisar manualmente la biblioteca:
+
+1. Abre Lucía Torres y recorre las cinco etapas; revisa la excepción de monto.
+2. Abre São Bento Design: la foto requiere verificación humana de la lectura.
+3. Filtra por SFTP: Pampa Hosting y Delta Support son filas del mismo CSV.
+4. Abre el reenvío de Estudio Nómada por WhatsApp: debe mostrarse frenado como duplicado.
+5. Abre Nordlicht Studio: la falta de tasa EUR impide su aprobación.
+6. Cambia los parámetros de la simulación y comprueba la reevaluación; recarga para restaurar el conjunto base.
+
+El agente conectado a documentos reales y sus pruebas de backend quedan pendientes de implementación.
