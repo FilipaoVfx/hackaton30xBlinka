@@ -160,3 +160,36 @@ def restablecer(bd: Session, con_set: bool, actor: str) -> None:
         auditoria.registrar(bd, "demo.restablecida", actor, "organizacion", "1",
                             "La demo se restableció " + ("con las 20 facturas del set." if con_set else "sin facturas."), {})
         bd.commit()
+
+
+def preparar_recorrido(bd: Session) -> None:
+    """Prepara el ensayo sin cambiar el set de referencia ni el motor de reglas.
+
+    Es un estado opcional de demo: amplía el presupuesto de octubre de forma
+    auditada y registra la primera firma de F10 por la ruta normal del agente.
+    Las facturas finales conservan su decisión original. Restablecer sin esta
+    opción recupera el set oficial intacto.
+    """
+    if not CONFIG.demo:
+        raise ValueError("El recorrido solo se prepara en modo demo.")
+    with BLOQUEO:
+        f = bd.get(Factura, "F10")
+        if not f or f.estado != "pendiente" or f.aprobaciones:
+            return
+        actual = agente.reglas_vigentes(bd)
+        presupuesto = Decimal(str(actual["presupuesto_periodo_usd"]))
+        objetivo = max(presupuesto, Decimal("20000"))
+        if objetivo > presupuesto:
+            version = actual["version"] + 1
+            parametros = {k: v for k, v in actual.items() if k != "version"}
+            parametros["presupuesto_periodo_usd"] = float(objetivo)
+            bd.add(VersionReglas(version=version, parametros=parametros,
+                                creada_por="Preparación de demo", motivo="Presupuesto simulado para el recorrido F12 y F10.",
+                                cambios={"presupuesto_periodo_usd": {"antes": float(presupuesto), "despues": float(objetivo)}}))
+            wallet.transferir(bd, "fondeo", "Ajuste simulado para preparar el recorrido de demostración", "DEMO-RECORRIDO",
+                              actual["periodo_actual"], "operativa", "cxp", objetivo - presupuesto)
+            auditoria.registrar(bd, "demo.recorrido", "Preparación de demo", "reglas", str(version),
+                                "Recorrido preparado: presupuesto simulado de USD 20.000; sin relajar reglas duras.", {})
+            bd.commit()
+        cfo = bd.execute(select(Usuario).where(Usuario.correo == "carlos.rivera@brisamar.example")).scalar_one()
+        agente.aprobar(bd, "F10", cfo, "Primera firma simulada para el ensayo: contrato verificado; falta la firma del CEO.", None, False)

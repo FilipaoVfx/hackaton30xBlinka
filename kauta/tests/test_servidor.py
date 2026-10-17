@@ -1,17 +1,12 @@
 """Pruebas del servidor: seguridad de la API, doble aprobación, wallet, idempotencia, auditoría y simulador."""
 import os
-import shutil
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ))
-_TMP = tempfile.mkdtemp(prefix="kauta-test-")
-os.environ["KAUTA_VAR"] = _TMP
-os.environ["KAUTA_BD"] = f"sqlite:///{_TMP}/prueba.db"
 
 from fastapi.testclient import TestClient  # noqa: E402
 
@@ -26,7 +21,16 @@ ORIGEN = {"Origin": "http://localhost:8000"}
 def cliente():
     with TestClient(app, base_url="http://localhost:8000") as c:
         yield c
-    shutil.rmtree(_TMP, ignore_errors=True)
+
+
+def test_suite_usa_base_temporal_antes_de_importar_servidor():
+    from servidor.config import CONFIG, VAR
+    from servidor.db import motor_bd
+
+    assert CONFIG.url_bd == os.environ["KAUTA_BD"]
+    assert VAR == Path(os.environ["KAUTA_VAR"])
+    assert Path(motor_bd.url.database).parent == VAR
+    assert VAR != RAIZ / "var"
 
 
 def entrar(c, correo, clave=CLAVE):
@@ -375,3 +379,84 @@ def test_restablecer_es_determinista(cliente):
         r.pop("calculado_en")
         vistas.append(r)
     assert vistas[0] == vistas[1]
+
+
+def test_recorrido_demo_f12_y_segunda_firma_sin_saltar_reglas(cliente):
+    from servidor.db import SesionBD
+    from servidor.servicios import semilla
+    h = persona(cliente, "tomas.herrera@brisamar.example")
+    assert cliente.post("/api/demo/restablecer", headers=h, json={"con_set": True, "preparar_recorrido": True}).status_code == 200
+    with SesionBD() as bd:
+        semilla.preparar_recorrido(bd)  # la preparación repetida no duplica la primera firma
+    h = persona(cliente, "carlos.rivera@brisamar.example")
+    f10 = cliente.get("/api/facturas/F10", headers=h).json()
+    assert f10["estado"] == "pendiente" and f10["aprobaciones_hechas"] == 1
+    assert f10["aprobaciones"][0]["usuario"] == "Carlos Rivera"
+    assert cliente.post("/api/facturas/F10/aprobar", headers=h, json={"comentario": "No puedo firmar dos veces."}).status_code == 409
+    # Un plazo desconocido no se da por confirmado con un comentario genérico.
+    assert cliente.post("/api/facturas/F12/aprobar", headers=h, json={"comentario": "Cuenta verificada."}).status_code == 409
+    assert cliente.post("/api/facturas/F12/aprobar", headers=h, json={"comentario": "Cuenta verificada.", "correcciones": {"fecha_vencimiento": "2026-13-32"}}).status_code == 422
+    r = cliente.post("/api/facturas/F12/aprobar", headers=h, json={"comentario": "Llamé al proveedor: se paga a la cuenta registrada.", "correcciones": {"fecha_vencimiento": "2026-10-30"}})
+    assert r.status_code == 200 and r.json()["completa"], r.text
+    f12 = cliente.get("/api/facturas/F12", headers=h).json()
+    assert f12["estado"] == "pagada" and f12["pago_detalle"]["cuenta"].endswith("8152")
+    assert f12["fecha_vencimiento"] == "2026-10-30"
+    h = persona(cliente, "mariana.torres@brisamar.example")
+    r = cliente.post("/api/facturas/F10/aprobar", headers=h, json={"comentario": "Segunda firma: contrato y presupuesto confirmados."})
+    assert r.status_code == 200 and r.json()["completa"], r.text
+    assert cliente.get("/api/facturas/F10", headers=h).json()["estado"] == "pagada"
+    assert cliente.get("/api/facturas/F07", headers=h).json()["estado"] == "frenada"
+    assert cliente.get("/api/wallet", headers=h).json()["libro"]["ok"]
+    assert cliente.get("/api/auditoria", headers=h).json()["verificacion"]["ok"]
+    # Restablecer devuelve F10 a una sola firma y F12 a pendiente.
+    h = persona(cliente, "tomas.herrera@brisamar.example")
+    assert cliente.post("/api/demo/restablecer", headers=h, json={"con_set": True, "preparar_recorrido": True}).status_code == 200
+    assert cliente.get("/api/facturas/F10", headers=h).json()["aprobaciones_hechas"] == 1
+    assert cliente.get("/api/facturas/F12", headers=h).json()["estado"] == "pendiente"
+
+
+def test_origenes_publicos_se_permiten_solo_si_estan_configurados(cliente, monkeypatch):
+    from dataclasses import replace
+    from servidor.seguridad import cabeceras
+    h = persona(cliente, "carlos.rivera@brisamar.example")
+    publico = "https://kauta-demo.vercel.app"
+    monkeypatch.setattr(cabeceras, "CONFIG", replace(cabeceras.CONFIG, origenes_adicionales=(publico,)))
+    r = cliente.post("/api/auth/persona", headers={**h, "Origin": publico}, json={"correo": "carlos.rivera@brisamar.example"})
+    assert r.status_code == 200
+    r = cliente.post("/api/auth/persona", headers={**h, "Origin": "https://otra-demo.vercel.app"}, json={"correo": "carlos.rivera@brisamar.example"})
+    assert r.status_code == 403
+
+
+def test_fallo_despues_de_crear_pago_revierte_pago_costos_y_wallet(cliente, monkeypatch):
+    from decimal import Decimal
+    from servidor.db import SesionBD
+    from servidor.modelos import EventoCosto, Pago
+    from servidor.servicios import agente, costos, wallet
+    h = persona(cliente, "tomas.herrera@brisamar.example")
+    # El fondeo del nuevo periodo es una acción legítima anterior al pago.
+    # Prepararlo permite comparar solo los movimientos del intento revertido.
+    with SesionBD() as bd:
+        reglas = agente.reglas_vigentes(bd)
+        wallet.asegurar_fondeo(bd, "2026-11", Decimal(str(reglas["presupuesto_periodo_usd"])), agente.periodos_abiertos(reglas))
+        bd.commit()
+    antes = cliente.get("/api/wallet", headers=h).json()["cuentas"]
+    original = costos.registrar_pago
+    vistos = []
+
+    def falla_tras_costear(bd, f, p):
+        original(bd, f, p)
+        assert bd.get(Pago, p.id) is not None
+        assert bd.query(EventoCosto).filter(EventoCosto.factura_id == f.id, EventoCosto.fuente.like("pago_%")).count() > 0
+        vistos.append(p.id)
+        raise ValueError("Fallo simulado después de crear el pago y sus costos")
+
+    monkeypatch.setattr(costos, "registrar_pago", falla_tras_costear)
+    datos = cliente.get("/api/simulador/escenarios/normal?periodo=2026-11", headers=h).json()
+    r = cliente.post("/api/simulador/factura", headers=h, json=datos)
+    assert r.status_code == 200 and r.json()["estado"] == "pendiente", r.text
+    assert vistos, "La prueba debe alcanzar la creación efectiva del pago y sus costos"
+    with SesionBD() as bd:
+        assert all(bd.get(Pago, pid) is None for pid in vistos)
+        assert bd.query(EventoCosto).filter(EventoCosto.factura_id == r.json()["id"], EventoCosto.fuente.like("pago_%")).count() == 0
+    despues = cliente.get("/api/wallet", headers=h).json()
+    assert despues["cuentas"] == antes and despues["libro"]["ok"]

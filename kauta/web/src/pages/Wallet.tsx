@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { ArrowRight, CircleCheck, CircleX, Landmark, Plus, RotateCcw } from "lucide-react";
 import { api, avisarCambio, dinero, fecha, PERIODO, puede, useApi, useCambios, type Pago, type Usuario } from "../api";
-import { Aviso, BarraPresupuesto, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, Modal, Panel, useToast } from "../ui";
+import { EstadoCarga, Aviso, BarraPresupuesto, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, Modal, Panel, useToast } from "../ui";
 
 const FLUJO = [
   { c: "operativa", t: "Cuenta operativa", d: "Dólares de la empresa" },
@@ -20,7 +20,7 @@ export default function WalletPagina({ usuario }: { usuario: Usuario }) {
   const [fondear, setFondear] = useState(false);
   const [monto, setMonto] = useState("25000");
   const toast = useToast();
-  if (!w.datos) return <Cargando filas={5} />;
+  if (w.error || pagos.error || rieles.error || !w.datos || !pagos.datos || !rieles.datos) return <EstadoCarga cargando={w.cargando || pagos.cargando || rieles.cargando} error={w.error || pagos.error || rieles.error} datos={w.datos && pagos.datos && rieles.datos} reintentar={() => { rec(); rieles.recargar(); }} />;
   const d = w.datos;
   const saldo = (c: string) => d.cuentas.find((x: any) => x.codigo === c)?.saldo ?? 0;
 

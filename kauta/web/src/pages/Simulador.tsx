@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Dices, FlaskConical, Play, RotateCcw, Send, ShieldCheck, Swords, TriangleAlert } from "lucide-react";
 import { api, avisarCambio, dinero, numero, PERIODO, puede, useApi, type FacturaDetalle, type Usuario } from "../api";
-import { Aviso, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, LineaTiempo, Modal, Panel, Sello, TiraReglas, useToast } from "../ui";
+import { EstadoCarga, Aviso, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, LineaTiempo, Modal, Panel, Sello, TiraReglas, useToast } from "../ui";
 
 type Esc = { codigo: string; titulo: string; descripcion: string; categoria: string; regla: string | null };
 const GRUPOS: { c: string; t: string; i: any }[] = [
@@ -23,8 +23,8 @@ export default function Simulador({ usuario }: { usuario: Usuario }) {
   const toast = useToast();
   const restablecer = async (con_set: boolean) => {
     try {
-      await api("/demo/restablecer", { cuerpo: { con_set } });
-      toast(con_set ? "Demo restablecida con las 20 facturas del set" : "Demo restablecida sin facturas", "info");
+      await api("/demo/restablecer", { cuerpo: { con_set, preparar_recorrido: con_set } });
+      toast(con_set ? "Recorrido preparado con 20 facturas y la primera firma de F10" : "Demo restablecida sin facturas", "info");
       setReiniciar(false);
       setVersion((v) => v + 1);
       avisarCambio();
@@ -55,7 +55,7 @@ export default function Simulador({ usuario }: { usuario: Usuario }) {
 }
 
 function CrearFactura() {
-  const { datos: cat } = useApi<any>("/simulador/escenarios");
+  const { datos: cat, cargando, error: errorCarga, recargar } = useApi<any>("/simulador/escenarios");
   const [periodo, setPeriodo] = useState<string | null>(null);
   const [form, setForm] = useState({ ...VACIO });
   const [activo, setActivo] = useState<string | null>(null);
@@ -109,7 +109,7 @@ function CrearFactura() {
     }
   };
   const set = (k: string, v: any) => setForm({ ...form, [k]: v });
-  if (!cat) return <Cargando />;
+  if (errorCarga || !cat) return <EstadoCarga cargando={cargando} error={errorCarga} datos={cat} reintentar={recargar} />;
 
   return (
     <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">

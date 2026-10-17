@@ -1,14 +1,15 @@
 import { useCallback } from "react";
 import { ArrowRight, Clock, Users } from "lucide-react";
 import { dinero, fecha, useApi, useCambios, type FacturaResumen, type Plazo, type Pregunta as P, type Usuario } from "../api";
-import { Cargando, cx, Encabezado, EstadoChip, TiraReglas, Vacio } from "../ui";
+import { EstadoCarga, Cargando, cx, Encabezado, EstadoChip, TiraReglas, Vacio } from "../ui";
 
 type Item = FacturaResumen & { preguntas: P[]; plazo: Plazo | null; ya_aprobe: boolean; cargue_yo: boolean; aprobadores: string[] };
 
 export default function Pregunta({ usuario }: { usuario: Usuario }) {
-  const { datos, cargando, recargar } = useApi<Item[]>("/aprobaciones");
+  const { datos, cargando, error, recargar } = useApi<Item[]>("/aprobaciones");
   const rec = useCallback(() => recargar(), [recargar]);
   useCambios(rec);
+  if (error || !datos) return <EstadoCarga cargando={cargando} error={error} datos={datos} reintentar={recargar} />;
   return (
     <div>
       <Encabezado titulo="Kauta pregunta"

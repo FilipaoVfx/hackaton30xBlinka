@@ -30,6 +30,8 @@ MAX_CUERPO = (CONFIG.max_archivo_mb + 2) * 1024 * 1024
 async def ciclo_de_vida(_: FastAPI):
     with SesionBD() as bd:
         semilla.iniciar(bd, con_set=True)
+        if CONFIG.demo and CONFIG.preparar_recorrido:
+            semilla.preparar_recorrido(bd)
     yield
 
 

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { CircleCheck, CircleX, Download, RefreshCw } from "lucide-react";
 import { fecha, puede, useApi, useCambios, type Usuario } from "../api";
-import { Boton, Cargando, cx, Encabezado, Hash, Panel } from "../ui";
+import { EstadoCarga, Boton, Cargando, cx, Encabezado, Hash, Panel } from "../ui";
 
 const FILTROS = [
   ["", "Todo"], ["factura", "Decisiones"], ["aprobacion", "Aprobaciones"], ["pago", "Pagos"], ["reglas", "Reglas"],
@@ -10,10 +10,11 @@ const FILTROS = [
 
 export default function Auditoria({ usuario }: { usuario: Usuario }) {
   const [tipo, setTipo] = useState("");
-  const { datos, cargando, recargar } = useApi<any>(`/auditoria?limite=300${tipo ? `&tipo=${tipo}` : ""}`, [tipo]);
+  const { datos, cargando, error, recargar } = useApi<any>(`/auditoria?limite=300${tipo ? `&tipo=${tipo}` : ""}`, [tipo]);
   const rec = useCallback(() => recargar(), [recargar]);
   useCambios(rec);
   if (!puede(usuario, "auditoria.ver")) return <Encabezado titulo="Auditoría" texto="Tu rol no consulta el registro de auditoría." />;
+  if (error || !datos) return <EstadoCarga cargando={cargando} error={error} datos={datos} reintentar={recargar} />;
   const v = datos?.verificacion;
   return (
     <div className="space-y-6">

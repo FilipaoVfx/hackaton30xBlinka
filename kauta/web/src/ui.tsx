@@ -175,6 +175,24 @@ export function Cargando({ filas = 4 }: { filas?: number }) {
   );
 }
 
+export function EstadoCarga({ cargando, error, datos, reintentar }: { cargando: boolean; error: string | null; datos: unknown; reintentar: () => void }) {
+  if (error) return <div className="py-8"><Aviso tono="error" titulo="Kauta no responde">{error}</Aviso><Boton className="mt-4" onClick={reintentar}>Reintentar</Boton></div>;
+  if (cargando) return <Cargando filas={4} />;
+  if (datos == null) return <Vacio titulo="No hay datos disponibles" accion={<Boton onClick={reintentar}>Reintentar</Boton>} />;
+  return null;
+}
+
+export interface TarjetaMetrica { id: string; titulo: string; detalle: string; valor_usd?: number | null; valor_pct?: number | null; valor?: number | null }
+export function TarjetasMetricas({ tarjetas }: { tarjetas: TarjetaMetrica[] }) {
+  return <dl data-testid="metricas" className={cx("metricas-grid", tarjetas.length === 3 && "metricas-tres")}>
+    {tarjetas.map((t) => <div key={t.id} className="metrica" data-metrica={t.id}>
+      <dt>{t.titulo}</dt>
+      <dd className="num">{"valor_usd" in t ? <><span className="metrica-moneda">USD </span>{t.valor_usd == null ? "—" : new Intl.NumberFormat("es-CO", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(t.valor_usd)}</> : "valor_pct" in t ? `${t.valor_pct == null ? "—" : new Intl.NumberFormat("es-CO", { maximumFractionDigits: 1 }).format(t.valor_pct)} %` : t.valor ?? "—"}</dd>
+      <p>{t.detalle}</p>
+    </div>)}
+  </dl>;
+}
+
 // ---------------------------------------------------------------- notificaciones
 type Toast = { id: number; texto: ReactNode; tono: "exito" | "error" | "info" };
 const CtxToast = createContext<(texto: ReactNode, tono?: Toast["tono"]) => void>(() => {});

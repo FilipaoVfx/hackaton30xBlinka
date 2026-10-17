@@ -1,0 +1,21 @@
+[Unit]
+Description=Kauta API y demo
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/hackaton30xBlinka/kauta
+EnvironmentFile=/root/.config/kauta/runtime.env
+ExecStart=/root/.local/share/kauta/venv/bin/python -m uvicorn servidor.main:app --host 127.0.0.1 --port 8840 --workers 1 --proxy-headers --forwarded-allow-ips 127.0.0.1
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/root/.local/share/kauta/var
+
+[Install]
+WantedBy=multi-user.target

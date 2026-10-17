@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { FileArchive, FileCode, FileText, Image, Mail, MessageSquare, Search, Upload, FlaskConical } from "lucide-react";
 import { api, avisarCambio, dinero, fecha, ir, puede, useApi, useCambios, type FacturaResumen, type Usuario } from "../api";
-import { Aviso, Boton, Cargando, claseEntrada, cx, Encabezado, EstadoChip, TiraReglas, useToast, Vacio } from "../ui";
+import { EstadoCarga, Aviso, Boton, Cargando, claseEntrada, cx, Encabezado, EstadoChip, TiraReglas, useToast, Vacio } from "../ui";
 
 const FILTROS = [
   { v: "", t: "Todas" }, { v: "pagada", t: "Pagadas" }, { v: "pendiente", t: "Pendientes" },
@@ -91,7 +91,7 @@ export default function Facturas({ usuario }: { usuario: Usuario }) {
         </label>
       </div>
 
-      {cargando && !datos ? <Cargando /> : error ? <Aviso tono="error">{error}</Aviso> : lista.length === 0 ? (
+      {error || !datos ? <EstadoCarga cargando={cargando} error={error} datos={datos} reintentar={recargar} /> : lista.length === 0 ? (
         <div className="rounded-[14px] border border-bruma bg-white"><Vacio titulo="No hay facturas con ese filtro" texto="Carga un documento o crea uno en el simulador para ver a Kauta decidir." /></div>
       ) : (
         <div className="overflow-hidden rounded-[14px] border border-bruma bg-white">

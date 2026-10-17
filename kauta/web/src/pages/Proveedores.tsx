@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { BadgeCheck, Ban, CircleHelp, PhoneCall, ShieldAlert } from "lucide-react";
 import { api, avisarCambio, dinero, fecha, puede, useApi, useCambios, type CambioCuenta, type Usuario } from "../api";
-import { Aviso, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, Modal, Panel, useToast } from "../ui";
+import { EstadoCarga, Aviso, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, Modal, Panel, useToast } from "../ui";
 
 const PAISES: Record<string, string> = { CO: "Colombia", MX: "México", AR: "Argentina", US: "EE. UU.", BR: "Brasil" };
 
@@ -13,6 +13,7 @@ export default function Proveedores({ usuario }: { usuario: Usuario }) {
   const [verificando, setVerificando] = useState<CambioCuenta | null>(null);
   const pendientes = (c.datos ?? []).filter((x) => x.estado === "pendiente");
 
+  if (p.error || c.error || !p.datos || !c.datos) return <EstadoCarga cargando={p.cargando || c.cargando} error={p.error || c.error} datos={p.datos && c.datos} reintentar={rec} />;
   return (
     <div className="space-y-6">
       <Encabezado titulo="Proveedores"

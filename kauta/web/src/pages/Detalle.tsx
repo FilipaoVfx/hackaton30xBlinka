@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react";
 import { ArrowLeft, Ban, Check, ChevronDown, FileDown, PenLine, ShieldCheck } from "lucide-react";
 import { api, avisarCambio, dinero, fecha, puede, useApi, useCambios, type FacturaDetalle, type Regla, type Usuario } from "../api";
-import {
+import { EstadoCarga,
   Aviso, Boton, Campo, Cargando, claseEntrada, cx, Dato, EstadoChip, Hash, LineaTiempo, Panel, resumenReglas, Sello, TiraReglas,
   useToast, Validaciones, Vacio,
 } from "../ui";
+import ReciboFactura from "./ReciboFactura";
 import { CANALES } from "./Facturas";
 
 const METODO: Record<string, string> = {
@@ -16,8 +17,7 @@ export default function Detalle({ id, usuario }: { id: string; usuario: Usuario 
   const { datos: f, cargando, error, recargar } = useApi<FacturaDetalle>(`/facturas/${id}`, [id]);
   const rec = useCallback(() => recargar(), [recargar]);
   useCambios(rec);
-  if (cargando && !f) return <Cargando filas={6} />;
-  if (error || !f) return <Vacio titulo="No encontramos esa factura" texto={error ?? ""} accion={<a className="font-semibold text-azul" href="#/facturas">Volver a facturas</a>} />;
+  if (error || !f) return <EstadoCarga cargando={cargando} error={error} datos={f} reintentar={recargar} />;
   const ext = f.extraccion ?? {};
   const C = CANALES[f.canal] ?? CANALES.pdf;
   const [primera, ...resto] = f.motivo.split(/(?<=\.)\s+(?=[A-ZÁÉÍÓÚ«])/);
@@ -96,6 +96,7 @@ export default function Detalle({ id, usuario }: { id: string; usuario: Usuario 
         </div>
 
         <div className="min-w-0 space-y-6">
+          <ReciboFactura id={f.id} />
           <Panel titulo="Documento" subtitulo={f.archivo} cuerpo="p-0">
             <VistaDocumento f={f} />
           </Panel>
@@ -119,7 +120,7 @@ function Decidir({ f, usuario, alTerminar }: { f: FacturaDetalle; usuario: Usuar
   const [comentario, setComentario] = useState("");
   const [codigo, setCodigo] = useState("");
   const [corregir, setCorregir] = useState(false);
-  const [corr, setCorr] = useState<{ monto?: string; moneda?: string; numero_factura?: string; horas?: string }>({});
+  const [corr, setCorr] = useState<{ monto?: string; moneda?: string; numero_factura?: string; horas?: string; fecha_vencimiento?: string }>({});
   const [enviando, setEnviando] = useState<"aprobar" | "rechazar" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
@@ -134,7 +135,7 @@ function Decidir({ f, usuario, alTerminar }: { f: FacturaDetalle; usuario: Usuar
     setError(null);
     try {
       const correcciones = corregir ? Object.fromEntries(Object.entries(corr).filter(([, v]) => v).map(([k, v]) => [k, ["monto", "horas"].includes(k) ? Number(v) : v])) : undefined;
-      const r = await api<any>(`/facturas/${f.id}/${accion}`, { cuerpo: accion === "aprobar" ? { comentario, correcciones, codigo_totp: codigo || undefined } : { comentario } });
+      const r = await api<any>(`/facturas/${f.id}/${accion}`, { cuerpo: accion === "aprobar" ? { comentario, correcciones: { ...correcciones, ...(!f.fecha_vencimiento && corr.fecha_vencimiento ? { fecha_vencimiento: corr.fecha_vencimiento } : {}) }, codigo_totp: codigo || undefined } : { comentario } });
       toast(accion === "rechazar" ? "Factura rechazada" : r.completa ? (r.pago ? `Aprobada y pagada (${r.pago})` : "Aprobada") : "Firma registrada: falta otra persona");
       avisarCambio();
       alTerminar();
@@ -148,6 +149,7 @@ function Decidir({ f, usuario, alTerminar }: { f: FacturaDetalle; usuario: Usuar
   return (
     <Panel titulo="Kauta te pregunta" subtitulo={f.aprobaciones_requeridas > 1 ? `Doble control: se necesitan ${f.aprobaciones_requeridas} personas distintas (${hechas} de ${f.aprobaciones_requeridas} firmas)` : "Responde para que la factura avance"}
       className="border-ambar/60 ring-4 ring-ambar-s">
+      {!f.fecha_vencimiento && f.extraccion.metodo_lectura !== "xml_fiscal" && <Campo etiqueta="Fecha de vencimiento confirmada" ayuda="Confirma el plazo con el proveedor antes de aprobar." className="mb-4"><input type="date" className={claseEntrada} value={corr.fecha_vencimiento ?? ""} onChange={(e) => setCorr({ ...corr, fecha_vencimiento: e.target.value })} /></Campo>}
       <ul className="space-y-3">
         {f.preguntas.map((p) => (
           <li key={p.regla} className="rounded-[12px] bg-ambar-s/70 p-3.5">

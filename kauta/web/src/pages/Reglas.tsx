@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Eye, Save } from "lucide-react";
 import { api, avisarCambio, dinero, fecha, puede, useApi, useCambios, type Usuario } from "../api";
-import { Aviso, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, Panel, useToast } from "../ui";
+import { EstadoCarga, Aviso, Boton, Campo, Cargando, claseEntrada, cx, Encabezado, Panel, useToast } from "../ui";
 
 const CAMPOS: { k: string; t: string; ayuda: string; regla: string; tipo?: "pct" | "conf" }[] = [
   { k: "presupuesto_periodo_usd", t: "Presupuesto del periodo (USD)", ayuda: "Lo máximo que sale en un mes. La sub-wallet se ajusta al guardar.", regla: "R12" },
@@ -14,7 +14,7 @@ const CAMPOS: { k: string; t: string; ayuda: string; regla: string; tipo?: "pct"
 const MONEDAS = ["USD", "COP", "MXN", "EUR", "ARS", "BRL"];
 
 export default function Reglas({ usuario }: { usuario: Usuario }) {
-  const { datos, recargar } = useApi<any>("/reglas");
+  const { datos, cargando, error: errorCarga, recargar } = useApi<any>("/reglas");
   const rec = useCallback(() => recargar(), [recargar]);
   useCambios(rec);
   const [form, setForm] = useState<Record<string, any> | null>(null);
@@ -24,7 +24,8 @@ export default function Reglas({ usuario }: { usuario: Usuario }) {
   const [guardando, setGuardando] = useState(false);
   const toast = useToast();
   useEffect(() => { if (datos) setForm({ ...datos.vigente }); }, [datos]);
-  if (!datos || !form) return <Cargando filas={5} />;
+  if (errorCarga || !datos) return <EstadoCarga cargando={cargando} error={errorCarga} datos={datos} reintentar={recargar} />;
+  if (!form) return <Cargando filas={5} />;
   const editable = puede(usuario, "reglas.editar");
   const cuerpo = () => ({
     ...Object.fromEntries(CAMPOS.map((c) => [c.k, Number(form[c.k])])), monedas_permitidas: form.monedas_permitidas, motivo: motivo || "Simulación",

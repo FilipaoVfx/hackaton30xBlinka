@@ -50,6 +50,8 @@ class Config:
     clave_auditoria: bytes
     origen: str
     cookie_segura: bool
+    origenes_adicionales: tuple[str, ...] = ()
+    preparar_recorrido: bool = False
     inactividad_min: int = 30
     duracion_max_h: int = 8
     max_archivo_mb: int = 10
@@ -77,6 +79,8 @@ def cargar() -> Config:
         clave_auditoria=_clave("KAUTA_CLAVE_AUDITORIA", modo),
         origen=origen.rstrip("/"),
         cookie_segura=origen.startswith("https://"),
+        origenes_adicionales=tuple(x.strip().rstrip("/") for x in os.environ.get("KAUTA_ORIGENES_ADICIONALES", "").split(",") if x.strip()),
+        preparar_recorrido=os.environ.get("KAUTA_PREPARAR_RECORRIDO", "0") == "1",
     )
 
 

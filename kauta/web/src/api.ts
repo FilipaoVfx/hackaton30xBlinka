@@ -51,6 +51,7 @@ export interface Pago {
   liquidado_en: string | null;
 }
 export interface FacturaResumen {
+  reglas: Regla[];
   id: string;
   archivo: string;
   canal: string;
@@ -137,6 +138,12 @@ export interface Usuario {
 // ---------------------------------------------------------------- cliente
 let csrf: string | null = null;
 let alExpirar: () => void = () => {};
+let alRenovar: (u: Usuario) => void = () => {};
+let recuperacion: Promise<Usuario> | null = null;
+const CFO = "carlos.rivera@brisamar.example";
+export const ultimaPersona = () => { try { return localStorage.getItem("kauta:persona") || CFO; } catch { return CFO; } };
+export const guardarPersona = (correo: string) => { try { localStorage.setItem("kauta:persona", correo); } catch { /* almacenamiento opcional */ } };
+export const alRenovarSesion = (fn: (u: Usuario) => void) => (alRenovar = fn);
 export const fijarCsrf = (t: string | null) => (csrf = t);
 export const alPerderSesion = (fn: () => void) => (alExpirar = fn);
 
@@ -146,22 +153,37 @@ export class ErrorApi extends Error {
   }
 }
 
-export async function api<T = any>(ruta: string, opciones: { metodo?: string; cuerpo?: unknown; formulario?: FormData } = {}): Promise<T> {
+export async function elegirPersona(correo: string): Promise<Usuario> {
+  const r = await api<{ usuario: Usuario }>("/auth/persona", { cuerpo: { correo } });
+  guardarPersona(correo);
+  fijarCsrf(r.usuario.csrf);
+  return r.usuario;
+}
+
+export async function api<T = any>(ruta: string, opciones: { metodo?: string; cuerpo?: unknown; formulario?: FormData } = {}, reintentado = false): Promise<T> {
   const metodo = opciones.metodo ?? (opciones.cuerpo !== undefined || opciones.formulario ? "POST" : "GET");
   const cabeceras: Record<string, string> = { Accept: "application/json" };
   if (opciones.cuerpo !== undefined) cabeceras["Content-Type"] = "application/json";
   if (metodo !== "GET" && csrf) cabeceras["X-CSRF-Token"] = csrf;
-  const r = await fetch("/api" + ruta, {
+  let r: Response;
+  try { r = await fetch("/api" + ruta, {
     method: metodo,
     headers: cabeceras,
     credentials: "same-origin",
     body: opciones.formulario ?? (opciones.cuerpo !== undefined ? JSON.stringify(opciones.cuerpo) : undefined),
-  });
+    signal: AbortSignal.timeout(45000),
+  }); } catch { throw new ErrorApi(0, "Kauta no responde. Revisa la conexión y vuelve a intentar."); }
   const tipo = r.headers.get("content-type") ?? "";
   const datos = tipo.includes("json") ? await r.json().catch(() => ({})) : null;
   if (!r.ok) {
-    if (r.status === 401 && !ruta.startsWith("/auth/login")) alExpirar();
-    const detalle = typeof datos?.detail === "string" ? datos.detail : `Error ${r.status}`;
+    if (r.status === 401 && !ruta.startsWith("/auth/") && !reintentado) {
+      if (!recuperacion) recuperacion = elegirPersona(ultimaPersona()).then((u) => { alRenovar(u); return u; }).finally(() => { recuperacion = null; });
+      try { await recuperacion; } catch (e) { alExpirar(); throw e; }
+      if (metodo === "GET") return api<T>(ruta, opciones, true);
+      throw new ErrorApi(401, "Tu sesión se renovó; repite la acción.");
+    }
+    if (r.status === 401 && reintentado) alExpirar();
+    const detalle = r.status >= 500 ? "Kauta no responde. Vuelve a intentar." : typeof datos?.detail === "string" ? datos.detail : `Error ${r.status}`;
     throw new ErrorApi(r.status, detalle, datos);
   }
   return datos as T;
@@ -172,19 +194,21 @@ export function useApi<T = any>(ruta: string | null, deps: unknown[] = []) {
   const [error, setError] = useState<string | null>(null);
   const [cargando, setCargando] = useState(true);
   const vivo = useRef(true);
+  const version = useRef(0);
   const cargar = useCallback(async () => {
     if (!ruta) return;
+    const intento = ++version.current;
     setCargando(true);
     try {
       const d = await api<T>(ruta);
-      if (vivo.current) {
+      if (vivo.current && intento === version.current) {
         setDatos(d);
         setError(null);
       }
     } catch (e) {
-      if (vivo.current) setError((e as Error).message);
+      if (vivo.current && intento === version.current) setError((e as Error).message);
     } finally {
-      if (vivo.current) setCargando(false);
+      if (vivo.current && intento === version.current) setCargando(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ruta, ...deps]);
@@ -193,6 +217,7 @@ export function useApi<T = any>(ruta: string | null, deps: unknown[] = []) {
     cargar();
     return () => {
       vivo.current = false;
+      version.current++;
     };
   }, [cargar]);
   return { datos, error, cargando, recargar: cargar, setDatos };

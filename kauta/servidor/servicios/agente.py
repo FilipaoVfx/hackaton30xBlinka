@@ -136,7 +136,7 @@ def procesar_archivo(bd: Session, nombre: str, datos: bytes, origen: str, actor:
 
 def registrar(bd: Session, nombre: str, r: dict[str, Any], origen: str, actor: str, cargada_por: str,
               ruta: str | None = None, forzar_pago: str | None = None, factura_id: str | None = None,
-              riel: str | None = None) -> Factura:
+              riel: str | None = None, confirmar: bool = True) -> Factura:
     with BLOQUEO:
         fid = factura_id or nuevo_id(bd, nombre, origen)
         reglas = reglas_vigentes(bd)
@@ -176,7 +176,8 @@ def registrar(bd: Session, nombre: str, r: dict[str, Any], origen: str, actor: s
         r07 = next((x for x in lista if x["id"] == "R07" and x["estado"] == "falla"), None)
         if r07 and f.beneficiario_id and (ext.get("cuenta_destino") or ""):
             _solicitar_cambio_cuenta(bd, f, ext["cuenta_destino"])
-        bd.commit()
+        if confirmar:
+            bd.commit()
         return f
 
 
@@ -251,6 +252,8 @@ def aprobar(bd: Session, fid: str, u: Usuario, comentario: str, correcciones: di
                 ext[k] = v
                 ext["confianza"][k] = 1.0
             ext["validaciones"] = [v for v in ext.get("validaciones") or [] if v.get("campo") != "qr_total"]
+        if not ext.get("fecha_vencimiento") and ext.get("metodo_lectura") != "xml_fiscal":
+            raise ErrorNegocio("Confirma la fecha de vencimiento del documento antes de aprobar.")
         d = motor.evaluar({"factura_id": fid, "extraccion": ext, "hashes": f.hashes}, reglas, bens, historial(bd, excluir=fid))
         duras = d.fallas("frenar")
         if duras:
@@ -261,6 +264,7 @@ def aprobar(bd: Session, fid: str, u: Usuario, comentario: str, correcciones: di
             raise ErrorNegocio(f"La aprobación no procede por una regla dura ({duras[0].id}): {duras[0].detalle}")
         if corr:
             f.extraccion = ext
+            f.fecha_vencimiento = ext.get("fecha_vencimiento")
             f.monto, f.moneda, f.monto_usd = _dec(d.monto), d.moneda, _dec(d.monto_usd)
         nivel = len(previas) + 1
         ts = datetime.now(timezone.utc).isoformat(timespec="seconds")

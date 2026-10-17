@@ -25,7 +25,7 @@ class CabecerasSeguridad(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         if request.method not in ("GET", "HEAD", "OPTIONS"):
             origen = request.headers.get("origin")
-            permitidos = {CONFIG.origen} | (ORIGENES_DEV if CONFIG.demo else set())
+            permitidos = {CONFIG.origen, *CONFIG.origenes_adicionales} | (ORIGENES_DEV if CONFIG.demo else set())
             if origen and origen.rstrip("/") not in permitidos:
                 return JSONResponse({"detail": "Origen no permitido."}, status_code=403)
         rid = request.headers.get("x-request-id") or uuid.uuid4().hex[:16]

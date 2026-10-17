@@ -5,8 +5,9 @@ rangos y largos máximos antes de tocar la lógica. Los campos desconocidos se r
 from __future__ import annotations
 
 from typing import Annotated, Literal
+from datetime import date
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 # Correo con el mismo formato en todas las entradas (sin depender de una librería externa)
 Correo = Annotated[str, Field(min_length=3, max_length=160, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
@@ -33,10 +34,18 @@ class CodigoIn(Estricto):
 
 
 class Correcciones(Estricto):
+    fecha_vencimiento: Annotated[str | None, Field(pattern=r"^\d{4}-\d{2}-\d{2}$")] = None
     monto: Annotated[float | None, Field(gt=0, lt=10_000_000)] = None
     moneda: Annotated[str | None, Field(pattern=r"^[A-Z]{3}$")] = None
     numero_factura: Annotated[str | None, Field(max_length=60)] = None
     horas: Annotated[float | None, Field(gt=0, lt=1000)] = None
+
+    @field_validator("fecha_vencimiento")
+    @classmethod
+    def fecha_valida(cls, valor):
+        if valor is not None:
+            date.fromisoformat(valor)
+        return valor
 
 
 class AprobarIn(Estricto):
@@ -130,6 +139,7 @@ class CambioContrasenaIn(Estricto):
 
 class RestablecerIn(Estricto):
     con_set: bool = True
+    preparar_recorrido: bool = False
 
 
 class ReintentarIn(Estricto):

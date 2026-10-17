@@ -42,6 +42,7 @@ def resumen(ctx: Contexto = Depends(requiere("ver"))):
     ultimas = [vistas.factura_resumen(bd, f) for f in sorted(fs, key=lambda x: x.recibida_en, reverse=True)[:8]]
     u = ctx.usuario
     return {"metricas": m, "lente": metricas.lente(bd, u.rol, u.correo, u.id, reglas["periodo_actual"]),
+            "necesitan_firma": [vistas.factura_resumen(bd, f) for f in metricas.esperando_firma(bd, u.correo, u.id)] if u.rol in ("ceo", "cfo") else [],
             "wallet": wallet.resumen(bd), "presupuesto": reglas["presupuesto_periodo_usd"],
             "periodo": reglas["periodo_actual"], "version_reglas": reglas["version"], "serie": serie,
             "fallas_por_regla": dict(sorted(fallas.items())), "pagos_por_riel": dict(por_riel), "ultimas": ultimas,
@@ -132,5 +133,7 @@ def restablecer(datos: RestablecerIn, ctx: Contexto = Depends(requiere("demo.res
     if not CONFIG.demo:
         raise HTTPException(404)
     semilla.restablecer(ctx.bd, datos.con_set, ctx.actor)
+    if datos.con_set and datos.preparar_recorrido:
+        semilla.preparar_recorrido(ctx.bd)
     LIMITADOR.reiniciar()
     return {"ok": True}
