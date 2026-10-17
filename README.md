@@ -2,9 +2,23 @@
 
 Proyecto para la hackatón **30xBlinka**: construir un agente que revise facturas de una empresa, aplique sus reglas y decida **aprobar un pago simulado, frenarlo o solicitar aprobación humana**, explicando cada decisión.
 
-> **Estado actual:** cuatro prototipos interactivos de UX/UI en HTML, CSS generado con Tailwind y JavaScript. La biblioteca corporativa incluye 15 documentos ficticios y siete rutas de recepción simuladas. La extracción con IA, los conectores de entrada y la persistencia de backend están pendientes; las reglas se ejecutan en el navegador para explorar la experiencia. La arquitectura y el reparto del equipo que aparecen más abajo siguen siendo propuestas.
+## Kauta, nuestra entrega
 
-## Prototipos disponibles
+**Kauta** es el agente de cuentas por pagar que construimos para el reto. Lee facturas (XML, texto, correo, chat, foto con OCR), las revisa contra 13 reglas en código y decide **pagar, frenar o preguntar** a una persona. La IA lee; el código decide. Tiene tres roles (CFO, CEO y CTO) con doble firma, wallet simulada, auditoría y un recibo por pago con su costo. Todo es ficticio: no se mueve dinero real.
+
+| Quiero | Ir a |
+| --- | --- |
+| Arrancar y probar la aplicación | [kauta/README.md](kauta/README.md) |
+| Ver el recorrido de demostración (F01, F07, F12, F10) | [kauta/README.md](kauta/README.md#recorrido-de-demostración) |
+| Entender qué es, cómo está hecha y qué no hace | [Documentación de Kauta](#documentación-de-kauta) |
+
+Pendientes conocidos, sin maquillaje: lectura real con IA de un documento nuevo (el set se lee de referencia), login real, avisos de segunda firma y verificación de seguridad independiente. Detalle en [aidlc-docs/aidlc-state.md](aidlc-docs/aidlc-state.md) y [TODOS.md](TODOS.md).
+
+> **Sobre el resto de este README:** las secciones siguientes (prototipos, arquitectura y reparto del equipo) son el material de planeación y exploración UX previo a Kauta. Donde difieran del código, manda [la ficha de hechos](aidlc-docs/inception/hechos-del-codigo.md).
+
+## Prototipos de UX (exploración previa)
+
+Cuatro prototipos interactivos en HTML, CSS generado con Tailwind y JavaScript. La biblioteca corporativa incluye 15 documentos ficticios y siete rutas de recepción simuladas; las reglas se ejecutan en el navegador, sin backend.
 
 | Pantalla | Archivo | Qué permite explorar |
 | --- | --- | --- |
@@ -240,7 +254,7 @@ Para revisar manualmente la biblioteca:
 5. Abre Nordlicht Studio: la falta de tasa EUR impide su aprobación.
 6. Cambia los parámetros de la simulación y comprueba la reevaluación; recarga para restaurar el conjunto base.
 
-El agente conectado a documentos reales y sus pruebas de backend quedan pendientes de implementación.
+Esto verifica solo los prototipos de UX; el agente y sus pruebas viven en `kauta/` (ver [kauta/README.md](kauta/README.md)).
 
 ## Documentación de Kauta
 
