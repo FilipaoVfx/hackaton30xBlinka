@@ -1,0 +1,41 @@
+---
+title: "C2 · Contenedores de Kauta | Fuente: hechos §1, §2, §14 · ops/ · web/vercel.json"
+---
+flowchart TB
+  P["<b>Personas</b> CFO, CEO, CTO<br/>[Persona]"]:::persona
+  NAV["<b>Navegador</b><br/>[Externo]"]:::externo
+  subgraph VERC["Vercel (despliegue NO VERIFICADO)"]
+    VJ["<b>web/vercel.json</b><br/>[Reglas de proxy y cabeceras]<br/>/api/* a https://kauta.2-25-233-186.sslip.io<br/>CSP, nosniff, X-Frame-Options DENY"]:::contenedor
+  end
+  subgraph SRV["Servidor (systemd kauta.service, 1 worker, puerto 8840)"]
+    NG["<b>nginx</b><br/>[Proxy inverso]<br/>443 Let's Encrypt a 127.0.0.1:8840<br/>cuerpo máx. 12 MB"]:::contenedor
+    WEB["<b>Web React</b> web/ 2.0.0<br/>[React 19, Vite, Tailwind, TypeScript]<br/>11 rutas hash; compilada en web/dist"]:::contenedor
+    API["<b>API FastAPI</b> servidor/ 2.1.0<br/>[Python 3.12, uvicorn]<br/>Rutas /api, seguridad, servicios"]:::contenedor
+    MOT["<b>Motor y lectores</b> kauta/<br/>[Paquete Python, en proceso]<br/>13 reglas, extractor, lectores XML, OCR"]:::contenedor
+    DB[("<b>Base de datos</b><br/>[SQLite WAL en VAR/kauta.db<br/>PostgreSQL opcional]<br/>16 tablas")]:::almacen
+    VAR[("<b>Almacén VAR/</b><br/>[Carpeta]<br/>claves *.key, archivos/ por SHA-256,<br/>vistas/ PNG")]:::almacen
+  end
+  TES["<b>Tesseract</b><br/>[Programa del sistema]"]:::externo
+  ANT["<b>API de Anthropic</b><br/>[Externo, opcional]"]:::externo
+  P -->|"usan"| NAV
+  NAV -->|"HTTPS: SPA y /api"| VJ
+  VJ -->|"rewrite /api/*"| NG
+  NG -->|"proxy_pass"| API
+  API -->|"sirve web/dist si existe"| WEB
+  API -->|"importa kauta.motor y kauta.extractor"| MOT
+  API -->|"SQLAlchemy 2"| DB
+  API -->|"lee claves y guarda archivos"| VAR
+  MOT -->|"subproceso"| TES
+  MOT -.->|"ExtractorIA (opcional)"| ANT
+  TES ~~~ L1
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Persona"]:::persona
+    L2["Contenedor construido"]:::contenedor
+    L3["Almacén de datos"]:::almacen
+    L4["Externo"]:::externo
+  end
+  classDef persona fill:#0b1736,stroke:#0b1736,color:#ffffff
+  classDef contenedor fill:#3b5bfd,stroke:#2a43c7,color:#ffffff
+  classDef almacen fill:#dfe6ff,stroke:#3b5bfd,color:#0b1736
+  classDef externo fill:#e3e8f2,stroke:#5b6782,color:#0b1736

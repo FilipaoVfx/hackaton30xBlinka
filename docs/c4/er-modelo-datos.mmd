@@ -1,0 +1,93 @@
+erDiagram
+    usuarios ||--o{ sesiones : "tiene"
+    usuarios ||--o{ aprobaciones : "firma"
+    beneficiarios ||--o{ facturas : "emite"
+    beneficiarios ||--o{ cambios_cuenta : "solicita"
+    beneficiarios ||--o{ pagos : "recibe"
+    facturas ||--o{ aprobaciones : "recibe"
+    facturas ||--o{ pagos : "genera"
+    facturas ||--o{ eventos_costo : "cuesta"
+    wallet_asientos ||--|{ wallet_movimientos : "contiene"
+    wallet_cuentas ||--o{ wallet_movimientos : "recibe"
+    usuarios {
+        int id PK
+        string correo UK
+        string rol "ceo cfo cto"
+        bool mfa_activo
+    }
+    sesiones {
+        string id PK "sha256 del token"
+        int usuario_id FK
+        string csrf
+        datetime expira_en
+    }
+    beneficiarios {
+        string id PK
+        string id_fiscal
+        string estado "activo bloqueado"
+        json contrato
+        string cuenta_ultimos4
+    }
+    cambios_cuenta {
+        int id PK
+        string beneficiario_id FK
+        string factura_id
+        string estado
+    }
+    facturas {
+        string id PK
+        string beneficiario_id FK
+        string decision "pagar frenar escalar"
+        string estado "pagada frenada pendiente rechazada devuelta"
+        string monto
+        string monto_usd
+        string periodo
+        json reglas
+        int version_reglas
+    }
+    aprobaciones {
+        int id PK
+        string factura_id FK
+        int usuario_id FK
+        string accion
+        string firma
+    }
+    pagos {
+        string id PK
+        string factura_id FK
+        string beneficiario_id FK
+        string riel
+        string estado "reservado enviado liquidado devuelto"
+        string clave_idempotencia UK
+    }
+    eventos_costo {
+        int id PK
+        string factura_id FK
+        string fuente
+        int importe_nano_usd
+    }
+    wallet_cuentas {
+        string codigo PK
+        string tipo
+    }
+    wallet_asientos {
+        int id PK
+        string referencia
+        string periodo
+    }
+    wallet_movimientos {
+        int id PK
+        int asiento_id FK
+        string cuenta FK
+        string debito
+        string credito
+    }
+    reglas_versiones {
+        int version PK
+        json parametros
+    }
+    auditoria {
+        int id PK
+        string hash UK
+        string hash_anterior
+    }

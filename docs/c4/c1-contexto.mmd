@@ -1,0 +1,29 @@
+---
+title: "C1 · Contexto del sistema de Kauta | Todos los datos son ficticios; sin dinero real"
+---
+flowchart TB
+  CFO["<b>CFO</b> Carlos Rivera<br/>[Persona]<br/>Firma, edita reglas, fondea, verifica cuentas"]:::persona
+  CEO["<b>CEO</b> Mariana Torres<br/>[Persona]<br/>Revisa resultados y pone la segunda firma"]:::persona
+  CTO["<b>CTO</b> Tomás Herrera<br/>[Persona]<br/>Carga documentos, opera, restablece la demo"]:::persona
+  NAV["<b>Navegador</b><br/>[Sistema externo]<br/>Ejecuta la SPA React"]:::externo
+  VER["<b>Vercel</b><br/>[Sistema externo]<br/>Sirve web/ y reenvía /api al servidor.<br/>Despliegue NO VERIFICADO"]:::externo
+  K["<b>Kauta</b><br/>[Sistema]<br/>Lee documentos, aplica 13 reglas y paga,<br/>frena o pregunta. La IA lee; el código decide"]:::sistema
+  TES["<b>Tesseract</b><br/>[Programa local]<br/>OCR spa+eng en el mismo servidor"]:::externo
+  ANT["<b>API de Anthropic</b><br/>[Sistema externo, opcional]<br/>Solo si existe ANTHROPIC_API_KEY<br/>y los lectores 1 a 4 no leyeron"]:::externo
+  CFO & CEO & CTO -->|"usan por HTTPS"| NAV
+  NAV -->|"carga la SPA y llama /api"| VER
+  VER -->|"proxy /api (rewrite)"| K
+  K -->|"lee imágenes y PDF escaneados<br/>(subproceso)"| TES
+  K -.->|"extracción con modelo<br/>(opcional)"| ANT
+  TES ~~~ L1
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Persona"]:::persona
+    L2["Sistema construido"]:::sistema
+    L3["Sistema o programa externo"]:::externo
+    L4["línea continua: siempre<br/>línea punteada: opcional"]:::nota
+  end
+  classDef persona fill:#0b1736,stroke:#0b1736,color:#ffffff
+  classDef sistema fill:#3b5bfd,stroke:#2a43c7,color:#ffffff
+  classDef externo fill:#e3e8f2,stroke:#5b6782,color:#0b1736
+  classDef nota fill:#ffffff,stroke:#5b6782,color:#0b1736,stroke-dasharray:4 3

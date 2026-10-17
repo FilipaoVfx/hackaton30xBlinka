@@ -1,0 +1,24 @@
+---
+title: "P2 · Recorrido de demostración F01, F07, F12, F10 | Fuente: kauta/README.md · data/esperado.csv · hechos §7"
+---
+flowchart LR
+  R["CFO · Resumen<br/>métricas y facturas por firmar"]:::paso
+  F01["<b>F01</b> Nube Clara 850 USD<br/>cumple las 13 reglas → pagar<br/>sin firma humana"]:::menta
+  F07["<b>F07</b> recordatorio de INV-1001<br/>R03 duplicado → frenar<br/>sin pago, dinero protegido"]:::coral
+  F12["<b>F12</b> Andrés Rojas 4.800.000 COP<br/>R07 cuenta distinta → escalar<br/>CFO confirma vencimiento y cuenta<br/>por otro canal y aprueba"]:::ambar
+  F12P["pago a la cuenta registrada ···8152"]:::menta
+  RN["Rendimiento<br/>4 tarjetas de costo del mismo libro"]:::paso
+  F10["<b>F10</b> Datos del Sur 3.200 USD<br/>R10 sobre el umbral de 3.000 → 2 firmas<br/>1ª CFO (preparada), 2ª CEO"]:::ambar
+  F10P["reglas duras re-evaluadas; pago"]:::menta
+  R --> F01 --> F07 --> F12 --> F12P --> RN --> F10 --> F10P
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Paso"]:::paso
+    L2["pagar"]:::menta
+    L3["escalar"]:::ambar
+    L4["frenar"]:::coral
+  end
+  classDef paso fill:#eef2ff,stroke:#3b5bfd,color:#0b1736
+  classDef menta fill:#d9f5e8,stroke:#0f9f6e,color:#0b1736
+  classDef ambar fill:#ffefcc,stroke:#c98a00,color:#0b1736
+  classDef coral fill:#ffe0dc,stroke:#d9483b,color:#0b1736

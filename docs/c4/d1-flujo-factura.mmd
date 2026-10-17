@@ -1,0 +1,51 @@
+---
+title: "D1 · Flujo dinámico de una factura, de la carga al pago | Fuente: hechos §7, §8 · pasos numerados como en la ficha"
+---
+flowchart TB
+  CTO["CTO con facturas.cargar<br/>(o semilla / simulador)"]:::persona
+  S1["1. POST /api/facturas/cargar<br/>límite 30/min, 10 MB, bytes mágicos"]:::paso
+  S2["2. agente.procesar_archivo<br/>guarda VAR/archivos/sha256"]:::paso
+  S3["3. Lectura: XML fiscal → referencia →<br/>rechazo de seguridad → OCR o texto →<br/>IA (solo con ANTHROPIC_API_KEY)"]:::paso
+  S4["4. enriquecer<br/>id fiscal, CUFE/UUID/CAE, receptor,<br/>instrucción sospechosa"]:::paso
+  S5["5. agente.registrar<br/>reglas vigentes, historial, fondeo cxp"]:::paso
+  M["<b>motor.evaluar: las 13 reglas como una caja</b><br/>R01 a R13 sin cortocircuito<br/>prioridad: frenar > escalar > pagar<br/>error inesperado = escalar"]:::motor
+  D{"decisión"}:::dec
+  P["pagar<br/>0 firmas"]:::menta
+  E["escalar → estado pendiente<br/>1 firma si monto ≤ 3000 USD<br/>2 firmas si monto > 3000 USD"]:::ambar
+  F["frenar → estado frenada<br/>sin ruta de aprobación"]:::coral
+  A1["7. POST /aprobar, 1ª firma<br/>comentario obligatorio; quien cargó no firma;<br/>re-evalúa y bloquea si falla regla dura;<br/>firma HMAC-SHA256"]:::paso
+  A2["Doble firma: 2ª persona distinta<br/>(CFO y CEO con los usuarios de demo)<br/>re-evalúa de nuevo y firma HMAC"]:::paso
+  PAGO["6. pagos.crear_y_ejecutar (begin_nested)<br/>beneficiario activo, re-verifica firmas,<br/>riel, titular, saldo cxp, idempotencia,<br/>asientos de wallet, costos, auditoría"]:::paso
+  OK["Pago liquidado<br/>factura pagada"]:::menta
+  ERR["ValueError o pago devuelto<br/>escalar / devuelta"]:::ambar
+  AUD[("auditoría HMAC encadenada<br/>eventos_costo · wallet")]:::almacen
+  CTO --> S1 --> S2 --> S3 --> S4 --> S5 --> M --> D
+  D -->|pagar| P
+  D -->|escalar| E
+  D -->|frenar| F
+  E --> A1
+  A1 -->|"1 firma requerida"| PAGO
+  A1 -->|"2 firmas requeridas"| A2
+  A2 --> PAGO
+  P --> PAGO
+  PAGO -->|"ok"| OK
+  PAGO -->|"falla"| ERR
+  S5 -.->|"factura.decision"| AUD
+  PAGO -.->|"pago.creado, costos, asientos"| AUD
+  OK ~~~ L1
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Paso"]:::paso
+    L2["Motor"]:::motor
+    L3["pagar"]:::menta
+    L4["escalar o falla"]:::ambar
+    L5["frenar"]:::coral
+  end
+  classDef persona fill:#0b1736,stroke:#0b1736,color:#ffffff
+  classDef paso fill:#eef2ff,stroke:#3b5bfd,color:#0b1736
+  classDef motor fill:#3b5bfd,stroke:#2a43c7,color:#ffffff
+  classDef dec fill:#ffffff,stroke:#0b1736,color:#0b1736
+  classDef menta fill:#d9f5e8,stroke:#0f9f6e,color:#0b1736
+  classDef ambar fill:#ffefcc,stroke:#c98a00,color:#0b1736
+  classDef coral fill:#ffe0dc,stroke:#d9483b,color:#0b1736
+  classDef almacen fill:#dfe6ff,stroke:#3b5bfd,color:#0b1736
