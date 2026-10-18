@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kauta · documentación</title>
+<style>
+:root{--lienzo:#f5f7fb;--panel:#fff;--elev:#eef1f8;--linea:#e3e8f2;--fuerte:#5b6782;--texto:#0b1736;--t2:#5b6782;--acento:#3b5bfd;--noche:#0b1736;
+--menta:#0f9f6e;--ambar:#c98a00;--coral:#d9483b;--menta-bg:#d9f5e8;--ambar-bg:#ffefcc;--coral-bg:#ffe0dc;--img-bg:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--lienzo:#0b1736;--panel:#13214a;--elev:#1a2a5a;--linea:#2a3a6a;--fuerte:#9aa7c7;--texto:#f5f7fb;--t2:#b6c0da;--acento:#8ea2ff;--noche:#050c20;
+--menta:#3ddba8;--ambar:#ffc24d;--coral:#ff8a7d;--menta-bg:#10372f;--ambar-bg:#3a2d14;--coral-bg:#3a1f26;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--lienzo);color:var(--texto);font:15px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;padding:32px max(16px,env(safe-area-inset-right)) 64px max(16px,env(safe-area-inset-left))}
+main{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h2{font-size:23px;margin:0}h3{font-size:17px;margin:0}
+p{margin:0;max-width:72ch;color:var(--t2)}
+.lead{font-size:17px;margin-top:12px}
+.nota{font-size:13px;color:var(--t2)}
+.sec{display:flex;flex-direction:column;gap:14px}
+nav.mn{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;border-bottom:1px solid var(--linea);padding-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--linea);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card p,.card li{font-size:14px}
+ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;color:var(--t2)}
+.tabla{overflow-x:auto;border:1px solid var(--linea);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--linea);vertical-align:top}
+th{background:var(--elev);font-size:13px}tr:last-child td{border-bottom:0}
+code{font:12.5px ui-monospace,Menlo,monospace;background:var(--elev);padding:1px 5px;border-radius:4px}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:1px 9px;border-radius:99px;border:1.5px solid;white-space:nowrap}
+.si{color:var(--menta);background:var(--menta-bg);border-color:var(--menta)}
+.no{color:var(--coral);background:var(--coral-bg);border-color:var(--coral)}
+.nd{color:var(--ambar);background:var(--ambar-bg);border-color:var(--ambar)}
+figure{margin:0}figure .im{background:var(--img-bg);border:1px solid var(--linea);border-radius:12px;padding:10px;overflow-x:auto}
+figure img{display:block;max-width:none;width:100%;min-width:min(100%,760px);height:auto}
+figcaption{font-size:13px;color:var(--t2);margin-top:8px;max-width:80ch}
+a{color:var(--acento)}a:focus-visible{outline:3px solid var(--acento);outline-offset:2px}
+.aviso{border-left:4px solid var(--ambar);background:var(--ambar-bg);padding:10px 14px;border-radius:8px;font-size:14px;color:var(--texto);max-width:80ch}
+footer{font-size:13px;color:var(--t2);border-top:1px solid var(--linea);padding-top:14px}
+</style></head><body><main>
+<nav class="mn" aria-label="Documentos"><a href="index.html">Índice</a><a href="propuesta.html">Propuesta</a><a href="arquitectura.html">Arquitectura</a><a href="personas.html">Personas</a><a href="https://github.com/FilipaoVfx/hackaton30xBlinka">Repositorio</a></nav><header><h1>Kauta · documentación</h1><p class="lead">Kauta lee documentos de cobro, los revisa contra 13 reglas y paga, frena o pregunta. Esta carpeta describe lo que Kauta tiene hoy; la fuente es la ficha de hechos del código.</p></header>
+<section class="sec" aria-labelledby="pag"><h2 id="pag">Páginas</h2><div class="grid"><a class="card" href="propuesta.html" style="text-decoration:none;color:inherit"><h3>Propuesta</h3><p>Problema, qué es Kauta, qué la distingue, qué no hace y cifras con su alcance.</p></a><a class="card" href="arquitectura.html" style="text-decoration:none;color:inherit"><h3>Arquitectura</h3><p>Diagramas C4 (contexto, contenedores, componentes, flujo), objetivo frente a hoy, seguridad, concurrencia, observabilidad y costos.</p></a><a class="card" href="modelo-de-datos.html" style="text-decoration:none;color:inherit"><h3>Modelo de datos</h3><p>Tablas y relaciones de la base (documento de otro agente).</p></a><a class="card" href="personas.html" style="text-decoration:none;color:inherit"><h3>Personas y permisos</h3><p>CFO, CEO y CTO: qué pueden y qué no, con evidencia, y el recorrido F01, F07, F12, F10.</p></a></div></section><section class="sec" aria-labelledby="enl"><h2 id="enl">Más documentos</h2><ul><li><a href="README.md">Índice de la documentación (README)</a></li><li><a href="../aidlc-docs/inception/hechos-del-codigo.md">Ficha de hechos del código</a></li><li><a href="../kauta/README.md">README de la aplicación</a></li><li><a href="../kauta/DESIGN.md">Sistema de interfaz (DESIGN.md)</a></li><li><a href="designs/kauta-estado-2026-10-17.md">Estado del 2026-10-17</a></li><li><a href="https://github.com/FilipaoVfx/hackaton30xBlinka">Repositorio en GitHub</a></li></ul></section>
+<footer>Todos los datos de Kauta son ficticios y no mueve dinero real. Fuente de las afirmaciones técnicas: <a href="../aidlc-docs/inception/hechos-del-codigo.md">hechos-del-codigo.md</a> (commit 7a9e108, lectura del 2026-10-17).</footer>
+</main></body></html>

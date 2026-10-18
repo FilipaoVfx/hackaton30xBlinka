@@ -1,0 +1,50 @@
+---
+title: "C3 · Componentes de web/src (SPA React, rutas por hash) | Fuente: hechos §12 · imports verificados en el código"
+---
+flowchart LR
+  MAIN["<b>main.tsx</b> → <b>App.tsx</b><br/>marco: barra lateral Operar / Dinero / Control,<br/>navegación móvil, selector de persona,<br/>GET /auth/yo y POST /auth/persona"]:::clave
+  subgraph OP["Operar"]
+    P1["Resumen<br/>#/resumen"]:::comp
+    P2["Facturas<br/>#/facturas"]:::comp
+    P3["Detalle + ReciboFactura<br/>#/facturas/id"]:::comp
+    P4["Pregunta<br/>#/pregunta"]:::comp
+    P5["Simulador<br/>#/simulador"]:::comp
+  end
+  subgraph DI["Dinero"]
+    P6["Wallet<br/>#/wallet"]:::comp
+    P7["Rendimiento<br/>#/rendimiento"]:::comp
+  end
+  subgraph CO["Control"]
+    P8["Proveedores<br/>#/proveedores"]:::comp
+    P9["Reglas<br/>#/reglas"]:::comp
+    P10["Auditoria<br/>#/auditoria"]:::comp
+    P11["Seguridad<br/>#/seguridad"]:::comp
+  end
+  UI["<b>ui.tsx</b><br/>Logo, Panel, Boton, Modal, Sello, TiraReglas,<br/>TarjetasMetricas, EstadoCarga, LineaTiempo,<br/>GraficoSaldo, Validaciones, toasts"]:::comp
+  API["<b>api.ts</b><br/>cliente HTTP, CSRF, reintento 401,<br/>hooks useApi, useRuta, useCambios,<br/>puede(), formato de dinero y fechas"]:::comp
+  CSS["<b>styles.css</b><br/>Tailwind 4 y tokens de DESIGN.md"]:::dato
+  BE["API FastAPI /api"]:::externo
+  LS["localStorage<br/>kauta:persona"]:::dato
+  MAIN -->|"enruta a"| OP
+  MAIN --> DI
+  MAIN --> CO
+  MAIN --> UI
+  MAIN --> API
+  OP & DI & CO --> UI
+  OP & DI & CO --> API
+  P3 -->|"CANALES"| P2
+  API -->|"fetch con cookie de sesión"| BE
+  API --> LS
+  UI --> CSS
+  CSS ~~~ L1
+  subgraph L["Leyenda"]
+    direction LR
+    L1["Componente"]:::comp
+    L2["Marco de la aplicación"]:::clave
+    L3["Estilos y almacenamiento local"]:::dato
+    L4["Externo"]:::externo
+  end
+  classDef comp fill:#3b5bfd,stroke:#2a43c7,color:#ffffff
+  classDef clave fill:#0b1736,stroke:#0b1736,color:#ffffff
+  classDef dato fill:#dfe6ff,stroke:#3b5bfd,color:#0b1736
+  classDef externo fill:#e3e8f2,stroke:#5b6782,color:#0b1736

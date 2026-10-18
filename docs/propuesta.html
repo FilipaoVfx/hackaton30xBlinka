@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Propuesta de Kauta</title>
+<style>
+:root{--lienzo:#f5f7fb;--panel:#fff;--elev:#eef1f8;--linea:#e3e8f2;--fuerte:#5b6782;--texto:#0b1736;--t2:#5b6782;--acento:#3b5bfd;--noche:#0b1736;
+--menta:#0f9f6e;--ambar:#c98a00;--coral:#d9483b;--menta-bg:#d9f5e8;--ambar-bg:#ffefcc;--coral-bg:#ffe0dc;--img-bg:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--lienzo:#0b1736;--panel:#13214a;--elev:#1a2a5a;--linea:#2a3a6a;--fuerte:#9aa7c7;--texto:#f5f7fb;--t2:#b6c0da;--acento:#8ea2ff;--noche:#050c20;
+--menta:#3ddba8;--ambar:#ffc24d;--coral:#ff8a7d;--menta-bg:#10372f;--ambar-bg:#3a2d14;--coral-bg:#3a1f26;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--lienzo);color:var(--texto);font:15px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;padding:32px max(16px,env(safe-area-inset-right)) 64px max(16px,env(safe-area-inset-left))}
+main{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h2{font-size:23px;margin:0}h3{font-size:17px;margin:0}
+p{margin:0;max-width:72ch;color:var(--t2)}
+.lead{font-size:17px;margin-top:12px}
+.nota{font-size:13px;color:var(--t2)}
+.sec{display:flex;flex-direction:column;gap:14px}
+nav.mn{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;border-bottom:1px solid var(--linea);padding-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--linea);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card p,.card li{font-size:14px}
+ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;color:var(--t2)}
+.tabla{overflow-x:auto;border:1px solid var(--linea);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--linea);vertical-align:top}
+th{background:var(--elev);font-size:13px}tr:last-child td{border-bottom:0}
+code{font:12.5px ui-monospace,Menlo,monospace;background:var(--elev);padding:1px 5px;border-radius:4px}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:1px 9px;border-radius:99px;border:1.5px solid;white-space:nowrap}
+.si{color:var(--menta);background:var(--menta-bg);border-color:var(--menta)}
+.no{color:var(--coral);background:var(--coral-bg);border-color:var(--coral)}
+.nd{color:var(--ambar);background:var(--ambar-bg);border-color:var(--ambar)}
+figure{margin:0}figure .im{background:var(--img-bg);border:1px solid var(--linea);border-radius:12px;padding:10px;overflow-x:auto}
+figure img{display:block;max-width:none;width:100%;min-width:min(100%,760px);height:auto}
+figcaption{font-size:13px;color:var(--t2);margin-top:8px;max-width:80ch}
+a{color:var(--acento)}a:focus-visible{outline:3px solid var(--acento);outline-offset:2px}
+.aviso{border-left:4px solid var(--ambar);background:var(--ambar-bg);padding:10px 14px;border-radius:8px;font-size:14px;color:var(--texto);max-width:80ch}
+footer{font-size:13px;color:var(--t2);border-top:1px solid var(--linea);padding-top:14px}
+</style></head><body><main>
+<nav class="mn" aria-label="Documentos"><a href="index.html">Índice</a><a href="propuesta.html">Propuesta</a><a href="arquitectura.html">Arquitectura</a><a href="personas.html">Personas</a><a href="https://github.com/FilipaoVfx/hackaton30xBlinka">Repositorio</a></nav><header><h1>Propuesta de Kauta</h1><p class="lead">Kauta es una demostración de un agente de cuentas por pagar: la IA lee y el código decide. Esta página resume la propuesta con sus cifras y sus límites. Fuente: hechos del código, <code>kauta/README.md</code> y <code>docs/designs/</code>.</p></header>
+<section class="sec" aria-labelledby="pb"><h2 id="pb">El problema</h2><p>Las facturas llegan por PDF, foto, correo, chat o XML fiscal. Pagarlas mal cuesta dinero: duplicados, cuentas cambiadas, proveedores bloqueados, montos que no cuadran con el contrato o instrucciones ocultas dentro del documento.</p></section><section class="sec" aria-labelledby="q"><h2 id="q">Qué es Kauta</h2><div class="grid"><div class="card"><h3>Lee</h3><p>XML fiscal exacto (CFDI 4.0, UBL DIAN), texto del PDF, OCR con Tesseract y, si hay clave, un modelo de Anthropic.</p></div><div class="card"><h3>Decide</h3><p>13 reglas puras y deterministas. Frenar gana a escalar y escalar a pagar; un error inesperado escala, nunca paga.</p></div><div class="card"><h3>Pregunta</h3><p>Lo dudoso va a una o dos personas con las preguntas por regla; las reglas duras se verifican otra vez al firmar.</p></div><div class="card"><h3>Paga y prueba</h3><p>Pagos simulados con aprobación firmada (HMAC), libro de doble partida, auditoría encadenada y un recibo de costos por factura.</p></div></div></section><section class="sec" aria-labelledby="d"><h2 id="d">Qué la distingue</h2><ul><li><b>El código decide.</b> El motor no usa IA; el prompt trata el documento como dato y 10 patrones detectan instrucciones sospechosas (R13).</li><li><b>Recibo de costos por pago:</b> lectura, revisión humana, comisión del riel, cambio e infraestructura salen de un solo libro; un costo desconocido se muestra como “—”, no como cero.</li><li><b>Doble control:</b> quien carga no aprueba; sobre 3.000 USD se exigen dos personas distintas; el cambio de cuenta lo verifica otra persona.</li><li><b>Falla cerrado:</b> pagos devueltos o fallidos revierten todo el intento y la factura vuelve a escalar.</li></ul></section><section class="sec" aria-labelledby="nh"><h2 id="nh">Qué no hace</h2><ul><li>No mueve dinero real: rieles, cuentas, directorio de titulares y costos son simulados.</li><li>No autentica en la pantalla actual: selector de persona sin contraseña; el login y el TOTP existen solo como API.</li><li>No lee el set con OCR ni IA: usa una tabla de referencia; la precisión de OCR vive en un script, no en una prueba.</li><li>No escala a varios procesos: un worker y un candado local.</li><li>Sin integración continua, migraciones ni rotación de claves; despliegue en Vercel <span class="chip nd">NO VERIFICADO</span>.</li></ul></section><section class="sec" aria-labelledby="c"><h2 id="c">Cifras y su alcance</h2><div class="tabla"><table><thead><tr><th>Cifra</th><th>Valor</th><th>Alcance</th></tr></thead><tbody><tr><td>Facturas del set</td><td>20: 9 pagar, 5 frenar, 6 escalar; 9 normales y 11 trampas</td><td><code>esperado.csv</code>; set ficticio</td></tr><tr><td>Reglas</td><td>13, con umbrales en <code>reglas.json</code> (umbral 3.000, máximo 10.000, presupuesto 15.000 USD)</td><td><code>motor.py</code>; valores de demo</td></tr><tr><td>Pruebas</td><td>76 casos (60 funciones) declarados en el estado del 2026-10-17</td><td>Contados por lectura; no ejecutados aquí <span class="chip nd">NO VERIFICADO</span></td></tr><tr><td>Lectura del set</td><td>Por tabla de referencia, no por OCR ni IA</td><td>El resultado del set no mide la calidad de lectura real (hechos §11)</td></tr><tr><td>Costos</td><td>Tarifas simuladas; costo de IA con 1 página fija</td><td>No son precios de proveedores</td></tr><tr><td>Moneda y países</td><td>USD, COP y MXN; validadores de 9 tipos de id fiscal</td><td><code>reglas.json</code>, <code>normalizacion.py</code></td></tr></tbody></table></div></section><section class="sec" aria-labelledby="lim"><h2 id="lim">Límites propios y siguientes pasos</h2><p>Los pendientes que el equipo ya registró: CI en GitHub Actions (<code>TODOS.md</code>), URL final de Vercel autorizada en el servidor, login real con TOTP en pantalla y lectura real de documentos nuevos. Las discrepancias conocidas entre documentos y código están en la sección 17 de la <a href="../aidlc-docs/inception/hechos-del-codigo.md">ficha de hechos</a>.</p></section>
+<footer>Todos los datos de Kauta son ficticios y no mueve dinero real. Fuente de las afirmaciones técnicas: <a href="../aidlc-docs/inception/hechos-del-codigo.md">hechos-del-codigo.md</a> (commit 7a9e108, lectura del 2026-10-17).</footer>
+</main></body></html>

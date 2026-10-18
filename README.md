@@ -294,3 +294,18 @@ node --test tests/finops.test.mjs
 ```
 
 Ver [contrato del MVP y guía de validación](docs/mvp-observabilidad.md) para fórmulas, límites y recorridos de comprobación.
+## Documentación de Kauta
+
+| Quiero entender | Documento |
+|---|---|
+| El índice de toda la documentación | [docs/README.md](docs/README.md) |
+| La arquitectura (contexto, contenedores, motor, servidor, web) | [docs/arquitectura.html](docs/arquitectura.html) |
+| Quién usa Kauta y qué hace cada rol | [docs/personas.html](docs/personas.html) |
+| Qué hace el código hoy, con evidencia ruta:línea | [aidlc-docs/inception/hechos-del-codigo.md](aidlc-docs/inception/hechos-del-codigo.md) |
+| Lo demás de la etapa de inicio (requisitos, plan, recortes) | [aidlc-docs/inception/](aidlc-docs/inception/) |
+| El historial de trabajo por commit y por bloque T1 a T13 | [aidlc-docs/construction/tandas.md](aidlc-docs/construction/tandas.md) |
+| Cómo se despliega y qué garantías no funcionales tiene | [aidlc-docs/construction/nfr-e-infraestructura.md](aidlc-docs/construction/nfr-e-infraestructura.md) |
+| Qué pruebas hay, cómo se ejecutan y qué no está probado | [aidlc-docs/construction/estrategia-de-verificacion.md](aidlc-docs/construction/estrategia-de-verificacion.md) |
+| El modelo de datos y las 13 reglas | [docs/modelo-de-datos.html](docs/modelo-de-datos.html) |
+| Los colores, la tipografía y los componentes de la interfaz | [docs/design-system/guia-de-estilo.html](docs/design-system/guia-de-estilo.html) |
+| El producto y su alcance | [docs/PRD.md](docs/PRD.md) |
