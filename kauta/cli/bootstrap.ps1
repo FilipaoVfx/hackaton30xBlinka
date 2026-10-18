@@ -7,10 +7,10 @@
 #
 # Variables opcionales:
 #   $env:REPO_DIR  dónde clonar/usar el repo (por defecto: $HOME\hackaton30xBlinka)
-#   $env:KAUTA_URL URL base de la API (por defecto: http://127.0.0.1:8000)
+#   $env:KAUTA_URL URL base de la API (por defecto: la demo pública)
 
 param(
-    [string]$ApiUrl = $(if ($env:KAUTA_URL) { $env:KAUTA_URL } else { "http://127.0.0.1:8000" })
+    [string]$ApiUrl = $(if ($env:KAUTA_URL) { $env:KAUTA_URL } else { "https://kauta.2-25-233-186.sslip.io" })
 )
 
 $ErrorActionPreference = "Stop"

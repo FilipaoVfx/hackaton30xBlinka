@@ -8,12 +8,12 @@
 #
 # Variables opcionales:
 #   REPO_DIR   dónde clonar/usar el repo (por defecto: ~/hackaton30xBlinka)
-#   KAUTA_URL  URL base de la API de Kauta (por defecto: http://127.0.0.1:8000)
+#   KAUTA_URL  URL base de la API (por defecto: la demo pública)
 set -euo pipefail
 
 REPO_URL="https://github.com/FilipaoVfx/hackaton30xBlinka.git"
 REPO_DIR="${REPO_DIR:-$HOME/hackaton30xBlinka}"
-API_URL="${1:-${KAUTA_URL:-http://127.0.0.1:8000}}"
+API_URL="${1:-${KAUTA_URL:-https://kauta.2-25-233-186.sslip.io}}"
 
 log() { printf '\033[1;36m==>\033[0m %s\n' "$1"; }
 

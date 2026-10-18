@@ -17,3 +17,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 include = ["kauta_cli*"]
+
+# Sin esto la hoja de estilos no entra en el wheel y la app solo arranca
+# instalada en modo editable (-e), no con un pip install normal.
+[tool.setuptools.package-data]
+kauta_cli = ["*.tcss"]

@@ -75,10 +75,15 @@ class KautaApp(App):
         self.switch_screen(LoginScreen())
 
 
+# La demo pública: así `kauta` sin argumentos funciona desde cualquier máquina.
+# Para un backend local: kauta --url http://127.0.0.1:8000
+API_DEMO = "https://kauta.2-25-233-186.sslip.io"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Kauta CLI — TUI de terminal para la API de Kauta.")
-    parser.add_argument("--url", default=os.environ.get("KAUTA_URL", "http://127.0.0.1:8000"),
-                         help="Base de la API de Kauta (por defecto http://127.0.0.1:8000).")
+    parser.add_argument("--url", default=os.environ.get("KAUTA_URL", API_DEMO),
+                         help=f"Base de la API de Kauta (por defecto la demo pública: {API_DEMO}).")
     args = parser.parse_args()
     KautaApp(args.url).run()
 
