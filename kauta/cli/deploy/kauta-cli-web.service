@@ -1,0 +1,25 @@
+# ttyd sirve la TUI de Kauta (kauta/cli) por WebSocket/HTTP en localhost:8742.
+# Cada conexión de navegador abre su propio proceso de la TUI (ttyd no comparte
+# el pty entre clientes), así que cada jurado tiene su propia sesión/persona sin
+# pelearse por el cursor con los demás. El comando ejecutado está fijo (no es un
+# shell), así que un visitante solo puede operar la TUI, nunca salir a bash.
+[Unit]
+Description=ttyd: TUI de Kauta (kauta/cli) accesible por navegador
+After=network-online.target kauta.service
+Wants=network-online.target
+Requires=kauta.service
+
+[Service]
+Type=simple
+WorkingDirectory=/root/hackaton30xBlinka/kauta/cli
+ExecStart=/usr/bin/ttyd -i 127.0.0.1 -p 8742 -m 25 -t titleFixed=Kauta -t fontSize=15 -t 'theme={"background":"#0B1736","foreground":"#F5F7FB"}' --writable -- /root/hackaton30xBlinka/kauta/cli/.venv/bin/python -m kauta_cli.app --url http://127.0.0.1:8840
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

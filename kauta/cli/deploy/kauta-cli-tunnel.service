@@ -1,0 +1,22 @@
+# Túnel rápido de Cloudflare hacia la TUI de Kauta servida por ttyd (127.0.0.1:8742).
+# La URL *.trycloudflare.com cambia si el servicio se reinicia:
+#   journalctl -u kauta-cli-tunnel | grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' | tail -1
+[Unit]
+Description=Túnel Cloudflare: TUI de Kauta por navegador (ttyd :8742)
+After=network-online.target kauta-cli-web.service
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/cloudflared tunnel --url http://127.0.0.1:8742 --no-autoupdate --protocol http2
+Restart=always
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+MemoryMax=192M
+
+[Install]
+WantedBy=multi-user.target
