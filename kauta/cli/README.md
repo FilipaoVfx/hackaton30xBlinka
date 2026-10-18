@@ -5,7 +5,23 @@ terminal estilo `k9s`, pensada para una demo rápida — paneles vivos, navegaci
 por teclado, sin sacrificar performance por efectos cosméticos. No reemplaza al
 frontend; es un cliente HTTP adicional de solo esa misma API pública.
 
-## Arrancar
+## Arrancar en un paso (cualquier máquina)
+
+- **Linux/macOS/WSL (bash):**
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/FilipaoVfx/hackaton30xBlinka/main/kauta/cli/bootstrap.sh | bash -s -- https://tu-kauta.example
+  ```
+- **Windows (PowerShell, sin WSL):**
+  ```powershell
+  iwr -useb https://raw.githubusercontent.com/FilipaoVfx/hackaton30xBlinka/main/kauta/cli/bootstrap.ps1 -OutFile bootstrap.ps1
+  .\bootstrap.ps1 https://tu-kauta.example
+  ```
+
+Ambos scripts: clonan el repo si hace falta, crean su propio `.venv`, instalan
+`textual`/`httpx` solo la primera vez, y arrancan la TUI apuntando a la URL dada
+(por defecto `http://127.0.0.1:8000`, o la variable `KAUTA_URL`).
+
+## Arrancar manualmente
 
 1. Backend (desde `kauta/`, modo demo):
 
