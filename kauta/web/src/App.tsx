@@ -1,7 +1,8 @@
+import { Button as HeroButton, Tooltip } from "@heroui/react";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Building2, ChevronDown, Ellipsis, FlaskConical, LayoutDashboard, MessageCircleQuestion, ReceiptText, ScrollText, ShieldCheck, SlidersHorizontal, Users, Wallet, ChartNoAxesCombined, ArrowRight, Search, Command } from "lucide-react";
 import { alPerderSesion, alRenovarSesion, api, avisarCambio, elegirPersona, fijarCsrf, guardarPersona, ultimaPersona, PERIODO, useCambios, useRuta, type Usuario } from "./api";
-import { Aviso, Boton, Cargando, cx, EstadoCarga, Logo, Modal } from "./ui";
+import { Aviso, Boton, Cargando, cx, EstadoCarga, Isotipo, Logo, Modal } from "./ui";
 import PaletaComandos from "./components/PaletaComandos";
 import Resumen from "./pages/Resumen";
 import Facturas from "./pages/Facturas";
@@ -88,37 +89,35 @@ function Marco({ usuario, setUsuario }: { usuario: Usuario; setUsuario: (u: Usua
     case "seguridad": contenido = <Seguridad />; break;
     default: contenido = <Resumen usuario={usuario} />;
   }
-  return <div className="kauta-app min-h-dvh lg:pl-[232px]">
+  return <div className="kauta-app">
     <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:bg-white focus:p-4">Saltar al contenido</a>
-    <aside className="kauta-sidebar fixed inset-y-0 left-0 z-30 hidden w-[232px] flex-col text-white lg:flex">
-      <div className="sidebar-brand px-6 pb-7 pt-8"><a href="#/resumen" aria-label="Kauta, inicio"><Logo claro /></a><p className="mt-3 text-xs text-[#aab6d3]">Autonomía, pero cauta.</p></div>
-      <a className="sidebar-empresa" href="#/resumen"><span className="empresa-avatar">K</span><span><strong>Kauta</strong><small>Espacio de demostración</small></span></a>
-      <nav className="sidebar-nav flex-1 px-3" aria-label="Secciones">
-        {["Operar", "Dinero", "Control"].map((grupo) => <div className="sidebar-grupo mb-6" key={grupo}>
-          <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#aab6d3]">{grupo}</p>
-          {NAV.filter((n) => n.grupo === grupo).map((n) => <a key={n.ruta} href={`#/${n.ruta}`} aria-current={pagina === n.ruta ? "page" : undefined}
-            className={cx("kauta-nav-item", pagina === n.ruta && "activo")}>
-            <n.icono className="h-[18px] w-[18px] shrink-0" strokeWidth={1.7} /><span className="flex-1">{n.nombre}</span>
-            {n.ruta === "pregunta" && pendientes > 0 && <span className="rounded-md bg-ambar px-1.5 py-0.5 text-[10px] font-bold text-noche num">{pendientes}</span>}
-          </a>)}
-        </div>)}
+    <aside className="kauta-sidebar" aria-label="Kauta">
+      <a className="rail-marca" href="#/resumen" aria-label="Kauta, inicio"><Isotipo size={38} /></a>
+      <nav className="sidebar-nav" aria-label="Secciones">
+        {NAV.map((n) => <Tooltip key={n.ruta} delay={250}><Tooltip.Trigger>
+          <a href={`#/${n.ruta}`} aria-label={n.nombre} aria-current={pagina === n.ruta ? "page" : undefined} className={cx("kauta-nav-item", pagina === n.ruta && "activo")}>
+            <n.icono size={21} strokeWidth={1.7} /><span>{n.corto ?? ({resumen:"Resumen",facturas:"Facturas",simulador:"Simular",wallet:"Wallet",proveedores:"Proveedores",reglas:"Reglas",auditoria:"Auditoría",seguridad:"Seguridad"} as Record<string,string>)[n.ruta] ?? n.nombre}</span>
+            {n.ruta === "pregunta" && pendientes > 0 && <b className="nav-conteo">{pendientes}</b>}
+          </a>
+        </Tooltip.Trigger><Tooltip.Content placement="right">{n.nombre}</Tooltip.Content></Tooltip>)}
       </nav>
-      <div className="sidebar-persona border-t border-white/10 p-4"><p className="px-2 text-xs text-[#aab6d3]">Demo sin autenticación</p><button onClick={() => setPersonas(true)} className="mt-2 flex min-h-14 w-full items-center gap-3 rounded-xl px-2 text-left hover:bg-white/10" aria-label="Cambiar de persona">
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-xs font-bold">{usuario.rol.toUpperCase()}</span>
-        <span className="min-w-0 flex-1"><span className="block truncate text-[13px] font-semibold">{usuario.nombre}</span><span className="block text-xs text-[#aab6d3]">Cambiar persona</span></span><ChevronDown className="h-4 w-4" />
-      </button></div>
+      <HeroButton className="rail-persona" isIconOnly aria-label="Cambiar de persona" onPress={() => setPersonas(true)}>{usuario.rol.toUpperCase()}</HeroButton>
     </aside>
-    <header className="kauta-topbar border-b border-bruma bg-white">
-      <div className="mx-auto flex min-h-[72px] max-w-[1280px] items-center gap-3 px-5 sm:px-9">
-        <a href="#/resumen" className="lg:hidden" aria-label="Inicio"><Logo /></a>
-        <div className="hidden text-[13px] sm:block"><span className="font-semibold">Kauta</span><span className="mx-3 text-bruma">/</span><span className="text-pizarra">{NAV.find(n => n.ruta === pagina)?.nombre ?? "Resumen"}</span></div>
-        <div className="ml-auto flex items-center gap-3"><button className="abrir-comandos" onClick={() => setBuscar(true)} aria-label="Buscar en Kauta"><Search size={16} /><span>Buscar</span><kbd><Command size={11} />K</kbd></button><span className="hidden items-center gap-2 text-xs text-pizarra sm:flex"><span className="h-1.5 w-1.5 rounded-full bg-menta" />Demo · sin dinero real</span>
-          <button onClick={() => setPersonas(true)} className="flex min-h-11 items-center gap-2 rounded-lg border border-bruma px-3 text-[13px] font-semibold" aria-label="Elegir persona"><span className="text-pizarra">Vista</span> {usuario.rol_nombre}<ChevronDown className="h-3.5 w-3.5" /></button>
+    <div className="kauta-area">
+      <header className="kauta-topbar">
+        <a href="#/resumen" className="topbar-logo" aria-label="Inicio"><Logo claro /></a>
+        <span className="topbar-separador" aria-hidden="true" />
+        <span className="topbar-espacio">Espacio de demostración <ChevronDown size={13} /></span>
+        <div className="topbar-acciones">
+          <HeroButton variant="ghost" className="abrir-comandos" onPress={() => setBuscar(true)} aria-label="Buscar en Kauta"><Search size={18} /><span>Buscar cualquier cosa</span><kbd>⌘ K</kbd></HeroButton>
+          <span className="demo-indicador"><span />Sin dinero real</span>
+          <HeroButton className="elegir-persona" onPress={() => setPersonas(true)} aria-label="Elegir persona"><span className="persona-avatar">{usuario.nombre.split(" ").map(p=>p[0]).slice(0,2).join("")}</span><span>{usuario.rol_nombre}</span><ChevronDown size={14} /></HeroButton>
         </div>
-      </div>
-    </header>
-    <main id="contenido" key={usuario.correo} className="kauta-contenido mx-auto max-w-[1280px] px-5 pb-28 pt-8 sm:px-9 lg:pb-12"><div className="contexto-periodo"><span><span className="contexto-punto" />Demo · sin dinero real</span><span>{PERIODO(periodo)}</span></div>{contenido}</main>
-    <footer className="mx-auto hidden max-w-[1280px] items-center justify-between border-t border-bruma px-9 py-5 text-xs text-pizarra lg:flex"><span>Kauta · La IA lee, el código decide.</span><span>Datos y costos simulados · Hackathon 30X</span></footer>
+      </header>
+      <div className="workspace-bar"><span><span className="workspace-punto" />{NAV.find(n => n.ruta === pagina)?.nombre ?? "Resumen"}</span><span>{PERIODO(periodo)}<span className="workspace-demo">Datos de demostración</span></span></div>
+      <main id="contenido" key={usuario.correo} className="kauta-contenido">{contenido}</main>
+      <footer className="kauta-footer"><span>Kauta · La IA lee, el código decide.</span><span>Hackathon 30X · Datos y costos simulados</span></footer>
+    </div>
     <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-bruma bg-white pb-[env(safe-area-inset-bottom)] lg:hidden" aria-label="Navegación móvil"><div className="grid grid-cols-5">
       {NAV.filter((n) => n.movil).map((n) => <a key={n.ruta} href={`#/${n.ruta}`} aria-current={pagina === n.ruta ? "page" : undefined} className={cx("flex min-h-16 flex-col items-center justify-center gap-1 text-[10px] font-semibold", pagina === n.ruta ? "text-azul" : "text-pizarra")}><n.icono className="h-5 w-5" />{n.corto ?? n.nombre}</a>)}
       <button onClick={() => setMas(true)} className="flex min-h-16 flex-col items-center justify-center gap-1 text-[10px] font-semibold text-pizarra"><Ellipsis className="h-5 w-5" />Más</button>

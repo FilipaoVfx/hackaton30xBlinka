@@ -1,3 +1,5 @@
+import { Button as HeroButton, Chip, Modal as HeroModal } from "@heroui/react";
+import type { ComponentProps } from "react";
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Check, CircleAlert, CircleCheck, CircleX, Copy, Info, LoaderCircle, X } from "lucide-react";
 import type { Decision, Estado, PasoPago, Regla } from "./api";
@@ -36,10 +38,10 @@ const ESTADOS: Record<Estado, { t: string; c: string }> = {
 };
 export function EstadoChip({ estado, className }: { estado: Estado; className?: string }) {
   const e = ESTADOS[estado] ?? ESTADOS.rechazada;
-  return <span className={cx("inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 whitespace-nowrap", e.c, className)}>
+  return <Chip size="sm" className={cx("kauta-chip inline-flex items-center gap-1.5 text-xs font-semibold whitespace-nowrap", e.c, className)}>
     <span className={cx("h-1.5 w-1.5 rounded-full", estado === "pagada" ? "bg-menta" : estado === "pendiente" ? "bg-ambar" : estado === "rechazada" ? "bg-pizarra" : "bg-coral")} />
-    {e.t}
-  </span>;
+    <Chip.Label>{e.t}</Chip.Label>
+  </Chip>;
 }
 const DECISIONES: Record<Decision, { t: string; c: string }> = {
   pagar: { t: "Pagar", c: "text-menta-t border-menta" },
@@ -118,13 +120,11 @@ const VARIANTES: Record<Variante, string> = {
   exito: "bg-menta-t text-white hover:bg-[#086349]",
 };
 export function Boton({ variante = "secundario", icono, cargando, children, className, ...p }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variante?: Variante; icono?: ReactNode; cargando?: boolean }) {
-  return (
-    <button {...p} disabled={p.disabled || cargando}
-      className={cx("kauta-boton inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-4 py-2 text-[14px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60", VARIANTES[variante], className)}>
-      {cargando ? <LoaderCircle className="h-4 w-4 animate-spin" /> : icono}
-      {children}
-    </button>
-  );
+  const { disabled, ...resto } = p;
+  return <HeroButton {...resto as ComponentProps<typeof HeroButton>} isDisabled={disabled || cargando}
+    className={cx("kauta-boton", `boton-${variante}`, VARIANTES[variante], className)}>
+      {cargando ? <LoaderCircle className="h-4 w-4 animate-spin" /> : icono}{children}
+    </HeroButton>;
 }
 export function Campo({ etiqueta, ayuda, children, className }: { etiqueta: string; ayuda?: ReactNode; children: ReactNode; className?: string }) {
   return (
@@ -223,26 +223,16 @@ export function ProveedorToast({ children }: { children: ReactNode }) {
 
 // ---------------------------------------------------------------- ventana modal
 export function Modal({ abierto, titulo, onCerrar, children, ancho = "max-w-lg" }: { abierto: boolean; titulo: string; onCerrar: () => void; children: ReactNode; ancho?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!abierto) return;
-    const f = (e: KeyboardEvent) => e.key === "Escape" && onCerrar();
-    document.addEventListener("keydown", f);
-    ref.current?.querySelector<HTMLElement>("input,textarea,button,select")?.focus();
-    return () => document.removeEventListener("keydown", f);
-  }, [abierto, onCerrar]);
-  if (!abierto) return null;
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-noche/50 p-0 sm:items-center sm:p-6" onMouseDown={(e) => e.target === e.currentTarget && onCerrar()}>
-      <div ref={ref} role="dialog" aria-modal="true" aria-label={titulo} className={cx("paso-animado max-h-[92vh] w-full overflow-y-auto rounded-t-[18px] bg-white shadow-2xl sm:rounded-[18px]", ancho)}>
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-bruma bg-white px-5 py-4">
-          <h2 className="text-[16px] font-bold">{titulo}</h2>
-          <button onClick={onCerrar} className="rounded-lg p-1.5 text-pizarra hover:bg-niebla" aria-label="Cerrar"><X className="h-5 w-5" /></button>
-        </div>
-        <div className="p-5">{children}</div>
-      </div>
-    </div>
-  );
+  return <HeroModal isOpen={abierto} onOpenChange={v => { if (!v) onCerrar(); }}>
+    <HeroModal.Backdrop className="kauta-modal-backdrop">
+      <HeroModal.Container className="kauta-modal-contenedor" placement="center" scroll="inside">
+        <HeroModal.Dialog className={cx("kauta-modal-dialogo", ancho)} aria-label={titulo}>
+          <HeroModal.Header className="kauta-modal-cabecera"><HeroModal.Heading>{titulo}</HeroModal.Heading><HeroButton variant="ghost" isIconOnly onPress={onCerrar} aria-label="Cerrar"><X size={20} /></HeroButton></HeroModal.Header>
+          <HeroModal.Body className="kauta-modal-cuerpo">{children}</HeroModal.Body>
+        </HeroModal.Dialog>
+      </HeroModal.Container>
+    </HeroModal.Backdrop>
+  </HeroModal>;
 }
 
 // ---------------------------------------------------------------- datos pequeños

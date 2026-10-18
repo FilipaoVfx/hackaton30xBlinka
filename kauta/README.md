@@ -134,7 +134,7 @@ importar la aplicación, para no reutilizar ni modificar la base local.
 
 - `kauta/`: motor determinista, extractores XML/texto/OCR y normalización fiscal.
 - `servidor/`: FastAPI, sesiones/CSRF, roles, pagos, wallet, auditoría y libro de costos.
-- `web/`: React, TypeScript, Vite, Tailwind e Inter local; tokens en `DESIGN.md`.
+- `web/`: React, TypeScript, Vite, Tailwind, HeroUI y Manrope local; tokens en `DESIGN.md`.
 - `data/`: empresa, reglas, tarifas simuladas, documentos y resultados del set.
 - `tests/`: núcleo, formatos, controles de servidor y conciliación de costos.
 - `scripts/`: mediciones y recorrido web reproducible.
@@ -143,4 +143,4 @@ La API heredada de contraseñas, invitaciones y TOTP conserva sus pruebas de
 regresión según la decisión D8. No forma parte de la interfaz pública de esta demo.
 El plan B Streamlit sigue disponible con las dependencias de `requirements.txt`.
 
-Diseño y planning: [sistema de interfaz](DESIGN.md), [plan aprobado](../docs/designs/kauta-finops-rediseno.md) y [estado de ejecución](../docs/designs/kauta-estado-2026-10-17.md).
+Diseño y planning: [contexto del producto](PRODUCT.md), [dirección del frontend](.impeccable/briefs/frontend.md), [sistema de interfaz](DESIGN.md), [plan aprobado](../docs/designs/kauta-finops-rediseno.md) y [estado de ejecución](../docs/designs/kauta-estado-2026-10-17.md).

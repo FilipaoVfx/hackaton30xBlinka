@@ -1,462 +1,592 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-17T21:54:45.467292+00:00",
-  "title": "Kauta · Sistema de interfaz",
+  "generatedAt": "2026-10-18T03:24:40.846632+00:00",
+  "title": "Design System: Kauta",
   "extensions": {
     "colorMeta": {
       "noche": {
-        "role": "neutral",
-        "displayName": "noche",
+        "role": "primary",
+        "displayName": "Noche",
+        "canonical": "#0b1736",
         "tonalRamp": [
-          "oklch(15.00% 0.06303 265.48)",
-          "oklch(26.43% 0.06303 265.48)",
-          "oklch(37.86% 0.06303 265.48)",
-          "oklch(49.29% 0.06303 265.48)",
-          "oklch(60.71% 0.06303 265.48)",
-          "oklch(72.14% 0.06303 265.48)",
-          "oklch(83.57% 0.06303 265.48)",
-          "oklch(95.00% 0.06303 265.48)"
+          "oklch(15.00% 0.0630 265.48)",
+          "oklch(26.43% 0.0630 265.48)",
+          "oklch(37.86% 0.0630 265.48)",
+          "oklch(49.29% 0.0630 265.48)",
+          "oklch(60.71% 0.0630 265.48)",
+          "oklch(72.14% 0.0630 265.48)",
+          "oklch(83.57% 0.0630 265.48)",
+          "oklch(95.00% 0.0630 265.48)"
         ]
       },
       "noche-2": {
         "role": "neutral",
-        "displayName": "noche-2",
+        "displayName": "Noche 2",
+        "canonical": "#142350",
         "tonalRamp": [
-          "oklch(15.00% 0.08500 266.80)",
-          "oklch(26.43% 0.08500 266.80)",
-          "oklch(37.86% 0.08500 266.80)",
-          "oklch(49.29% 0.08500 266.80)",
-          "oklch(60.71% 0.08500 266.80)",
-          "oklch(72.14% 0.08500 266.80)",
-          "oklch(83.57% 0.08500 266.80)",
-          "oklch(95.00% 0.08500 266.80)"
+          "oklch(15.00% 0.0850 266.80)",
+          "oklch(26.43% 0.0850 266.80)",
+          "oklch(37.86% 0.0850 266.80)",
+          "oklch(49.29% 0.0850 266.80)",
+          "oklch(60.71% 0.0850 266.80)",
+          "oklch(72.14% 0.0850 266.80)",
+          "oklch(83.57% 0.0850 266.80)",
+          "oklch(95.00% 0.0850 266.80)"
         ]
       },
       "noche-3": {
         "role": "neutral",
-        "displayName": "noche-3",
+        "displayName": "Noche 3",
+        "canonical": "#1e2f63",
         "tonalRamp": [
-          "oklch(15.00% 0.09443 267.32)",
-          "oklch(26.43% 0.09443 267.32)",
-          "oklch(37.86% 0.09443 267.32)",
-          "oklch(49.29% 0.09443 267.32)",
-          "oklch(60.71% 0.09443 267.32)",
-          "oklch(72.14% 0.09443 267.32)",
-          "oklch(83.57% 0.09443 267.32)",
-          "oklch(95.00% 0.09443 267.32)"
+          "oklch(15.00% 0.0944 267.32)",
+          "oklch(26.43% 0.0944 267.32)",
+          "oklch(37.86% 0.0944 267.32)",
+          "oklch(49.29% 0.0944 267.32)",
+          "oklch(60.71% 0.0944 267.32)",
+          "oklch(72.14% 0.0944 267.32)",
+          "oklch(83.57% 0.0944 267.32)",
+          "oklch(95.00% 0.0944 267.32)"
         ]
       },
       "menta": {
         "role": "secondary",
-        "displayName": "menta",
+        "displayName": "Menta",
+        "canonical": "#16c79a",
         "tonalRamp": [
-          "oklch(15.00% 0.14523 168.72)",
-          "oklch(26.43% 0.14523 168.72)",
-          "oklch(37.86% 0.14523 168.72)",
-          "oklch(49.29% 0.14523 168.72)",
-          "oklch(60.71% 0.14523 168.72)",
-          "oklch(72.14% 0.14523 168.72)",
-          "oklch(83.57% 0.14523 168.72)",
-          "oklch(95.00% 0.14523 168.72)"
+          "oklch(15.00% 0.1452 168.72)",
+          "oklch(26.43% 0.1452 168.72)",
+          "oklch(37.86% 0.1452 168.72)",
+          "oklch(49.29% 0.1452 168.72)",
+          "oklch(60.71% 0.1452 168.72)",
+          "oklch(72.14% 0.1452 168.72)",
+          "oklch(83.57% 0.1452 168.72)",
+          "oklch(95.00% 0.1452 168.72)"
         ]
       },
       "menta-t": {
         "role": "secondary",
-        "displayName": "menta-t",
+        "displayName": "Menta t",
+        "canonical": "#0b7a5c",
         "tonalRamp": [
-          "oklch(15.00% 0.10210 167.72)",
-          "oklch(26.43% 0.10210 167.72)",
-          "oklch(37.86% 0.10210 167.72)",
-          "oklch(49.29% 0.10210 167.72)",
-          "oklch(60.71% 0.10210 167.72)",
-          "oklch(72.14% 0.10210 167.72)",
-          "oklch(83.57% 0.10210 167.72)",
-          "oklch(95.00% 0.10210 167.72)"
+          "oklch(15.00% 0.1021 167.72)",
+          "oklch(26.43% 0.1021 167.72)",
+          "oklch(37.86% 0.1021 167.72)",
+          "oklch(49.29% 0.1021 167.72)",
+          "oklch(60.71% 0.1021 167.72)",
+          "oklch(72.14% 0.1021 167.72)",
+          "oklch(83.57% 0.1021 167.72)",
+          "oklch(95.00% 0.1021 167.72)"
         ]
       },
       "menta-s": {
         "role": "secondary",
-        "displayName": "menta-s",
+        "displayName": "Menta s",
+        "canonical": "#e3f8f1",
         "tonalRamp": [
-          "oklch(15.00% 0.02387 173.85)",
-          "oklch(26.43% 0.02387 173.85)",
-          "oklch(37.86% 0.02387 173.85)",
-          "oklch(49.29% 0.02387 173.85)",
-          "oklch(60.71% 0.02387 173.85)",
-          "oklch(72.14% 0.02387 173.85)",
-          "oklch(83.57% 0.02387 173.85)",
-          "oklch(95.00% 0.02387 173.85)"
+          "oklch(15.00% 0.0239 173.85)",
+          "oklch(26.43% 0.0239 173.85)",
+          "oklch(37.86% 0.0239 173.85)",
+          "oklch(49.29% 0.0239 173.85)",
+          "oklch(60.71% 0.0239 173.85)",
+          "oklch(72.14% 0.0239 173.85)",
+          "oklch(83.57% 0.0239 173.85)",
+          "oklch(95.00% 0.0239 173.85)"
         ]
       },
       "ambar": {
         "role": "secondary",
-        "displayName": "ambar",
+        "displayName": "Ambar",
+        "canonical": "#ffb547",
         "tonalRamp": [
-          "oklch(15.00% 0.14865 73.35)",
-          "oklch(26.43% 0.14865 73.35)",
-          "oklch(37.86% 0.14865 73.35)",
-          "oklch(49.29% 0.14865 73.35)",
-          "oklch(60.71% 0.14865 73.35)",
-          "oklch(72.14% 0.14865 73.35)",
-          "oklch(83.57% 0.14865 73.35)",
-          "oklch(95.00% 0.14865 73.35)"
+          "oklch(15.00% 0.1486 73.35)",
+          "oklch(26.43% 0.1486 73.35)",
+          "oklch(37.86% 0.1486 73.35)",
+          "oklch(49.29% 0.1486 73.35)",
+          "oklch(60.71% 0.1486 73.35)",
+          "oklch(72.14% 0.1486 73.35)",
+          "oklch(83.57% 0.1486 73.35)",
+          "oklch(95.00% 0.1486 73.35)"
         ]
       },
       "ambar-t": {
         "role": "secondary",
-        "displayName": "ambar-t",
+        "displayName": "Ambar t",
+        "canonical": "#9a5800",
         "tonalRamp": [
-          "oklch(15.00% 0.12015 62.73)",
-          "oklch(26.43% 0.12015 62.73)",
-          "oklch(37.86% 0.12015 62.73)",
-          "oklch(49.29% 0.12015 62.73)",
-          "oklch(60.71% 0.12015 62.73)",
-          "oklch(72.14% 0.12015 62.73)",
-          "oklch(83.57% 0.12015 62.73)",
-          "oklch(95.00% 0.12015 62.73)"
+          "oklch(15.00% 0.1201 62.73)",
+          "oklch(26.43% 0.1201 62.73)",
+          "oklch(37.86% 0.1201 62.73)",
+          "oklch(49.29% 0.1201 62.73)",
+          "oklch(60.71% 0.1201 62.73)",
+          "oklch(72.14% 0.1201 62.73)",
+          "oklch(83.57% 0.1201 62.73)",
+          "oklch(95.00% 0.1201 62.73)"
         ]
       },
       "ambar-s": {
         "role": "secondary",
-        "displayName": "ambar-s",
+        "displayName": "Ambar s",
+        "canonical": "#fff4e0",
         "tonalRamp": [
-          "oklch(15.00% 0.02883 82.60)",
-          "oklch(26.43% 0.02883 82.60)",
-          "oklch(37.86% 0.02883 82.60)",
-          "oklch(49.29% 0.02883 82.60)",
-          "oklch(60.71% 0.02883 82.60)",
-          "oklch(72.14% 0.02883 82.60)",
-          "oklch(83.57% 0.02883 82.60)",
-          "oklch(95.00% 0.02883 82.60)"
+          "oklch(15.00% 0.0288 82.60)",
+          "oklch(26.43% 0.0288 82.60)",
+          "oklch(37.86% 0.0288 82.60)",
+          "oklch(49.29% 0.0288 82.60)",
+          "oklch(60.71% 0.0288 82.60)",
+          "oklch(72.14% 0.0288 82.60)",
+          "oklch(83.57% 0.0288 82.60)",
+          "oklch(95.00% 0.0288 82.60)"
         ]
       },
       "coral": {
         "role": "secondary",
-        "displayName": "coral",
+        "displayName": "Coral",
+        "canonical": "#ff5c5c",
         "tonalRamp": [
-          "oklch(15.00% 0.19869 23.91)",
-          "oklch(26.43% 0.19869 23.91)",
-          "oklch(37.86% 0.19869 23.91)",
-          "oklch(49.29% 0.19869 23.91)",
-          "oklch(60.71% 0.19869 23.91)",
-          "oklch(72.14% 0.19869 23.91)",
-          "oklch(83.57% 0.19869 23.91)",
-          "oklch(95.00% 0.19869 23.91)"
+          "oklch(15.00% 0.1987 23.91)",
+          "oklch(26.43% 0.1987 23.91)",
+          "oklch(37.86% 0.1987 23.91)",
+          "oklch(49.29% 0.1987 23.91)",
+          "oklch(60.71% 0.1987 23.91)",
+          "oklch(72.14% 0.1987 23.91)",
+          "oklch(83.57% 0.1987 23.91)",
+          "oklch(95.00% 0.1987 23.91)"
         ]
       },
       "coral-t": {
         "role": "secondary",
-        "displayName": "coral-t",
+        "displayName": "Coral t",
+        "canonical": "#c7302f",
         "tonalRamp": [
-          "oklch(15.00% 0.18798 26.31)",
-          "oklch(26.43% 0.18798 26.31)",
-          "oklch(37.86% 0.18798 26.31)",
-          "oklch(49.29% 0.18798 26.31)",
-          "oklch(60.71% 0.18798 26.31)",
-          "oklch(72.14% 0.18798 26.31)",
-          "oklch(83.57% 0.18798 26.31)",
-          "oklch(95.00% 0.18798 26.31)"
+          "oklch(15.00% 0.1880 26.31)",
+          "oklch(26.43% 0.1880 26.31)",
+          "oklch(37.86% 0.1880 26.31)",
+          "oklch(49.29% 0.1880 26.31)",
+          "oklch(60.71% 0.1880 26.31)",
+          "oklch(72.14% 0.1880 26.31)",
+          "oklch(83.57% 0.1880 26.31)",
+          "oklch(95.00% 0.1880 26.31)"
         ]
       },
       "coral-s": {
         "role": "secondary",
-        "displayName": "coral-s",
+        "displayName": "Coral s",
+        "canonical": "#ffe9e9",
         "tonalRamp": [
-          "oklch(15.00% 0.02405 17.58)",
-          "oklch(26.43% 0.02405 17.58)",
-          "oklch(37.86% 0.02405 17.58)",
-          "oklch(49.29% 0.02405 17.58)",
-          "oklch(60.71% 0.02405 17.58)",
-          "oklch(72.14% 0.02405 17.58)",
-          "oklch(83.57% 0.02405 17.58)",
-          "oklch(95.00% 0.02405 17.58)"
+          "oklch(15.00% 0.0241 17.58)",
+          "oklch(26.43% 0.0241 17.58)",
+          "oklch(37.86% 0.0241 17.58)",
+          "oklch(49.29% 0.0241 17.58)",
+          "oklch(60.71% 0.0241 17.58)",
+          "oklch(72.14% 0.0241 17.58)",
+          "oklch(83.57% 0.0241 17.58)",
+          "oklch(95.00% 0.0241 17.58)"
         ]
       },
       "azul": {
         "role": "primary",
-        "displayName": "azul",
+        "displayName": "Azul",
+        "canonical": "#3b5bfd",
         "tonalRamp": [
-          "oklch(15.00% 0.24164 268.26)",
-          "oklch(26.43% 0.24164 268.26)",
-          "oklch(37.86% 0.24164 268.26)",
-          "oklch(49.29% 0.24164 268.26)",
-          "oklch(60.71% 0.24164 268.26)",
-          "oklch(72.14% 0.24164 268.26)",
-          "oklch(83.57% 0.24164 268.26)",
-          "oklch(95.00% 0.24164 268.26)"
+          "oklch(15.00% 0.2416 268.26)",
+          "oklch(26.43% 0.2416 268.26)",
+          "oklch(37.86% 0.2416 268.26)",
+          "oklch(49.29% 0.2416 268.26)",
+          "oklch(60.71% 0.2416 268.26)",
+          "oklch(72.14% 0.2416 268.26)",
+          "oklch(83.57% 0.2416 268.26)",
+          "oklch(95.00% 0.2416 268.26)"
         ]
       },
       "azul-t": {
         "role": "primary",
-        "displayName": "azul-t",
+        "displayName": "Azul t",
+        "canonical": "#2a44d6",
         "tonalRamp": [
-          "oklch(15.00% 0.22292 267.91)",
-          "oklch(26.43% 0.22292 267.91)",
-          "oklch(37.86% 0.22292 267.91)",
-          "oklch(49.29% 0.22292 267.91)",
-          "oklch(60.71% 0.22292 267.91)",
-          "oklch(72.14% 0.22292 267.91)",
-          "oklch(83.57% 0.22292 267.91)",
-          "oklch(95.00% 0.22292 267.91)"
+          "oklch(15.00% 0.2229 267.91)",
+          "oklch(26.43% 0.2229 267.91)",
+          "oklch(37.86% 0.2229 267.91)",
+          "oklch(49.29% 0.2229 267.91)",
+          "oklch(60.71% 0.2229 267.91)",
+          "oklch(72.14% 0.2229 267.91)",
+          "oklch(83.57% 0.2229 267.91)",
+          "oklch(95.00% 0.2229 267.91)"
         ]
       },
       "azul-s": {
         "role": "primary",
-        "displayName": "azul-s",
+        "displayName": "Azul s",
+        "canonical": "#e8edff",
         "tonalRamp": [
-          "oklch(15.00% 0.02483 273.50)",
-          "oklch(26.43% 0.02483 273.50)",
-          "oklch(37.86% 0.02483 273.50)",
-          "oklch(49.29% 0.02483 273.50)",
-          "oklch(60.71% 0.02483 273.50)",
-          "oklch(72.14% 0.02483 273.50)",
-          "oklch(83.57% 0.02483 273.50)",
-          "oklch(95.00% 0.02483 273.50)"
+          "oklch(15.00% 0.0248 273.50)",
+          "oklch(26.43% 0.0248 273.50)",
+          "oklch(37.86% 0.0248 273.50)",
+          "oklch(49.29% 0.0248 273.50)",
+          "oklch(60.71% 0.0248 273.50)",
+          "oklch(72.14% 0.0248 273.50)",
+          "oklch(83.57% 0.0248 273.50)",
+          "oklch(95.00% 0.0248 273.50)"
         ]
       },
       "pizarra": {
         "role": "neutral",
-        "displayName": "pizarra",
+        "displayName": "Pizarra",
+        "canonical": "#5b6782",
         "tonalRamp": [
-          "oklch(15.00% 0.04543 266.09)",
-          "oklch(26.43% 0.04543 266.09)",
-          "oklch(37.86% 0.04543 266.09)",
-          "oklch(49.29% 0.04543 266.09)",
-          "oklch(60.71% 0.04543 266.09)",
-          "oklch(72.14% 0.04543 266.09)",
-          "oklch(83.57% 0.04543 266.09)",
-          "oklch(95.00% 0.04543 266.09)"
+          "oklch(15.00% 0.0454 266.09)",
+          "oklch(26.43% 0.0454 266.09)",
+          "oklch(37.86% 0.0454 266.09)",
+          "oklch(49.29% 0.0454 266.09)",
+          "oklch(60.71% 0.0454 266.09)",
+          "oklch(72.14% 0.0454 266.09)",
+          "oklch(83.57% 0.0454 266.09)",
+          "oklch(95.00% 0.0454 266.09)"
         ]
       },
       "bruma": {
         "role": "neutral",
-        "displayName": "bruma",
+        "displayName": "Bruma",
+        "canonical": "#e3e8f2",
         "tonalRamp": [
-          "oklch(15.00% 0.01456 264.50)",
-          "oklch(26.43% 0.01456 264.50)",
-          "oklch(37.86% 0.01456 264.50)",
-          "oklch(49.29% 0.01456 264.50)",
-          "oklch(60.71% 0.01456 264.50)",
-          "oklch(72.14% 0.01456 264.50)",
-          "oklch(83.57% 0.01456 264.50)",
-          "oklch(95.00% 0.01456 264.50)"
+          "oklch(15.00% 0.0146 264.50)",
+          "oklch(26.43% 0.0146 264.50)",
+          "oklch(37.86% 0.0146 264.50)",
+          "oklch(49.29% 0.0146 264.50)",
+          "oklch(60.71% 0.0146 264.50)",
+          "oklch(72.14% 0.0146 264.50)",
+          "oklch(83.57% 0.0146 264.50)",
+          "oklch(95.00% 0.0146 264.50)"
         ]
       },
       "niebla": {
         "role": "neutral",
-        "displayName": "niebla",
+        "displayName": "Niebla",
+        "canonical": "#f5f7fb",
         "tonalRamp": [
-          "oklch(15.00% 0.00574 264.53)",
-          "oklch(26.43% 0.00574 264.53)",
-          "oklch(37.86% 0.00574 264.53)",
-          "oklch(49.29% 0.00574 264.53)",
-          "oklch(60.71% 0.00574 264.53)",
-          "oklch(72.14% 0.00574 264.53)",
-          "oklch(83.57% 0.00574 264.53)",
-          "oklch(95.00% 0.00574 264.53)"
+          "oklch(15.00% 0.0057 264.53)",
+          "oklch(26.43% 0.0057 264.53)",
+          "oklch(37.86% 0.0057 264.53)",
+          "oklch(49.29% 0.0057 264.53)",
+          "oklch(60.71% 0.0057 264.53)",
+          "oklch(72.14% 0.0057 264.53)",
+          "oklch(83.57% 0.0057 264.53)",
+          "oklch(95.00% 0.0057 264.53)"
         ]
       },
       "panel": {
         "role": "neutral",
-        "displayName": "panel",
+        "displayName": "Panel",
+        "canonical": "#ffffff",
         "tonalRamp": [
-          "oklch(15.00% 0.00000 89.88)",
-          "oklch(26.43% 0.00000 89.88)",
-          "oklch(37.86% 0.00000 89.88)",
-          "oklch(49.29% 0.00000 89.88)",
-          "oklch(60.71% 0.00000 89.88)",
-          "oklch(72.14% 0.00000 89.88)",
-          "oklch(83.57% 0.00000 89.88)",
-          "oklch(95.00% 0.00000 89.88)"
+          "oklch(15.00% 0.0000 89.88)",
+          "oklch(26.43% 0.0000 89.88)",
+          "oklch(37.86% 0.0000 89.88)",
+          "oklch(49.29% 0.0000 89.88)",
+          "oklch(60.71% 0.0000 89.88)",
+          "oklch(72.14% 0.0000 89.88)",
+          "oklch(83.57% 0.0000 89.88)",
+          "oklch(95.00% 0.0000 89.88)"
+        ]
+      },
+      "rail-label": {
+        "role": "neutral",
+        "displayName": "Rail label",
+        "canonical": "#becae2",
+        "tonalRamp": [
+          "oklch(15.00% 0.0361 264.36)",
+          "oklch(26.43% 0.0361 264.36)",
+          "oklch(37.86% 0.0361 264.36)",
+          "oklch(49.29% 0.0361 264.36)",
+          "oklch(60.71% 0.0361 264.36)",
+          "oklch(72.14% 0.0361 264.36)",
+          "oklch(83.57% 0.0361 264.36)",
+          "oklch(95.00% 0.0361 264.36)"
+        ]
+      },
+      "rule-pass-bg": {
+        "role": "secondary",
+        "displayName": "Rule pass bg",
+        "canonical": "#164438",
+        "tonalRamp": [
+          "oklch(15.00% 0.0544 172.90)",
+          "oklch(26.43% 0.0544 172.90)",
+          "oklch(37.86% 0.0544 172.90)",
+          "oklch(49.29% 0.0544 172.90)",
+          "oklch(60.71% 0.0544 172.90)",
+          "oklch(72.14% 0.0544 172.90)",
+          "oklch(83.57% 0.0544 172.90)",
+          "oklch(95.00% 0.0544 172.90)"
+        ]
+      },
+      "rule-pass-text": {
+        "role": "secondary",
+        "displayName": "Rule pass text",
+        "canonical": "#90ebd4",
+        "tonalRamp": [
+          "oklch(15.00% 0.0937 176.07)",
+          "oklch(26.43% 0.0937 176.07)",
+          "oklch(37.86% 0.0937 176.07)",
+          "oklch(49.29% 0.0937 176.07)",
+          "oklch(60.71% 0.0937 176.07)",
+          "oklch(72.14% 0.0937 176.07)",
+          "oklch(83.57% 0.0937 176.07)",
+          "oklch(95.00% 0.0937 176.07)"
+        ]
+      },
+      "metric-line": {
+        "role": "neutral",
+        "displayName": "Metric line",
+        "canonical": "#d4dcea",
+        "tonalRamp": [
+          "oklch(15.00% 0.0211 261.77)",
+          "oklch(26.43% 0.0211 261.77)",
+          "oklch(37.86% 0.0211 261.77)",
+          "oklch(49.29% 0.0211 261.77)",
+          "oklch(60.71% 0.0211 261.77)",
+          "oklch(72.14% 0.0211 261.77)",
+          "oklch(83.57% 0.0211 261.77)",
+          "oklch(95.00% 0.0211 261.77)"
         ]
       }
     },
     "typographyMeta": {
       "headline": {
-        "displayName": "headline",
-        "purpose": "Cabeceras compartidas."
+        "displayName": "Headline",
+        "purpose": "Cabecera de página."
+      },
+      "inspector-title": {
+        "displayName": "Inspector title",
+        "purpose": "Título de evidencia interactiva."
       },
       "metric": {
-        "displayName": "metric",
-        "purpose": "Importes y métricas tabulares."
+        "displayName": "Metric",
+        "purpose": "Importes tabulares."
       },
       "title": {
-        "displayName": "title",
-        "purpose": "Cabeceras de panel."
+        "displayName": "Title",
+        "purpose": "Cabecera de panel."
       },
       "body": {
-        "displayName": "body",
+        "displayName": "Body",
         "purpose": "Texto base."
       },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Acciones compartidas."
+      },
       "label": {
-        "displayName": "label",
-        "purpose": "Etiquetas y navegación."
+        "displayName": "Label",
+        "purpose": "Etiquetas operativas."
+      },
+      "rail-label": {
+        "displayName": "Rail label",
+        "purpose": "Etiqueta con icono y tooltip."
       }
     },
     "shadows": [
       {
-        "name": "command-dialog",
+        "name": "modal",
+        "value": "0 24px 70px -18px #0b17365c",
+        "purpose": "Diálogo compartido."
+      },
+      {
+        "name": "command",
         "value": "0 24px 80px -12px #0b173659",
-        "purpose": "Superposición de búsqueda modal."
+        "purpose": "Paleta de comandos."
+      },
+      {
+        "name": "toast",
+        "value": "0 10px 30px -10px rgba(11,23,54,.5)",
+        "purpose": "Avisos flotantes."
       }
     ],
     "motion": [
       {
-        "name": "state-transition",
-        "value": "150ms",
-        "purpose": "Filas de decisión y enlaces del recorrido."
+        "name": "control",
+        "value": "background 160ms,color 160ms",
+        "purpose": "Botones y rail."
       },
       {
-        "name": "inspector-transition",
-        "value": "160ms",
-        "purpose": "Cambios de estado y selección de reglas."
+        "name": "decision-row",
+        "value": "background 150ms",
+        "purpose": "Hover de fila."
+      },
+      {
+        "name": "rule-selection",
+        "value": "transform 180ms,border-color 180ms",
+        "purpose": "Selección translateY(-4px)."
+      },
+      {
+        "name": "rule-strip",
+        "value": "encender 240ms ease-out both",
+        "purpose": "Entrada opcional de tira scaleY(.4) a scaleY(1)."
       },
       {
         "name": "reduced-motion",
-        "value": "0.01ms",
-        "purpose": "Duración reducida con retrasos de animación anulados."
+        "value": "animation-duration:.01ms;animation-delay:0ms;transition-duration:.01ms",
+        "purpose": "Preferencia de movimiento reducido."
       }
     ],
     "breakpoints": [
       {
-        "name": "mobile",
+        "name": "tour-two-columns",
         "value": "640px"
       },
       {
-        "name": "invoice-table",
-        "value": "768px"
+        "name": "mobile-max",
+        "value": "767px"
       },
       {
-        "name": "sidebar",
+        "name": "desktop-rail-min",
         "value": "1024px"
       },
       {
-        "name": "metric-mid",
-        "value": "1100px"
+        "name": "compact-desktop-max",
+        "value": "1250px"
       },
       {
-        "name": "summary-stack",
-        "value": "1199px"
+        "name": "tour-four-columns",
+        "value": "1280px"
       }
-    ]
+    ],
+    "heightBreakpoints": [
+      {
+        "name": "compact-rail",
+        "maxHeight": "760px",
+        "minWidth": "1024px"
+      },
+      {
+        "name": "short-rail",
+        "maxHeight": "640px",
+        "minWidth": "1024px"
+      },
+      {
+        "name": "scroll-rail",
+        "maxHeight": "540px",
+        "minWidth": "1024px"
+      }
+    ],
+    "rampNote": "Tonal ramps are synthesized OKLCH panel previews; canonical fields and DESIGN.md preserve implementation colors."
   },
   "components": [
     {
-      "name": "Botón primary",
+      "name": "Button primary",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Acción compartida de al menos 44 px.",
-      "html": "<button class=\"ds-button-primary\">Revisar factura</button>",
-      "css": ".ds-button-primary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-panel,#ffffff);background:var(--color-azul,#3b5bfd);border:0;}.ds-button-primary:hover{background:var(--color-azul-t,#2a44d6);}.ds-button-primary:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-primary:active{transform:translateY(1px);}"
+      "description": "Variante compartida con mínimo de 44 px.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Revisar pendientes</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:11px 17px;border:0;border-radius:10px;font:750 12px/1.4 var(--font-sans,\"Manrope Variable\",sans-serif);transition:background 160ms,color 160ms;cursor:pointer}.ds-btn:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:3px}.ds-btn:disabled{opacity:.5;pointer-events:none}.ds-btn-primary{background:var(--color-azul,#3b5bfd);color:var(--color-panel,#ffffff);}.ds-btn-primary:hover{background:#2a44d6}"
     },
     {
-      "name": "Botón secondary",
+      "name": "Button secondary",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Acción compartida de al menos 44 px.",
-      "html": "<button class=\"ds-button-secondary\">Revisar factura</button>",
-      "css": ".ds-button-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-noche,#0b1736);background:var(--color-panel,#ffffff);border:0;box-shadow:0 0 0 1px var(--color-bruma,#e3e8f2);}.ds-button-secondary:hover{background:var(--color-niebla,#f5f7fb);}.ds-button-secondary:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-secondary:active{transform:translateY(1px);}"
+      "description": "Variante compartida con mínimo de 44 px.",
+      "html": "<button class=\"ds-btn ds-btn-secondary\">Cancelar</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:11px 17px;border:0;border-radius:10px;font:750 12px/1.4 var(--font-sans,\"Manrope Variable\",sans-serif);transition:background 160ms,color 160ms;cursor:pointer}.ds-btn:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:3px}.ds-btn:disabled{opacity:.5;pointer-events:none}.ds-btn-secondary{background:var(--color-panel,#ffffff);color:var(--color-noche,#0b1736);box-shadow:inset 0 0 0 1px #d3dbea;}.ds-btn-secondary:hover{background:#f5f7fb}"
     },
     {
-      "name": "Botón danger",
-      "kind": "button",
-      "refersTo": "button-danger",
-      "description": "Acción compartida de al menos 44 px.",
-      "html": "<button class=\"ds-button-danger\">Revisar factura</button>",
-      "css": ".ds-button-danger{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-coral-t,#c7302f);background:var(--color-panel,#ffffff);border:0;box-shadow:0 0 0 1px #ff5c5c66;}.ds-button-danger:hover{background:var(--color-coral-s,#ffe9e9);}.ds-button-danger:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-danger:active{transform:translateY(1px);}"
-    },
-    {
-      "name": "Botón ghost",
-      "kind": "button",
-      "refersTo": "button-ghost",
-      "description": "Acción compartida de al menos 44 px.",
-      "html": "<button class=\"ds-button-ghost\">Revisar factura</button>",
-      "css": ".ds-button-ghost{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-pizarra,#5b6782);background:transparent;border:0;}.ds-button-ghost:hover{color:var(--color-noche,#0b1736);background:#e3e8f299;}.ds-button-ghost:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-ghost:active{transform:translateY(1px);}"
-    },
-    {
-      "name": "Botón success",
+      "name": "Button success",
       "kind": "button",
       "refersTo": "button-success",
-      "description": "Acción compartida de al menos 44 px.",
-      "html": "<button class=\"ds-button-success\">Revisar factura</button>",
-      "css": ".ds-button-success{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:7px;font:600 12px \"Inter Variable\",sans-serif;transition:background 150ms;color:var(--color-panel,#ffffff);background:var(--color-menta-t,#0b7a5c);border:0;}.ds-button-success:hover{background:#086349;}.ds-button-success:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}.ds-button-success:active{transform:translateY(1px);}"
+      "description": "Variante compartida con mínimo de 44 px.",
+      "html": "<button class=\"ds-btn ds-btn-success\">Aprobar</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:11px 17px;border:0;border-radius:10px;font:750 12px/1.4 var(--font-sans,\"Manrope Variable\",sans-serif);transition:background 160ms,color 160ms;cursor:pointer}.ds-btn:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:3px}.ds-btn:disabled{opacity:.5;pointer-events:none}.ds-btn-success{background:var(--color-menta-t,#0b7a5c);color:var(--color-panel,#ffffff);}.ds-btn-success:hover{background:#086349}"
+    },
+    {
+      "name": "Button danger",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Variante compartida con mínimo de 44 px.",
+      "html": "<button class=\"ds-btn ds-btn-danger\">Eliminar</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:11px 17px;border:0;border-radius:10px;font:750 12px/1.4 var(--font-sans,\"Manrope Variable\",sans-serif);transition:background 160ms,color 160ms;cursor:pointer}.ds-btn:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:3px}.ds-btn:disabled{opacity:.5;pointer-events:none}.ds-btn-danger{background:var(--color-coral-s,#ffe9e9);color:var(--color-coral-t,#c7302f);}.ds-btn-danger:hover{background:#ffe9e9}"
+    },
+    {
+      "name": "Button ghost",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Variante compartida con mínimo de 44 px.",
+      "html": "<button class=\"ds-btn ds-btn-ghost\">Volver</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:11px 17px;border:0;border-radius:10px;font:750 12px/1.4 var(--font-sans,\"Manrope Variable\",sans-serif);transition:background 160ms,color 160ms;cursor:pointer}.ds-btn:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:3px}.ds-btn:disabled{opacity:.5;pointer-events:none}.ds-btn-ghost{background:transparent;color:var(--color-pizarra,#5b6782);}.ds-btn-ghost:hover{background:rgb(227 232 242 / .6)}"
     },
     {
       "name": "Campo",
       "kind": "input",
       "refersTo": "input",
-      "description": "Campo con etiqueta y placeholder pizarra.",
-      "html": "<label class=\"ds-field\">Buscar facturas<input class=\"ds-input\" placeholder=\"Proveedor, número o ID\" /></label>",
-      "css": ".ds-field{display:block;font:500 13px \"Inter Variable\",sans-serif;color:var(--color-noche,#0b1736)}.ds-input{display:block;margin-top:6px;min-height:40px;padding:8px 12px;border:1px solid var(--color-bruma,#e3e8f2);border-radius:10px;background:white;color:var(--color-noche,#0b1736);font:14px \"Inter Variable\",sans-serif}.ds-input::placeholder{color:var(--color-pizarra,#5b6782)}.ds-input:hover{border-color:var(--color-bruma,#e3e8f2)}.ds-input:focus-visible{border-color:var(--color-azul,#3b5bfd);outline:none;box-shadow:0 0 0 2px #3b5bfd33}"
+      "description": "Campo etiquetado de formulario.",
+      "html": "<label class=\"ds-field\">Proveedor<input placeholder=\"Buscar proveedor\" /></label>",
+      "css": ".ds-field{display:grid;gap:6px;font:600 13px var(--font-sans,sans-serif);color:var(--color-noche,#0b1736)}.ds-field input{min-height:40px;padding:8px 12px;border:1px solid var(--color-bruma,#e3e8f2);border-radius:10px;background:#fff;color:var(--color-noche,#0b1736);font:400 14px var(--font-sans,sans-serif)}.ds-field input::placeholder{color:var(--color-pizarra,#5b6782)}.ds-field input:focus{outline:none;border-color:var(--color-azul,#3b5bfd);box-shadow:0 0 0 2px rgb(59 91 253 / .2)}"
     },
     {
-      "name": "Navegación",
+      "name": "Rail navigation",
       "kind": "nav",
-      "description": "Selección sobre noche con señal menta.",
-      "html": "<nav class=\"ds-nav\"><a href=\"#/resumen\" aria-current=\"page\" class=\"ds-nav-item\">Resumen</a></nav>",
-      "css": ".ds-nav{background:var(--color-noche,#0b1736);padding:15px}.ds-nav-item{display:flex;align-items:center;position:relative;min-height:42px;padding:10px;border-radius:6px;color:#c4cde0;font:500 12px \"Inter Variable\",sans-serif;text-decoration:none}.ds-nav-item:hover{background:#142350;color:white}.ds-nav-item[aria-current=page]{background:#243556;color:white;font-weight:600}.ds-nav-item[aria-current=page]::after{content:\"\";position:absolute;left:-15px;top:14px;bottom:14px;width:2px;background:var(--color-menta,#16c79a)}.ds-nav-item:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}"
+      "description": "Icono y etiqueta; selección menta dentro del rail noche.",
+      "html": "<nav class=\"ds-rail\" aria-label=\"Secciones\"><a href=\"#resumen\" aria-current=\"page\"><svg width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/></svg><span>Resumen</span></a></nav>",
+      "css": ".ds-rail{width:88px;padding:10px;background:var(--color-noche,#0b1736)}.ds-rail a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:68px;height:53px;border-radius:12px;color:#becae2;text-decoration:none;font:650 9px var(--font-sans,sans-serif);transition:background 160ms,color 160ms}.ds-rail a:hover{background:var(--color-noche-3,#1e2f63);color:#fff}.ds-rail a[aria-current=page]{background:var(--color-menta,#16c79a);color:var(--color-noche,#0b1736)}.ds-rail a:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:3px}"
     },
     {
-      "name": "Estado pagada",
+      "name": "Pagada chip",
       "kind": "chip",
-      "description": "Estado escrito y punto, sin depender solo del color.",
-      "html": "<span class=\"ds-chip\"><span></span>Pagada</span>",
-      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;border-radius:9999px;padding:2px 10px;background:var(--color-menta-s,#e3f8f1);color:var(--color-menta-t,#0b7a5c);box-shadow:0 0 0 1px #16c79a4d;font:600 12px \"Inter Variable\",sans-serif}.ds-chip>span{width:6px;height:6px;border-radius:50%;background:var(--color-menta,#16c79a)}"
+      "refersTo": "chip-paid",
+      "description": "Estado escrito acompañado por punto.",
+      "html": "<span class=\"ds-chip\"><span class=\"ds-dot\"></span>Pagada</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;min-height:24px;padding:5px 8px;border-radius:6px;background:var(--color-menta-s,#e3f8f1);color:var(--color-menta-t,#0b7a5c);font:600 10px var(--font-sans,sans-serif)}.ds-dot{width:6px;height:6px;border-radius:50%;background:var(--color-menta,#16c79a)}"
     },
     {
       "name": "Panel",
       "kind": "card",
       "refersTo": "panel",
-      "description": "Contenedor compartido con borde y sin sombra.",
-      "html": "<section class=\"ds-panel\"><header><h2>Necesita tu firma</h2><p>Estas decisiones necesitan una persona.</p></header><div>Decisiones pendientes</div></section>",
-      "css": ".ds-panel{border:1px solid var(--color-bruma,#e3e8f2);border-radius:12px;background:white;color:var(--color-noche,#0b1736);font:14px \"Inter Variable\",sans-serif}.ds-panel>header{padding:22px 24px 18px;border-bottom:1px solid var(--color-bruma,#e3e8f2)}.ds-panel h2{margin:0;font-size:16px;font-weight:600;letter-spacing:-.025em}.ds-panel p{margin:6px 0 0;font-size:12px;line-height:1.6;color:var(--color-pizarra,#5b6782)}.ds-panel>div{padding:20px}"
+      "description": "Contenedor plano con cabecera y divisor.",
+      "html": "<section class=\"ds-panel\"><header><h2>Necesita tu firma</h2><p>Estas decisiones necesitan una persona.</p></header><div class=\"ds-body\">La decisión y su motivo.</div></section>",
+      "css": ".ds-panel{overflow:hidden;border:1px solid var(--color-bruma,#e3e8f2);border-radius:14px;background:#fff;color:var(--color-noche,#0b1736);font-family:var(--font-sans,sans-serif)}.ds-panel header{padding:22px 24px;border-bottom:1px solid var(--color-bruma,#e3e8f2)}.ds-panel h2{margin:0;font-size:16px;font-weight:800;letter-spacing:-.02em}.ds-panel p{margin:6px 0 0;color:var(--color-pizarra,#5b6782);font-size:11px;line-height:1.65;max-width:52ch}.ds-body{padding:20px;font-size:14px}"
     },
     {
-      "name": "Regla inspeccionable",
+      "name": "Regla seleccionada",
       "kind": "custom",
-      "description": "Muestra de una regla seleccionada; no ejecuta una evaluación.",
-      "html": "<section class=\"ds-inspector\"><button class=\"ds-rule\" aria-pressed=\"true\" aria-label=\"R12: requiere atención\"><span>12</span><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M18 6 6 18M6 6l12 12\" /></svg></button></section>",
-      "css": ".ds-inspector{padding:24px;background:var(--color-noche,#0b1736);border-radius:12px}.ds-rule{display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-height:74px;min-width:28px;padding:9px 0;border:1px solid transparent;border-radius:4px;background:#ff8585;color:var(--color-noche,#0b1736);font:9px ui-monospace,monospace;transition:background 160ms,transform 160ms,border-color 160ms}.ds-rule[aria-pressed=true]{border-color:white;transform:translateY(-4px)}.ds-rule:hover{border-color:#c4cde0}.ds-rule:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:2px;}@media(prefers-reduced-motion:reduce){.ds-rule{transition-duration:.01ms}}"
+      "description": "Celda con nombre y selección; motivo exacto en inspector.",
+      "html": "<div class=\"ds-rule-ground\"><button class=\"ds-rule\" aria-pressed=\"true\" aria-label=\"R12: Cuenta bancaria. Requiere atención\"><span class=\"ds-id\">12</span><span>Cuenta bancaria</span><svg class=\"ds-sign\" width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"m18 6-12 12M6 6l12 12\"/></svg></button></div>",
+      "css": ".ds-rule-ground{padding:12px;background:var(--color-noche,#0b1736)}.ds-rule{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:8px;min-height:88px;width:100px;padding:10px 8px;border:1px solid transparent;border-radius:6px;background:var(--color-coral,#ff5c5c);color:var(--color-noche,#0b1736);text-align:left;font:400 10px/1.45 var(--font-sans,sans-serif);transition:transform 180ms,border-color 180ms;cursor:pointer}.ds-id{font-size:9px;font-variant-numeric:tabular-nums}.ds-sign{position:absolute;right:7px;top:9px}.ds-rule:hover{border-color:#becae2}.ds-rule[aria-pressed=true]{transform:translateY(-4px);border-color:#fff}.ds-rule:focus-visible{outline:2px solid var(--color-azul,#3b5bfd);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-rule{transition-duration:.01ms}}"
     }
   ],
   "narrative": {
-    "northStar": "Autonomía, pero cauta.",
-    "overview": "Kauta es una herramienta para operar cuentas por pagar. La pregunta de cada pantalla manda sobre la cantidad de datos: como máximo cuatro métricas de cabecera; los detalles se abren cuando hacen falta.\n\nLa identidad existente se mantiene: modo claro, navegación noche, superficie niebla, panel blanco y semáforo de decisiones. El refinamiento da más peso a la tipografía, reduce los contenedores y muestra el motivo de cada decisión. No introduce una identidad nueva.",
+    "northStar": "El desplegable financiero",
+    "overview": "Kauta traduce el orden de un informe anual corporativo a una herramienta de trabajo: envolvente noche, Manrope firme, superficies claras y grupos amplios de información. Alineación y líneas finas organizan la densidad; la evidencia de una decisión recibe el mayor contraste.\n\nLa paleta principal permanece y la composición anterior se reemplaza. Los controles convencionales de HeroUI permiten operar; la firma visual es una matriz de reglas con nombre, estado y motivo verificable. La marca usa el SVG existente y la tipografía se sirve localmente; no se incorporan imágenes rasterizadas.",
     "keyCharacteristics": [
-      "Semáforo reservado a decisiones, con texto e iconos.",
-      "Métricas en una fila compartida con separadores.",
-      "Inter Variable local y números tabulares.",
-      "Inspección de reglas guardadas, sin evaluación ficticia."
+      "Envolvente noche y rail estrecho.",
+      "Manrope local y cifras tabulares.",
+      "Superficies planas delimitadas por líneas.",
+      "Evidencia interactiva y demo identificada."
     ],
     "rules": [
       {
         "name": "The Semáforo Rule",
-        "body": "Menta significa pagar, ámbar preguntar y coral frenar. Azul identifica acciones y selección; nunca informar un estado solo con color.",
+        "body": "Menta identifica un resultado favorable, ámbar una escalación y coral un freno. Cada estado lleva texto o icono además de color; azul identifica acción y foco.",
         "section": "colors"
       },
       {
         "name": "The Dato Rule",
-        "body": "Dinero y métricas usan números tabulares; monospace se reserva a IDs y huellas.",
+        "body": "Importes y métricas usan cifras tabulares; la pila mono se reserva a identificadores y huellas.",
         "section": "typography"
       },
       {
         "name": "The Superficie Rule",
-        "body": "Los paneles ordinarios se separan con fondo y borde, sin sombra decorativa. La búsqueda modal usa sombra para expresar su superposición.",
+        "body": "Los paneles ordinarios se separan con fondo y borde, sin sombra decorativa; las sombras expresan superposición en diálogos y avisos.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do conservar la identidad noche, niebla y el semáforo de decisiones.",
-      "Do mostrar como máximo cuatro métricas de cabecera, con separadores y sin tarjetas individuales.",
-      "Do distinguir carga, vacío y error; ofrecer Reintentar cuando corresponde.",
-      "Do mantener foco visible, etiquetas y preferencia de movimiento reducido.",
-      "Do validar F01 → F07 → F12 → Rendimiento → CEO/F10 a 390 y 1440 px."
+      "Do conservar la paleta principal y los significados del semáforo.",
+      "Do mantener nombres legibles en las trece reglas y revelar el motivo al seleccionarlas.",
+      "Do conservar foco visible, navegación por teclado y preferencia de movimiento reducido.",
+      "Do distinguir carga, vacío y error, con Reintentar cuando corresponde.",
+      "Do revisar a 1440 px y 390 px, incluidas personas y Facturas."
     ],
     "donts": [
-      "Don't añadir KPIs a los desgloses, gráficas decorativas ni cifras calculadas por la vista.",
-      "Don't usar solo color para comunicar estado.",
-      "Don't representar las reglas guardadas como una evaluación nueva o una animación de progreso.",
-      "Don't extender el radio heredado de 14 px a los paneles compartidos actuales."
+      "Don't comunicar estado solo con color.",
+      "Don't presentar decisiones guardadas como una evaluación nueva o un progreso ficticio.",
+      "Don't recuperar la barra lateral de 232 px ni las tarjetas iguales de la interfaz sustituida.",
+      "Don't inventar cifras, resultados ni evidencia visual de Gmail conectado."
     ]
   }
 }
