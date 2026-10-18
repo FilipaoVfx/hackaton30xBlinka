@@ -18,3 +18,4 @@ web/dist/
 .vercel/
 gmail-oauth*.json
 oauth-client*.json
+*.egg-info/

@@ -1,0 +1,19 @@
+[project]
+name = "kauta-cli"
+version = "0.1.0"
+description = "TUI de terminal para Kauta: otra forma de consumir la misma API, pensada para una demo rápida y liviana."
+requires-python = ">=3.11"
+dependencies = [
+    "textual>=0.89.0",
+    "httpx>=0.27.0",
+]
+
+[project.scripts]
+kauta = "kauta_cli.app:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["kauta_cli*"]
