@@ -33,11 +33,18 @@ class ResumenScreen(PantallaBase):
         super().on_mount()
         tabla = self.query_one("#ultimas", DataTable)
         tabla.add_columns("ID", "Beneficiario", "Monto USD", "Decisión", "Estado")
+        # Sin esto el foco se queda en el contenedor que scrollea y las flechas
+        # nunca llegan a la tabla: el cursor se queda clavado en la primera fila.
+        tabla.focus()
         self._refrescar()
         self.set_interval(INTERVALO_S, self._refrescar)
 
     def action_refrescar(self) -> None:
         self._refrescar()
+
+    def on_data_table_row_selected(self, evento: DataTable.RowSelected) -> None:
+        if evento.row_key.value:
+            self.app.ir_a_factura(str(evento.row_key.value))
 
     @work(exclusive=True)
     async def _refrescar(self) -> None:
@@ -62,6 +69,10 @@ class ResumenScreen(PantallaBase):
         serie = [p["acumulado"] for p in datos["serie"][-60:]] or [0]
         self.query_one("#sparkline", Sparkline).data = serie
         tabla = self.query_one("#ultimas", DataTable)
+        fila = tabla.cursor_row  # el refresco cada 2.5s no debe mover el cursor bajo los pies
         tabla.clear()
         for f in datos["ultimas"]:
-            tabla.add_row(f["id"], f["beneficiario"][:28], f"{f.get('monto_usd') or 0:,.2f}", f["decision"], f["estado"])
+            tabla.add_row(f["id"], f["beneficiario"][:28], f"{f.get('monto_usd') or 0:,.2f}",
+                          f["decision"], f["estado"], key=f["id"])
+        if fila is not None and tabla.row_count:
+            tabla.move_cursor(row=min(fila, tabla.row_count - 1))

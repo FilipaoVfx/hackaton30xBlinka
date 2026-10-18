@@ -14,8 +14,9 @@ Screen {
 .mal { color: #FF5C5C; }
 .tenue { color: #B5BFD3; }
 
+/* Sin dock: dos widgets con `dock: top` se superponen en la misma fila y el
+   menú de teclas queda invisible debajo de la barra. En flujo normal se apilan. */
 BarraEstado {
-    dock: top;
     height: 1;
     background: #142343;
     color: #F5F7FB;
@@ -23,7 +24,6 @@ BarraEstado {
 }
 
 Menu {
-    dock: top;
     height: 1;
     background: #0B1736;
     color: #B5BFD3;

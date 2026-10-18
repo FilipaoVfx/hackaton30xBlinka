@@ -58,6 +58,11 @@ class KautaApp(App):
         # disparó, la dejaría encerrada en una vuelta de bucle de mensajes bloqueada.
         self.switch_screen(ResumenScreen())
 
+    def ir_a_factura(self, fid: str) -> None:
+        """Desde el resumen: abrir Facturas ya parado sobre esa factura."""
+        if self.usuario is not None:
+            self.switch_screen(FacturasScreen(fid))
+
     def action_ir(self, tecla: str) -> None:
         if self.usuario is None:
             return

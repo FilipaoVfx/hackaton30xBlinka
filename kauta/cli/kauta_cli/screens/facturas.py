@@ -29,10 +29,15 @@ class FacturasScreen(PantallaBase):
 
     _fid_actual: str | None = None
 
+    def __init__(self, fid_inicial: str | None = None):
+        super().__init__()
+        self._fid_inicial = fid_inicial
+
     def on_mount(self) -> None:
         super().on_mount()
         tabla = self.query_one("#facturas", DataTable)
         tabla.add_columns("ID", "Beneficiario", "Monto USD", "Decisión", "Estado", "Motivo")
+        tabla.focus()
         self._refrescar()
 
     def action_refrescar(self) -> None:
@@ -51,7 +56,13 @@ class FacturasScreen(PantallaBase):
                 f["id"], f["beneficiario"][:28], f"{f.get('monto_usd') or 0:,.2f}",
                 f["decision"], f["estado"], (f.get("motivo") or "")[:40], key=f["id"],
             )
-        if facturas and fila_actual is not None and fila_actual < len(facturas):
+        if self._fid_inicial:  # llegamos desde el resumen pidiendo una factura concreta
+            for i, f in enumerate(facturas):
+                if f["id"] == self._fid_inicial:
+                    tabla.move_cursor(row=i)
+                    break
+            self._fid_inicial = None
+        elif facturas and fila_actual is not None and fila_actual < len(facturas):
             tabla.move_cursor(row=fila_actual)
 
     def on_data_table_row_highlighted(self, evento: DataTable.RowHighlighted) -> None:
