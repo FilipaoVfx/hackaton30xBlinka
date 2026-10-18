@@ -16,3 +16,5 @@ var/
 web/node_modules/
 web/dist/
 .vercel/
+gmail-oauth*.json
+oauth-client*.json

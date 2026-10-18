@@ -6,6 +6,7 @@ Documentación interactiva de la API en /api/docs (solo en modo demo).
 """
 from __future__ import annotations
 
+import asyncio
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -17,9 +18,9 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 from .config import CONFIG, RAIZ
 from .db import SesionBD
-from .rutas import auth, control, dinero, negocio, personas, simulador
+from .rutas import auth, control, correo, correo_oauth, dinero, negocio, personas, simulador
 from .seguridad.cabeceras import CabecerasSeguridad
-from .servicios import semilla
+from .servicios import ingesta, semilla
 from .servicios.agente import ErrorNegocio
 
 WEB = RAIZ / "web" / "dist"
@@ -32,7 +33,14 @@ async def ciclo_de_vida(_: FastAPI):
         semilla.iniciar(bd, con_set=True)
         if CONFIG.demo and CONFIG.preparar_recorrido:
             semilla.preparar_recorrido(bd)
-    yield
+    detener = asyncio.Event()
+    tarea = asyncio.create_task(ingesta.escuchar(detener)) if ingesta.CONFIG_GMAIL.activo else None
+    try:
+        yield
+    finally:
+        detener.set()
+        if tarea:
+            await tarea
 
 
 app = FastAPI(title="Kauta API", version=CONFIG.version, lifespan=ciclo_de_vida,
@@ -51,7 +59,7 @@ class LimiteCuerpo(BaseHTTPMiddleware):
 
 app.add_middleware(LimiteCuerpo)
 app.add_middleware(CabecerasSeguridad)
-for modulo in (auth, negocio, dinero, simulador, control, personas):
+for modulo in (auth, negocio, dinero, simulador, control, personas, correo, correo_oauth):
     app.include_router(modulo.r)
 
 

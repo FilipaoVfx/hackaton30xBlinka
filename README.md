@@ -2,18 +2,19 @@
 
 Proyecto para la hackatón **30xBlinka**: construir un agente que revise facturas de una empresa, aplique sus reglas y decida **aprobar un pago simulado, frenarlo o solicitar aprobación humana**, explicando cada decisión.
 
-> **Estado actual:** cuatro prototipos interactivos de UX/UI en HTML, CSS generado con Tailwind y JavaScript. La biblioteca corporativa incluye 15 documentos ficticios y siete rutas de recepción simuladas. La extracción con IA, los conectores de entrada y la persistencia de backend están pendientes; las reglas se ejecutan en el navegador para explorar la experiencia. La arquitectura y el reparto del equipo que aparecen más abajo siguen siendo propuestas.
+> **Estado actual:** la aplicación [Kauta](kauta/README.md) incluye React, FastAPI, persistencia y un motor de 13 reglas para pagos simulados. La [recepción automática por Gmail](docs/ingesta-gmail.md) está implementada para el asunto `kauta`; su activación requiere una credencial OAuth propia de Gmail. Además se conservan los prototipos de UX/UI descritos abajo: la biblioteca de HTML contiene 15 documentos ficticios y siete rutas simuladas; sus reglas corren en el navegador. La arquitectura y el reparto del equipo que aparecen más abajo siguen siendo propuestas.
 
 ## Prototipos disponibles
 
 | Pantalla | Archivo | Qué permite explorar |
 | --- | --- | --- |
-| **Biblioteca corporativa** | [prototipos/biblioteca.html](prototipos/biblioteca.html) | Documento original, campos con evidencia, normalización, reglas, decisiones y correcciones con historial de sesión. |
+| **Biblioteca corporativa** | [prototipos/biblioteca.html](prototipos/biblioteca.html) | Cuentas por pagar, biblioteca documental y decisiones e historial; estados independientes, recorridos por perfil y reporte ejecutivo de ejemplo. |
 | Centro de decisiones CRM | [prototipos/monitor.html](prototipos/monitor.html) | Cola priorizada, responsables ficticios, simulación de parámetros y comparación contra el escenario base. |
 | Revisor individual | [prototipos/revisor.html](prototipos/revisor.html) | Revisar facturas, autorizar excepciones de monto, rechazar y exportar el registro de la sesión. |
 | Planificador de pagos | [prototipos/planificador.html](prototipos/planificador.html) | Seleccionar facturas, ordenar por vencimiento o monto y simular la distribución del presupuesto. |
+| Rendimiento y costos | [prototipos/observabilidad.html](prototipos/observabilidad.html) | Consultar cinco vistas FinOps/AgentOps, explorar consumos simulados, medir revisión local y exportar el registro financiero. |
 
-Las cuatro pantallas tienen modo claro y oscuro, recuerdan la elección de tema y se adaptan a dispositivos móviles. La biblioteca utiliza como referencia visual la paleta, la fuente y el logotipo públicos de [Blinka](https://blinka.co); es una exploración de la hackatón.
+Las pantallas tienen modo claro y oscuro, recuerdan la elección de tema y se adaptan a dispositivos móviles. La biblioteca utiliza como referencia visual la paleta, la fuente y el logotipo públicos de [Blinka](https://blinka.co); es una exploración de la hackatón.
 
 ### Biblioteca: formatos y rutas de recepción
 
@@ -26,6 +27,31 @@ Los formatos y los canales se muestran por separado: un PDF puede llegar por cor
 - Fotos y escaneos con lectura por confirmar, proforma que requiere revisión y factura en EUR sin tasa configurada.
 
 Cada documento recorre cinco etapas: **Documento → Extracción → Normalización → Validación → Decisión**. Seleccionar un campo resalta su evidencia. Las correcciones conservan la representación original y generan otra versión de lectura en la sesión. La exportación JSON incluye procedencia, datos normalizados y resultados de reglas.
+
+### Recorridos por perfil y vistas de trabajo
+
+**Alternativa A reconstruida desde la referencia visual:** cabecera compacta, barra lateral, Inter, azul de acción intenso, métricas horizontales y tabla con la factura seleccionada. El panel derecho presenta miniatura e importe en paralelo, metadatos, flujo y acciones. Incluye las pestañas Resumen, Documento e Historial, zoom, visor ampliado y seis campos vinculados a evidencia. Abre en el perfil de aprobación; el selector permite explorar los demás perfiles. Mantiene modo oscuro y adaptación a móvil. Las fuentes son representaciones HTML ficticias: no incorpora todavía un lector de PDF ni OCR real.
+
+**Identidad de Kauta:** logo original y paleta extraídos de la guía maestra compartida en Drive. Aplicados a cuentas y costos en modo claro y oscuro, conservando la estructura. Colores, procedencia y archivos en [KAUTA-BRAND.md](prototipos/assets/KAUTA-BRAND.md).
+
+La biblioteca corporativa abre en **Cuentas por pagar**. Cada documento muestra por separado su lectura (completa, por confirmar o corregida), la decisión del motor y su vencimiento. La siguiente acción dirige a la evidencia o al caso que corresponde; las fechas se interpretan contra el corte ficticio del 17 de octubre de 2026.
+
+- **Cuentas por pagar:** obligaciones registradas, vencimientos, responsables, búsqueda, filtros y siguiente acción. Las filas incluyen documentos identificados como duplicados o proformas para explicar su tratamiento; su presencia no significa que sean obligaciones aprobadas.
+- **Biblioteca documental:** recepción y evidencia, extracción simulada, normalización, validaciones y detalle de la decisión.
+- **Decisiones e historial:** cola de excepciones, autorización de monto o rechazo con motivo, y consulta de instantáneas de decisiones anteriores con sus reglas y versiones.
+
+El selector **Vista de ejemplo** permite explorar cuatro perfiles. Es una simulación de UX; no implementa autenticación ni control de acceso seguro en backend.
+
+| Perfil de demostración | Experiencia y acciones disponibles |
+| --- | --- |
+| Analista de finanzas | Consulta documentos, corrige montos con motivo y añade ejemplos. No autoriza excepciones ni cambia reglas. |
+| Responsable de aprobación | Consulta documentos, autoriza excepciones de monto permitidas, rechaza facturas pendientes y ajusta las reglas de la simulación. No corrige lecturas. |
+| CEO / Dirección | Consulta un resumen y excepciones relevantes, genera una vista previa de correo y exporta el reporte. La interfaz no ofrece acceso al documento fuente ni acciones de aprobación. |
+| Auditor | Consulta documentos, reglas y decisiones históricas y exporta los registros. La interfaz no ofrece modificaciones. |
+
+El reporte ejecutivo se genera con el estado actual de la sesión. Su destinatario es ficticio y **no se envía ningún correo**. Los montos aprobados o reservados están identificados como simulados; no equivalen a pagos ejecutados. Los documentos sin conversión conocida no se suman como cero.
+
+Las instantáneas de decisiones conservan importes, actor, motivo, reglas y versiones anteriores durante la sesión. No constituyen un registro persistente o firmado de producción.
 
 ### Límites del prototipo
 
@@ -241,3 +267,30 @@ Para revisar manualmente la biblioteca:
 6. Cambia los parámetros de la simulación y comprueba la reevaluación; recarga para restaurar el conjunto base.
 
 El agente conectado a documentos reales y sus pruebas de backend quedan pendientes de implementación.
+
+
+## MVP de observabilidad financiera
+
+Abre [Rendimiento y costos](prototipos/observabilidad.html) desde la biblioteca. Conserva el servidor estático descrito arriba, o ejecútalo desde la raíz:
+
+```bash
+python3 -m http.server 8831 --bind 127.0.0.1
+```
+
+Visita http://127.0.0.1:8831/prototipos/observabilidad.html. Requiere HTTP porque utiliza módulos JavaScript y carga un archivo JSON local; no necesita dependencias ni claves.
+
+El MVP incluye resumen financiero, operación, consumo por modelo, revisión humana y calidad/trazas de ejemplo. Puedes filtrar por recepción, canal y estado, buscar proveedores, abrir cada factura, añadir un reintento simulado, comprobar que un evento duplicado no se cobra dos veces, registrar tiempo de revisión y exportar JSON con los filtros y el registro de costos. Configura minutos manuales y tarifa horaria para explorar el ahorro estimado.
+
+Los 15 documentos de ejemplo se agrupan en 14 casos, de los cuales 13 son facturas elegibles. Un reenvío se atribuye al original; la proforma se presenta aparte. Los escenarios del panel son independientes de las decisiones temporales de la biblioteca. El enlace al documento abre su caso de referencia.
+
+**Estado de la entrega:** contratos de cálculo y MVP funcional de los hitos 0–1 del [plan](docs/plan-panel-finops-agentops.md). La persistencia es `localStorage`, por navegador y origen. No implementa autenticación ni aislamiento seguro entre usuarios; el backend, worker, extracción real, conectores y OpenTelemetry siguen pendientes. No se realizan llamadas a IA ni pagos. Los precios y resultados de calidad son ficticios. El reloj registra actividad local aproximada, se pausa al ocultar/cerrar el detalle o tras 60 segundos sin actividad y conserva tarifas por sesión. Al cambiar el panel en otra pestaña se solicita recargar para impedir sobrescrituras.
+
+Los costos usan enteros en milmillonésimas de USD; entrada cacheada se descuenta de entrada total antes de aplicar precios. Tarifas desconocidas permanecen pendientes. El CPI incluye los costos conocidos de toda la cohorte elegible, incluso fallos y pendientes, divididos entre casos resueltos; infraestructura e implantación todavía no están asignadas. El ahorro compara únicamente trabajo resuelto equivalente y es una estimación antes de esos gastos.
+
+Para verificar el cálculo financiero con Node.js 18 o superior:
+
+```bash
+node --test tests/finops.test.mjs
+```
+
+Ver [contrato del MVP y guía de validación](docs/mvp-observabilidad.md) para fórmulas, límites y recorridos de comprobación.

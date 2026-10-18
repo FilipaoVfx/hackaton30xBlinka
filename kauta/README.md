@@ -61,6 +61,19 @@ Cada pantalla declara los costos simulados y los tiempos humanos estimados.
 “—” significa desconocido; el cero conocido sí es cero. La infraestructura se
 reparte provisionalmente entre facturas finales hasta que termina el mes en Bogotá.
 
+## Recepción automática por Gmail
+
+La pantalla **Facturas** incluye el estado de conexión y una bandeja de recepción.
+El recolector del servidor consulta cada minuto los correos recibidos con asunto
+`kauta`, conserva originales y adjuntos, evita reprocesar duplicados y entrega
+los documentos al motor vigente. Los errores de lectura quedan visibles para
+revisión y reintento por el CTO.
+
+La conexión está desactivada por defecto. Requiere una credencial OAuth propia
+con `gmail.readonly`; la conexión del chat y el remoto Drive de rclone no la
+sustituyen. La interfaz solo indica **Escuchando** después de una consulta real
+exitosa. Configuración y autorización en [Ingesta Gmail](../docs/ingesta-gmail.md).
+
 ## Importación manual en Vercel
 
 El despliegue aprobado separa la pantalla y la API: Vercel sirve React y
