@@ -1,0 +1,178 @@
+El efecto “wow” para un financiero aparece cuando Kauta descubre que una decisión sobre una obligación mejora varias partes del calendario de pagos, y demuestra que la caja sigue alcanzando.
+Estos tres casos son hipotéticos, diseñados para perfiles compatibles con los clientes de Blinka. Los porcentajes, cotizaciones y acuerdos ilustran posibilidades; no son condiciones verificadas de Blinka ni de sus clientes. Las comparaciones suponen obligaciones válidas, servicios equivalentes y ausencia de diferencias tributarias entre alternativas.
+Historia 1. “Pagar un recargo nos permite gastar menos y conservar más caja”
+Una empresa tecnológica cobra en dólares y paga a varias agencias y proveedores. Su responsable financiero tiene US$90.000, pero debe conservar una reserva operativa de US$30.000.
+Por tanto, dispone de US$60.000 para decidir hoy. Tiene además un cobro previsto de US$60.000 el día 25.
+Estas son sus obligaciones:
+Factura	Importe	Vencimiento	Condición disponible
+A: servicios profesionales	US$60.000	Hoy	El proveedor podría aceptar día 30 con recargo único del 0,75 %.
+B: agencia comercial	US$25.000	Día 30	Descuento del 3 % si recibe el pago hoy.
+C: implementación tecnológica	US$20.000	Día 30	Descuento del 2,5 % si recibe el pago hoy.
+D: producción de contenido	US$15.000	Día 30	Descuento del 2 % si recibe el pago hoy.
+Total	US$120.000		
+
+
+La ruta habitual sería pagar A hoy, conservar los US$30.000 de reserva y utilizar el cobro del día 25 para pagar B, C y D.
+Es una ruta viable. Sin embargo, deja vencer tres oportunidades.
+Lo que descubre Kauta
+La negociación con A cuesta:
+US$60.000 × 0,75 % = US$450.
+Esa extensión permitiría utilizar la caja de hoy para capturar:
+Factura	Descuento	Pago anticipado
+B	US$750	US$24.250
+C	US$500	US$19.500
+D	US$300	US$14.700
+Total	US$1.550	US$58.450
+
+
+Kauta propone una secuencia condicionada:
+1. Confirmar por escrito la extensión de A hasta el día 30 por US$60.450.
+2. Verificar que los tres descuentos siguen vigentes y que los pagos llegarán dentro del plazo.
+3. Pagar B, C y D por US$58.450.
+4. Reservar el cobro del día 25 para liquidar A.
+Cómo queda la caja
+Momento	Ruta habitual	Ruta propuesta
+Saldo inicial	US$90.000	US$90.000
+Después de los pagos de hoy	US$30.000	US$31.550
+Después del cobro del día 25	US$90.000	US$91.550
+Después de los pagos del día 30	US$30.000	US$31.100
+Costo total de las cuatro obligaciones	US$120.000	US$118.900
+
+
+Resultado: US$1.100 de ahorro neto, equivalente al 0,92 % del total de obligaciones. La reserva de US$30.000 se conserva durante toda la ruta prevista.
+Aquí aparece el descubrimiento: aceptar un recargo del 0,75 % permite capturar descuentos equivalentes al 2,58 % sobre las otras tres facturas, que también suman US$60.000.
+Kauta puede incluso ayudar a negociar. El punto de equilibrio del recargo de A sería:
+US$1.550 ÷ US$60.000 = 2,58 %.
+Ese es el techo matemático antes de otros costos. El límite de negociación debería ser menor para conservar un beneficio suficiente.
+Qué podría invalidar la ruta
+Si el cobro previsto se desplaza más allá del día 30, ambas rutas necesitarían revisarse. Kauta debe mostrar esa dependencia y evaluar un retraso antes de recomendar comprometer el dinero. La prórroga, además, tiene que estar aceptada antes de anticipar las otras facturas.
+Lo que vería el financiero:
+“Negociar US$450 de recargo habilita US$1.550 de descuentos. Ahorras US$1.100 y conservas tu reserva. La propuesta depende de confirmar la extensión y recibir US$60.000 antes del día 30.”
+
+Historia 2. “La misma obligación cuesta un 4,97 % menos al combinar moneda, ruta y descuento”
+Una empresa estadounidense contrata servicios en México. Tiene una obligación de US$50.000.
+El contrato permite liquidarla alternativamente por MXN 1.000.000. Ambas cantidades están aceptadas por el proveedor para esta operación. También existe un 2 % de descuento por liquidación anticipada, aplicable a cualquiera de las dos monedas.
+Para esta historia, todas las alternativas se comparan en la misma ventana de ejecución:
+- Transferencia en USD: comisión total de US$80.
+- Pago local en MXN: cotización ejecutable de 20,60 MXN por USD, con comisión adicional total de US$20.
+- Los importes locales indicados son los que recibe el proveedor, sin deducciones posteriores.
+La empresa tiene US$105.000. Debe pagar US$40.000 al equipo cinco días después y conservar una reserva de US$10.000.
+La decisión que normalmente se prepara
+El equipo carga un pago de US$50.000 porque esa es la moneda principal de la factura. El débito sería US$50.080.
+Kauta revisa el contrato y encuentra dos alternativas que no estaban incorporadas en esa instrucción: moneda local y descuento.
+Las cuatro rutas
+Ruta para liquidar la obligación	Cálculo	Débito total
+USD, sin descuento	US$50.000 + US$80	US$50.080,00
+USD, con descuento del 2 %	US$49.000 + US$80	US$49.080,00
+MXN, sin descuento	MXN 1.000.000 ÷ 20,60 + US$20	US$48.563,69
+MXN, con descuento del 2 %	MXN 980.000 ÷ 20,60 + US$20	US$47.592,82
+
+
+La mejor alternativa de las modeladas es pagar MXN 980.000, con un débito de US$47.592,82.
+Cómo se construye el ahorro
+Primero, cambiar de la ruta USD sin descuento a la ruta local sin descuento ahorra:
+US$50.080 − US$48.563,69 = US$1.516,31.
+Después, añadir el descuento al pago local ahorra:
+US$48.563,69 − US$47.592,82 = US$970,87.
+Por tanto:
+Ahorro total: US$2.487,18, equivalente al 4,97 % del débito original.
+No se suman porcentajes aplicados sobre bases distintas: Kauta compara el dinero que efectivamente sale de la cuenta.
+Incluso frente a un financiero que ya hubiera encontrado el descuento en dólares, la ruta local todavía ahorra:
+US$49.080 − US$47.592,82 = US$1.487,18 adicionales.
+La diferencia en liquidez
+Concepto	Instrucción original	Ruta propuesta
+Caja inicial	US$105.000	US$105.000
+Pago al proveedor, con costos	−US$50.080	−US$47.592,82
+Pago posterior al equipo	−US$40.000	−US$40.000
+Caja restante	US$14.920	US$17.407,18
+Caja por encima de la reserva de US$10.000	US$4.920	US$7.407,18
+
+
+El margen de caja sobre la reserva aumenta aproximadamente un 50,55 %. Ese porcentaje se refiere al margen disponible, no al ahorro sobre la factura.
+Qué debe comprobar Kauta
+La moneda alternativa debe estar contractualmente aceptada. La cotización debe seguir vigente al ejecutar, el importe neto debe llegar dentro del plazo del descuento y los cargos deben estar completos. Si alguna condición cambia, se recalcula la comparación.
+No hace falta acertar el movimiento futuro del dólar. El valor está en comparar opciones ejecutables para liquidar la misma obligación.
+Lo que vería el financiero:
+“Puedes liquidar esta obligación por US$47.592,82. Combinar la moneda aceptada por el proveedor con el pronto pago ahorra US$2.487,18 frente a la instrucción preparada. Después de pagar al equipo, conservarías US$7.407,18 por encima de tu reserva.”
+
+Historia 3. “Un acuerdo por volumen y por hitos abre una segunda oportunidad de ahorro”
+Un administrador inmobiliario gestiona dos sociedades independientes. Cada una debe pagar sus propias obligaciones y conservar su reserva.
+Entidad	Caja inicial	Reserva mínima	Caja utilizable
+Sociedad A	US$32.000	US$12.000	US$20.000
+Sociedad B	US$25.000	US$10.000	US$15.000
+Total	US$57.000	US$22.000	US$35.000
+
+
+Ambas necesitan trabajos de mantenimiento con el mismo proveedor:
+- A: trabajo de US$20.000.
+- B: trabajo de US$15.000.
+La propuesta inicial exige pago completo al inicio. Además, existen otras dos facturas de suministros:
+- A: US$12.000, con vencimiento el día 45.
+- B: US$8.000, con vencimiento el día 45.
+Estas últimas ofrecen 3 % de descuento si se pagan antes del día 3.
+El día 25 se esperan ingresos de US$18.000 para A y US$12.000 para B.
+La ruta habitual
+Pagar los trabajos completos al inicio consume los US$35.000 utilizables. Las sociedades quedan exactamente en sus reservas.
+Aunque los suministros ofrecen US$600 de descuento conjunto, no pueden anticiparlos sin reducir esas reservas. Esperan los ingresos y pagan US$20.000 el día 45.
+Costo total: US$55.000.
+La primera oportunidad que encuentra Kauta
+Los trabajos se revisaron por separado, pero pueden negociarse comercialmente como un paquete.
+El proveedor acepta, en este escenario:
+- 8 % de descuento por contratar ambos trabajos.
+- 40 % de anticipo para materiales y programación.
+- 60 % el día 30, contra aceptación del hito acordado.
+- Facturación y pagos separados para cada sociedad.
+El proveedor obtiene dos trabajos confirmados y un calendario de ejecución coordinado. Las sociedades mantienen la separación de sus fondos.
+Trabajo	Precio inicial	Precio con 8 % de descuento	Anticipo del 40 %	Saldo del 60 %
+A	US$20.000	US$18.400	US$7.360	US$11.040
+B	US$15.000	US$13.800	US$5.520	US$8.280
+Total	US$35.000	US$32.200	US$12.880	US$19.320
+
+
+El acuerdo produce dos efectos diferentes:
+- US$2.800 de ahorro permanente.
+- US$19.320 cuyo desembolso se desplaza al día 30.
+Por eso, justo después del anticipo, hay US$22.120 más de caja que en la ruta original. No todo ese importe es ahorro.
+La segunda oportunidad
+Ahora Kauta comprueba si esa caja permite anticipar los suministros sin incumplir las reservas ni comprometer los pagos del día 30.
+Factura de suministros	Importe original	Descuento del 3 %	Pago anticipado
+A	US$12.000	US$360	US$11.640
+B	US$8.000	US$240	US$7.760
+Total	US$20.000	US$600	US$19.400
+
+
+La respuesta es afirmativa bajo los cobros previstos. Y Kauta puede demostrarlo entidad por entidad:
+Momento	Caja de A	Caja de B	Caja total
+Inicio	US$32.000	US$25.000	US$57.000
+Día 0: anticipos de mantenimiento	US$24.640	US$19.480	US$44.120
+Día 2: suministros con descuento	US$13.000	US$11.720	US$24.720
+Día 25: recepción de ingresos	US$31.000	US$23.720	US$54.720
+Día 30: saldos de mantenimiento	US$19.960	US$15.440	US$35.400
+
+
+A nunca baja de su reserva de US$12.000. B nunca baja de US$10.000. No se transfiere dinero entre ambas.
+El resultado completo
+Indicador	Ruta habitual	Ruta propuesta
+Costo de mantenimiento	US$35.000	US$32.200
+Costo de suministros	US$20.000	US$19.400
+Costo total	US$55.000	US$51.600
+Caja final, después de todos los pagos e ingresos indicados	US$32.000	US$35.400
+Reservas respetadas	Sí	Sí
+
+
+Ahorro: US$3.400, equivalente al 6,18 % de las obligaciones originales.
+La diferencia frente a simplemente negociar un precio es que el nuevo calendario habilita otros US$600 de ahorro. Kauta descubre la secuencia completa.
+Qué podría invalidar la ruta
+Los ingresos del día 25 deben estar disponibles antes del segundo desembolso. Sin ellos, no alcanza para pagar los saldos manteniendo las reservas.
+Kauta tendría que evaluar esa dependencia antes de anticipar los suministros. También debe comprobar que el descuento por volumen no cambia la calidad, el alcance ni las garantías de los trabajos, y que el segundo pago depende del hito pactado.
+Lo que vería el financiero:
+“Contratar ambos trabajos bajo este acuerdo reduce su costo un 8 %. El pago por hitos permite además capturar un 3 % de descuento en suministros. El ahorro conjunto es US$3.400; cada sociedad conserva su reserva y paga con sus propios fondos.”
+
+Las tres historias demostrarían capacidades distintas:
+Historia	Oportunidad que Kauta conecta	Ahorro neto
+1	Prórroga de una factura → descuentos en otras tres	US$1.100 / 0,92 %
+2	Moneda contractual → ruta de pago → pronto pago	US$2.487,18 / 4,97 %
+3	Volumen → pagos por hitos → segundo descuento	US$3.400 / 6,18 %
+
+
+Para una demostración comercial, usaría la tercera historia como caso principal. Permite ver que Kauta entiende contratos, secuencias de pagos, oportunidades relacionadas y reservas por entidad. El financiero puede seguir cada movimiento y comprobar de dónde sale el beneficio
